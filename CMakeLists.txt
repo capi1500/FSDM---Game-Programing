@@ -8,7 +8,9 @@ include_directories(src)
 
 # find SFML 2.5
 if(WIN32)
-    set(SFML_DIR libraries/SFML-2.5.1/lib/cmake/SFML/)
+    set(SFML_DIR libraries/win/SFML-2.5.1/lib/cmake/SFML/)
+else()
+    set(SFML_DIR libraries/unix/SFML-2.5.1/lib/cmake/SFML/)
 endif(WIN32)
 
 find_package(SFML 2.5 COMPONENTS graphics window system audio network REQUIRED)
