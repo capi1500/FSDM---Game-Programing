@@ -16,7 +16,7 @@ endif(WIN32)
 find_package(SFML 2.5 COMPONENTS graphics window system audio network REQUIRED)
 
 # add execs
-add_executable(ProgramowanieGier src/main.cpp)
+add_executable(ProgramowanieGier src/main.cpp src/FiniteStateMachine/finiteStateMachine.cpp src/FiniteStateMachine/finiteStateMachine.hpp src/FiniteStateMachine/state.cpp src/FiniteStateMachine/state.hpp src/Objects/object.cpp src/Objects/object.hpp)
 
 # compile options
 target_compile_options(ProgramowanieGier PRIVATE -Wall)

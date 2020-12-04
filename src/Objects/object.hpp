@@ -1,0 +1,11 @@
+//
+// Created by Kacper on 04/12/2020.
+//
+
+#ifndef PROGRAMOWANIEGIER_OBJECT_HPP
+#define PROGRAMOWANIEGIER_OBJECT_HPP
+
+class Object{
+};
+
+#endif //PROGRAMOWANIEGIER_OBJECT_HPP
