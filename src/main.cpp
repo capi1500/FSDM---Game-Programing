@@ -13,14 +13,14 @@ int main(){
 	rect.setPosition(100, 100);
 	
 	sf::Texture textureKeyA, textureKeyA2, textureKeyW, textureKeyW2, textureKeyD, textureKeyD2, textureKeyS, textureKeyS2;
-	textureKeyA.loadFromFile("../assets/textures/keyboard_and_controller/Keyboard & Mouse/Dark/Keyboard_Black_A.png");
-	textureKeyA2.loadFromFile("../assets/textures/keyboard_and_controller/Keyboard & Mouse/Light/Keyboard_White_A.png");
-	textureKeyS.loadFromFile("../assets/textures/keyboard_and_controller/Keyboard & Mouse/Dark/Keyboard_Black_S.png");
-	textureKeyS2.loadFromFile("../assets/textures/keyboard_and_controller/Keyboard & Mouse/Light/Keyboard_White_S.png");
-	textureKeyD.loadFromFile("../assets/textures/keyboard_and_controller/Keyboard & Mouse/Dark/Keyboard_Black_D.png");
-	textureKeyD2.loadFromFile("../assets/textures/keyboard_and_controller/Keyboard & Mouse/Light/Keyboard_White_D.png");
-	textureKeyW.loadFromFile("../assets/textures/keyboard_and_controller/Keyboard & Mouse/Dark/Keyboard_Black_M.png");
-	textureKeyW2.loadFromFile("../assets/textures/keyboard_and_controller/Keyboard & Mouse/Light/Keyboard_White_M.png");
+	textureKeyA.loadFromFile("../assets/textures/keyboard_and_controller/Keyboard & Mouse/Dark/A_Key_Dark.png");
+	textureKeyA2.loadFromFile("../assets/textures/keyboard_and_controller/Keyboard & Mouse/Light/A_Key_Light.png");
+	textureKeyS.loadFromFile("../assets/textures/keyboard_and_controller/Keyboard & Mouse/Dark/S_Key_Dark.png");
+	textureKeyS2.loadFromFile("../assets/textures/keyboard_and_controller/Keyboard & Mouse/Light/S_Key_Light.png");
+	textureKeyD.loadFromFile("../assets/textures/keyboard_and_controller/Keyboard & Mouse/Dark/D_Key_Dark.png");
+	textureKeyD2.loadFromFile("../assets/textures/keyboard_and_controller/Keyboard & Mouse/Light/D_Key_Light.png");
+	textureKeyW.loadFromFile("../assets/textures/keyboard_and_controller/Keyboard & Mouse/Dark/W_Key_Dark.png");
+	textureKeyW2.loadFromFile("../assets/textures/keyboard_and_controller/Keyboard & Mouse/Light/W_Key_Light.png");
 	
 	sf::Sprite keyA, keyD, keyW, keyS;
 	keyA.setTexture(textureKeyA);
@@ -28,8 +28,7 @@ int main(){
 	keyD.setTexture(textureKeyD);
 	keyW.setTexture(textureKeyW);
 	
-	keyW.rotate(180);
-	keyW.setPosition(200, 100);
+	keyW.setPosition(100, 0);
 	keyA.setPosition(0, 100);
 	keyS.setPosition(100, 100);
 	keyD.setPosition(200, 100);
