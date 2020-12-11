@@ -13,9 +13,10 @@
 class State{
 	private:
 		bool m_delete;
+	protected:
 		std::vector<Object*> m_objects;
 	public:
-		virtual void draw();
+		virtual void draw(sf::RenderWindow& window);
 		virtual void update(const sf::Time& time);
 		virtual void input(const sf::Event& event);
 		
