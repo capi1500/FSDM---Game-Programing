@@ -22,6 +22,10 @@ class Ball : public Object{
 		
 		void bounce();
 		
+		const sf::Vector2f& getPosition() const;
+		const sf::Vector2f& getOldPosition() const;
+		float getRadius() const;
+		
 		Ball(sf::Vector2u windowSize);
 };
 

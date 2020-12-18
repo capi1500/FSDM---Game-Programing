@@ -27,7 +27,18 @@ Ball::Ball(sf::Vector2u windowSize){
 	m_circle.setPosition(-50 + windowSize.x / 2, -50 + windowSize.y / 2);
 	m_velocity = 50;
 	m_angle = (rand() % 360);
-	std::cout << m_angle;
+}
+
+const sf::Vector2f& Ball::getPosition() const{
+	return m_circle.getPosition();
+}
+
+const sf::Vector2f& Ball::getOldPosition() const{
+	return m_oldPosition;
+}
+
+float Ball::getRadius() const{
+	return m_circle.getRadius();
 }
 
 

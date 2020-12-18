@@ -3,6 +3,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <Objects/ball.hpp>
 #include <Objects/paddle.hpp>
+#include <Utils/function.hpp>
 
 sf::RenderWindow window;
 FiniteStateMachine machine;
@@ -18,6 +19,8 @@ class MainMenu : public State{
 };
 
 class Game : public State{
+	private:
+		void checkBounce();
 	public:
 		void draw(sf::RenderWindow& window) override{
 			State::draw(window);
@@ -25,6 +28,8 @@ class Game : public State{
 		}
 		
 		void input(const sf::Event& event) override;
+		
+		void update(const sf::Time& time) override;
 		
 		Game(){
 			int x = window.getSize().x / 10;
@@ -57,6 +62,23 @@ void Game::input(const sf::Event& event){
 			machine.removeState();
 		}
 	}
+}
+
+void Game::checkBounce(){
+	Ball* ball = dynamic_cast<Ball*>(m_objects[0]);
+	sf::Vector2<long double> n = ball->getPosition(), o = ball->getOldPosition();
+	long double r = ball->getRadius();
+	Function up({o.x, o.y - r}, {n.x, n.y - r}), down({o.x, o.y + r}, {n.x, n.y + r}), left({o.x - r, o.y}, {n.x - r, n.y}), right({o.x + r, o.y}, {n.x + r, n.y});
+	
+	Paddle* p1 = dynamic_cast<Paddle*>(m_objects[1]);
+	Paddle* p2 = dynamic_cast<Paddle*>(m_objects[2]);
+	
+	
+}
+
+void Game::update(const sf::Time& time){
+	State::update(time);
+	checkBounce();
 }
 
 int main(){
