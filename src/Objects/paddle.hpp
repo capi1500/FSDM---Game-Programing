@@ -7,6 +7,7 @@
 
 #include "object.hpp"
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <Utils/rectangle.hpp>
 
 class Paddle : public Object{
 	private:
@@ -14,12 +15,14 @@ class Paddle : public Object{
 		sf::Keyboard::Key m_up;
 		sf::Keyboard::Key m_down;
 		float m_velocity;
+		
+		std::vector<Shape*> m_shapes;
 	public:
 		void draw(sf::RenderWindow& window) override;
 		void update(const sf::Time& time) override;
 		void input(const sf::Event& input) override;
 		
-		const sf::FloatRect getRect() const;
+		std::tuple<bool, Line> findBounce(const sf::Vector2f& o, const sf::Vector2f& n);
 		
 		Paddle(sf::Keyboard::Key up, sf::Keyboard::Key down, int posx, int posy, int sizex, int sizey);
 };

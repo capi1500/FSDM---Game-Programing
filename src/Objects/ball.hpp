@@ -8,6 +8,7 @@
 #include "object.hpp"
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <Utils/line.hpp>
 
 class Ball : public Object{
 	private:
@@ -20,11 +21,13 @@ class Ball : public Object{
 		void update(const sf::Time& time) override;
 		void input(const sf::Event& input) override;
 		
-		void bounce();
+		void bounce(const Line& line);
 		
-		const sf::Vector2f& getPosition() const;
-		const sf::Vector2f& getOldPosition() const;
+		sf::Vector2f getPosition() const; // returns center
+		const sf::Vector2f& getOldPosition() const; // returns old center
 		float getRadius() const;
+		
+		void setCenter(const sf::Vector2f& p);
 		
 		Ball(sf::Vector2u windowSize);
 };

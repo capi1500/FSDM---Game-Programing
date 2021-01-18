@@ -4,6 +4,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <Utils/vector.hpp>
 #include "ball.hpp"
 
 void Ball::draw(sf::RenderWindow& window){
@@ -11,7 +12,7 @@ void Ball::draw(sf::RenderWindow& window){
 }
 
 void Ball::update(const sf::Time& time){
-	m_oldPosition = {m_circle.getPosition().x - m_circle.getRadius(), m_circle.getPosition().y - m_circle.getRadius()};
+	m_oldPosition = {getPosition().x, getPosition().y};
 	m_circle.move(m_velocity * cos(m_angle) * time.asSeconds(), m_velocity * sin(m_angle) * time.asSeconds());
 }
 
@@ -19,18 +20,39 @@ void Ball::input(const sf::Event& input){
 
 }
 
-void Ball::bounce(){
+void Ball::bounce(const Line& line){
+	sf::Vector2f o = getOldPosition(), n = getPosition(), np, c = line.crossLine(Line(o, n))[0];
+	Vector v = Vector(o, np), u = Vector(np, c), dir;
+	if(line.getB() == 0)
+		dir = Vector(-line.getC() / line.getA(), 0);
+	else
+		dir = Vector(0, -line.getC() / line.getB());
+	dir.normalize();
+	long double r = dir ^ u;
+	dir *= r;
+	Vector shift = -u + dir;
+	np = (Vector(n) - shift * 2).toVector2f();
+	
+	m_oldPosition = c;
+	setCenter(np);
+	
+	v = Vector(c, np);
+	m_angle = atan2(v.y, v.x);
 }
 
 Ball::Ball(sf::Vector2u windowSize){
 	m_circle.setRadius(50);
-	m_circle.setPosition(-50 + windowSize.x / 2, -50 + windowSize.y / 2);
+	setCenter({windowSize.x / 2.f, windowSize.y / 2.f});
 	m_velocity = 50;
-	m_angle = (rand() % 360);
+	m_angle = (rand() % static_cast<int>(2 * M_PI * 1000)) / 1000.0;
 }
 
-const sf::Vector2f& Ball::getPosition() const{
-	return m_circle.getPosition();
+void Ball::setCenter(const sf::Vector2f& p){
+	m_circle.setPosition(p.x - getRadius(), p.y - getRadius());
+}
+
+sf::Vector2f Ball::getPosition() const{
+	return m_circle.getPosition() + sf::Vector2f(getRadius(), getRadius());
 }
 
 const sf::Vector2f& Ball::getOldPosition() const{
@@ -40,12 +62,3 @@ const sf::Vector2f& Ball::getOldPosition() const{
 float Ball::getRadius() const{
 	return m_circle.getRadius();
 }
-
-
-/*
- *
- * rand() - 0, 2000000000
- *
- * 2 * M_PI = 6.283...
- *
- */

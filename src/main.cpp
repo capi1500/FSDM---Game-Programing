@@ -3,7 +3,9 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <Objects/ball.hpp>
 #include <Objects/paddle.hpp>
-#include <Utils/function.hpp>
+#include <Utils/line.hpp>
+#include <Utils/segment.hpp>
+#include <Utils/rectangle.hpp>
 
 sf::RenderWindow window;
 FiniteStateMachine machine;
@@ -37,6 +39,8 @@ class Game : public State{
 			m_objects.push_back(new Ball(window.getSize()));
 			m_objects.push_back(new Paddle(sf::Keyboard::W, sf::Keyboard::S, x, y, x, y * 8));
 			m_objects.push_back(new Paddle(sf::Keyboard::Up, sf::Keyboard::Down, x * 8, y, x, y * 8));
+			m_objects.push_back(new Paddle(sf::Keyboard::KeyCount, sf::Keyboard::KeyCount, -100, -100, window.getSize().x + 200, 100));
+			m_objects.push_back(new Paddle(sf::Keyboard::KeyCount, sf::Keyboard::KeyCount, -100, window.getSize().y, window.getSize().x + 200, 100));
 		}
 };
 
@@ -66,13 +70,18 @@ void Game::input(const sf::Event& event){
 
 void Game::checkBounce(){
 	Ball* ball = dynamic_cast<Ball*>(m_objects[0]);
-	sf::Vector2<long double> n = ball->getPosition(), o = ball->getOldPosition();
-	long double r = ball->getRadius();
-	Function up({o.x, o.y - r}, {n.x, n.y - r}), down({o.x, o.y + r}, {n.x, n.y + r}), left({o.x - r, o.y}, {n.x - r, n.y}), right({o.x + r, o.y}, {n.x + r, n.y});
+	sf::Vector2f n = ball->getPosition(), o = ball->getOldPosition();
 	
-	Paddle* p1 = dynamic_cast<Paddle*>(m_objects[1]);
-	Paddle* p2 = dynamic_cast<Paddle*>(m_objects[2]);
-	
+	bool bounced;
+	Line line;
+	for(int i = 1; i < 5; i++){
+		 std::tie(bounced, line) = dynamic_cast<Paddle*>(m_objects[i])->findBounce(o, n);
+		 if(bounced){
+		 	ball->bounce(line);
+		 	checkBounce();
+		 	return;
+		 }
+	}
 	
 }
 
