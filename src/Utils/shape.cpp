@@ -4,5 +4,10 @@
 
 #include "shape.hpp"
 
-void Shape::move(){
+void Shape::move(const sf::Vector2f& shift){
+
+}
+
+void Shape::print() const{
+
 }

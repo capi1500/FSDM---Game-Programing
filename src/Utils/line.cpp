@@ -3,13 +3,18 @@
 //
 
 #include <cmath>
+#include <iostream>
 #include "line.hpp"
 
 bool Line::pointInside(const sf::Vector2f point) const{
+	#ifdef unix
+	return fabs(A * point.x + B * point.y + C) < eps;
+	#else
 	return abs(A * point.x + B * point.y + C) < eps;
+	#endif
 }
 
-std::vector<sf::Vector2f> Line::crossLine(const Line& line) const{
+std::vector<std::pair<sf::Vector2f, Line>> Line::crossLine(const Line& line) const{
 	const long double& A2 = line.getA();
 	const long double& B2 = line.getB();
 	const long double& C2 = line.getC();
@@ -20,7 +25,8 @@ std::vector<sf::Vector2f> Line::crossLine(const Line& line) const{
 	
 	if(W == 0) // równoległe
 		return {};
-	return {{static_cast<float>(Wx / W), static_cast<float>(Wy / W)}};
+	std::cout << "\t\t\t\tCross line in {" << Wx / W << ", " << Wy / W << "}\n";
+	return {{sf::Vector2f(Wx / W, Wy / W), *this}};
 }
 
 bool Line::isCrossLine(const Line& line) const{
@@ -32,7 +38,11 @@ Line Line::perpendicular(const sf::Vector2f& point) const{
 }
 
 long double Line::distance(const sf::Vector2f& point) const{
+	#ifdef unix
+	return fabs(A * point.x + B * point.y + C) / sqrt(A * A + B * B);
+	#else
 	return abs(A * point.x + B * point.y + C) / sqrt(A * A + B * B);
+	#endif
 }
 
 long double Line::getA() const{
@@ -57,3 +67,7 @@ Line::Line(const sf::Vector2f& p1, const sf::Vector2f& p2){
 }
 
 Line::Line(){}
+
+void Line::print() const{
+	std::cout << A << "x + " << B << "y + " << C << " = 0";
+}

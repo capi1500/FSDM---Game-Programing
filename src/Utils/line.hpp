@@ -14,7 +14,7 @@ class Line : public Shape{
 		long double C;
 	public:
 		bool pointInside(const sf::Vector2f point) const override;
-		std::vector<sf::Vector2f> crossLine(const Line& line) const override;
+		std::vector<std::pair<sf::Vector2f, Line>> crossLine(const Line& line) const override;
 		bool isCrossLine(const Line& line) const override;
 		Line perpendicular(const sf::Vector2f& point) const;
 		long double distance(const sf::Vector2f& point) const;
@@ -26,6 +26,8 @@ class Line : public Shape{
 		Line(long double a, long double b, long double c);
 		Line(const sf::Vector2f& p1, const sf::Vector2f& p2);
 		Line();
+		
+		void print() const override;
 };
 
 #endif //PROGRAMOWANIEGIER_LINE_HPP

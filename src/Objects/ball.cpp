@@ -21,23 +21,24 @@ void Ball::input(const sf::Event& input){
 }
 
 void Ball::bounce(const Line& line){
-	sf::Vector2f o = getOldPosition(), n = getPosition(), np, c = line.crossLine(Line(o, n))[0];
-	Vector v = Vector(o, np), u = Vector(np, c), dir;
+	sf::Vector2f o = getOldPosition(), n = getPosition(), np, c = line.crossLine(Line(o, n))[0].first;
+	
+	Vector u = Vector(c, n), dir;
 	if(line.getB() == 0)
-		dir = Vector(-line.getC() / line.getA(), 0);
+		dir = Vector(0, -line.getC() / line.getA());
 	else
-		dir = Vector(0, -line.getC() / line.getB());
+		dir = Vector(-line.getC() / line.getB(), 0);
 	dir.normalize();
 	long double r = dir ^ u;
 	dir *= r;
 	Vector shift = -u + dir;
-	np = (Vector(n) - shift * 2).toVector2f();
+	np = (Vector(n) + shift * 2).toVector2f();
 	
 	m_oldPosition = c;
 	setCenter(np);
 	
-	v = Vector(c, np);
-	m_angle = atan2(v.y, v.x);
+	u = Vector(c, np);
+	m_angle = atan2(u.y, u.x);
 }
 
 Ball::Ball(sf::Vector2u windowSize){

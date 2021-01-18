@@ -3,6 +3,7 @@
 //
 
 #include <Utils/circle.hpp>
+#include <iostream>
 #include "paddle.hpp"
 #include "common.hpp"
 
@@ -18,10 +19,10 @@ void Paddle::update(const sf::Time& time){
 	if(sf::Keyboard::isKeyPressed(m_down)){
 		shift = {0, m_velocity * time.asSeconds()};
 	}
-	if(shift != {0, 0}){
+	if(shift != sf::Vector2f(0, 0)){
 		m_rect.move(shift);
 		for(auto p : m_shapes)
-			p->move();
+			p->move(shift);
 	}
 }
 
@@ -35,13 +36,9 @@ Paddle::Paddle(sf::Keyboard::Key up, sf::Keyboard::Key down, int posx, int posy,
 	m_velocity = 50;
 	
 	m_shapes.push_back(new Circle(radious, sf::Vector2f(posx, posy)));
-	m_shapes.push_back(new Circle(radious, sf::Vector2f(posx, posy + sixey)));
+	m_shapes.push_back(new Circle(radious, sf::Vector2f(posx, posy + sizey)));
 	m_shapes.push_back(new Circle(radious, sf::Vector2f(posx + sizex, posy)));
-	m_shapes.push_back(new Circle(radious, sf::Vector2f(posx + sizex, posy + sizey)));/*
-	m_shapes.push_back(new Segment(sf::Vector2f(posx, posy - radious), sf::Vector2f(posx + sizex, posy - radious)));
-	m_shapes.push_back(new Segment(sf::Vector2f(posx, posy + sizey + radious), sf::Vector2f(posx + sizex, posy + sizey + radious)));
-	m_shapes.push_back(new Segment(sf::Vector2f(posx - radious, posy), sf::Vector2f(posx - radious, posy + sizey)));
-	m_shapes.push_back(new Segment(sf::Vector2f(posx + sizex + radious, posy), sf::Vector2f(posx + sizex + radious, posy + sizey)));*/
+	m_shapes.push_back(new Circle(radious, sf::Vector2f(posx + sizex, posy + sizey)));
 	m_shapes.push_back(new Rectangle(sf::FloatRect(posx, posy - radious, sizex, sizey + 2 * radious)));
 	m_shapes.push_back(new Rectangle(sf::FloatRect(posx - radious, posy, sizex + 2 * radious, sizey)));
 }
@@ -51,18 +48,21 @@ std::tuple<bool, Line> Paddle::findBounce(const sf::Vector2f& o, const sf::Vecto
 	
 	sf::Vector2f closest = n;
 	Line bounceLine = Line(0, 0, 0);
-	double minDistance = distance(o, n);
+	double minDistance = 1000000000;
+	
 	
 	for(auto p : m_shapes){
 		if(p->pointInside(n) and p->isCrossLine(shift)){
-			std::vector<sf::Vector2f> t = p->crossLine(shift);
+			std::vector<std::pair<sf::Vector2f, Line>> t = p->crossLine(shift);
 			for(auto& x : t){
-				if(distance(o, x) < minDistance){
-					minDistance = distance(o, x);
-					closest = x;
+				if(distance(o, x.first) < minDistance){
+					minDistance = distance(o, x.first);
+					closest = x.first;
+					bounceLine = x.second;
 				}
 			}
 		}
 	}
-	return {closest = n, bounceLine};
+	
+	return std::make_tuple(closest != n, bounceLine);
 }

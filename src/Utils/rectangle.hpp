@@ -27,13 +27,15 @@ class Rectangle : public Shape{
 		bool pointInside(const sf::Vector2f point) const override;
 		bool isCrossLine(const Line& line) const override;
 		
-		std::vector<sf::Vector2f> crossLine(const Line& line) const override;
+		std::vector<std::pair<sf::Vector2f, Line>> crossLine(const Line& line) const override;
 		
 		void setRect(const sf::FloatRect& rect);
 		
 		void move(const sf::Vector2f& shift);
 		
 		Rectangle(const sf::FloatRect& rect);
+		
+		void print() const override;
 };
 
 #endif //PROGRAMOWANIEGIER_RECTANGLE_HPP

@@ -16,8 +16,10 @@ class Shape{
 	public:
 		virtual bool pointInside(const sf::Vector2f point) const = 0;
 		virtual bool isCrossLine(const Line& line) const = 0;
-		virtual std::vector<sf::Vector2f> crossLine(const Line& line) const = 0;
+		virtual std::vector<std::pair<sf::Vector2f, Line>> crossLine(const Line& line) const = 0;
 		virtual void move(const sf::Vector2f& shift);
+		
+		virtual void print() const;
 };
 
 #endif //PROGRAMOWANIEGIER_SHAPE_HPP
