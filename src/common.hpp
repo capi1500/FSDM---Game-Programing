@@ -6,11 +6,10 @@
 #define PROGRAMOWANIEGIER_COMMON_HPP
 
 #include <cmath>
+#include <SFML/System.hpp>
 
 const float radious = 50;
 
-double distance(const sf::Vector2f& a, const sf::Vector2f& b){
-	return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
-}
+double distance(const sf::Vector2f& a, const sf::Vector2f& b);
 
 #endif //PROGRAMOWANIEGIER_COMMON_HPP

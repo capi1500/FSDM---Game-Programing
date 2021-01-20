@@ -5,6 +5,7 @@
 #include <cmath>
 #include <iostream>
 #include <Utils/vector.hpp>
+#include <common.hpp>
 #include "ball.hpp"
 
 void Ball::draw(sf::RenderWindow& window){
@@ -37,7 +38,7 @@ void Ball::bounce(const Line& line){
 }
 
 Ball::Ball(sf::Vector2u windowSize){
-	m_circle.setRadius(50);
+	m_circle.setRadius(radious);
 	setCenter({windowSize.x / 2.f, windowSize.y / 2.f});
 	m_velocity = 50;
 	m_angle = (rand() % static_cast<int>(2 * M_PI * 1000)) / 1000.0;
