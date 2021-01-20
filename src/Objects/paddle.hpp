@@ -8,6 +8,7 @@
 #include "object.hpp"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <Utils/rectangle.hpp>
+#include <SFML/Graphics/CircleShape.hpp>
 
 class Paddle : public Object{
 	private:
@@ -17,6 +18,15 @@ class Paddle : public Object{
 		float m_velocity;
 		
 		std::vector<Shape*> m_shapes;
+		
+		/// DEBUG
+		sf::CircleShape c1;
+		sf::CircleShape c2;
+		sf::CircleShape c3;
+		sf::CircleShape c4;
+		sf::RectangleShape r1;
+		sf::RectangleShape r2;
+		/// END
 	public:
 		void draw(sf::RenderWindow& window) override;
 		void update(const sf::Time& time) override;

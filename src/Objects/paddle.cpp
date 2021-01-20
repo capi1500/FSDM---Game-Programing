@@ -9,6 +9,15 @@
 
 void Paddle::draw(sf::RenderWindow& window){
 	window.draw(m_rect);
+	
+	// DEBUG
+	window.draw(c1);
+	window.draw(c2);
+	window.draw(c3);
+	window.draw(c4);
+	window.draw(r1);
+	window.draw(r2);
+	// END
 }
 
 void Paddle::update(const sf::Time& time){
@@ -24,6 +33,15 @@ void Paddle::update(const sf::Time& time){
 		for(auto p : m_shapes)
 			p->move(shift);
 	}
+	
+	// DEBUG
+	c1.move(shift);
+	c2.move(shift);
+	c3.move(shift);
+	c4.move(shift);
+	r1.move(shift);
+	r2.move(shift);
+	// END
 }
 
 void Paddle::input(const sf::Event& input){
@@ -41,6 +59,28 @@ Paddle::Paddle(sf::Keyboard::Key up, sf::Keyboard::Key down, int posx, int posy,
 	m_shapes.push_back(new Circle(radious, sf::Vector2f(posx + sizex, posy + sizey)));
 	m_shapes.push_back(new Rectangle(sf::FloatRect(posx, posy - radious, sizex, sizey + 2 * radious)));
 	m_shapes.push_back(new Rectangle(sf::FloatRect(posx - radious, posy, sizex + 2 * radious, sizey)));
+	
+	// DEBUG
+	c1.setRadius(radious);
+	c2.setRadius(radious);
+	c3.setRadius(radious);
+	c4.setRadius(radious);
+	c1.setPosition(posx - radious, posy - radious);
+	c2.setPosition(posx - radious, posy - radious + sizey);
+	c3.setPosition(posx - radious + sizex, posy - radious);
+	c4.setPosition(posx - radious + sizex, posy - radious + sizey);
+	r1.setPosition(posx, posy - radious);
+	r2.setPosition(posx - radious, posy);
+	r1.setSize(sf::Vector2f(sizex, sizey + 2 * radious));
+	r2.setSize(sf::Vector2f(sizex + 2 * radious, sizey));
+	
+	c1.setFillColor(sf::Color(0, 255, 0, 127));
+	c2.setFillColor(sf::Color(0, 255, 0, 127));
+	c3.setFillColor(sf::Color(0, 255, 0, 127));
+	c4.setFillColor(sf::Color(0, 255, 0, 127));
+	r1.setFillColor(sf::Color(255, 0, 0, 127));
+	r2.setFillColor(sf::Color(255, 0, 0, 127));
+	// END
 }
 
 std::tuple<bool, Line> Paddle::findBounce(const sf::Vector2f& o, const sf::Vector2f& n){
