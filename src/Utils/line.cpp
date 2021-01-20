@@ -25,7 +25,6 @@ std::vector<std::pair<sf::Vector2f, Line>> Line::crossLine(const Line& line) con
 	
 	if(W == 0) // równoległe
 		return {};
-	std::cout << "\t\t\t\tCross line in {" << Wx / W << ", " << Wy / W << "}\n";
 	return {{sf::Vector2f(Wx / W, Wy / W), *this}};
 }
 

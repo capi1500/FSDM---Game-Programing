@@ -72,28 +72,12 @@ void Game::checkBounce(){
 	Ball* ball = dynamic_cast<Ball*>(m_objects[0]);
 	sf::Vector2f n = ball->getPosition(), o = ball->getOldPosition();
 	
-	/// DEBUG
-	auto printVec = [] (const sf::Vector2f& v) {
-		std::cout << "{" << v.x << ", " << v.y << "}";
-	};
-	
-	std::cout << "Checking bounce: ";
-	printVec(o);
-	std::cout << " -> ";
-	printVec(n);
-	std::cout << "\n";
-	/// END DEBUG
-	
 	bool bounced;
 	Line line;
 	for(int i = 1; i < 5; i++){
 		 std::tie(bounced, line) = dynamic_cast<Paddle*>(m_objects[i])->findBounce(o, n);
 		 if(bounced){
-		 	std::cout << "\tBouncing from line ";
-		 	line.print();
-		 	std::cout << "\n";
 		 	ball->bounce(line);
-		 	//throw -1;
 		 	checkBounce();
 		 	return;
 		 }

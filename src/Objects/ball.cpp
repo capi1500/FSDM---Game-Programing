@@ -23,12 +23,7 @@ void Ball::input(const sf::Event& input){
 void Ball::bounce(const Line& line){
 	sf::Vector2f o = getOldPosition(), n = getPosition(), np, c = line.crossLine(Line(o, n))[0].first;
 	
-	Vector u = Vector(c, n), dir;
-	if(line.getB() == 0)
-		dir = Vector(0, -line.getC() / line.getA());
-	else
-		dir = Vector(-line.getC() / line.getB(), 0);
-	dir.normalize();
+	Vector u = Vector(c, n), dir = Vector(-line.getB(), line.getA()).normalize();
 	long double r = dir ^ u;
 	dir *= r;
 	Vector shift = -u + dir;
