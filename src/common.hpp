@@ -8,7 +8,8 @@
 #include <cmath>
 #include <SFML/System.hpp>
 
-const float radious = 50;
+const float radious = 40;
+extern int windowSizeY, windowSizeX;
 
 double distance(const sf::Vector2f& a, const sf::Vector2f& b);
 

@@ -9,15 +9,6 @@
 
 void Paddle::draw(sf::RenderWindow& window){
 	window.draw(m_rect);
-	
-	// DEBUG
-	window.draw(c1);
-	window.draw(c2);
-	window.draw(c3);
-	window.draw(c4);
-	window.draw(r1);
-	window.draw(r2);
-	// END
 }
 
 void Paddle::update(const sf::Time& time){
@@ -29,19 +20,14 @@ void Paddle::update(const sf::Time& time){
 		shift = {0, m_velocity * time.asSeconds()};
 	}
 	if(shift != sf::Vector2f(0, 0)){
+		if(shift.y + m_rect.getPosition().y < 0)
+			shift.y = -m_rect.getPosition().y;
+		if(shift.y + m_rect.getPosition().y + m_rect.getSize().y > windowSizeY)
+			shift.y = windowSizeY - m_rect.getPosition().y - m_rect.getSize().y;
 		m_rect.move(shift);
 		for(auto p : m_shapes)
 			p->move(shift);
 	}
-	
-	// DEBUG
-	c1.move(shift);
-	c2.move(shift);
-	c3.move(shift);
-	c4.move(shift);
-	r1.move(shift);
-	r2.move(shift);
-	// END
 }
 
 void Paddle::input(const sf::Event& input){
@@ -49,41 +35,14 @@ void Paddle::input(const sf::Event& input){
 }
 
 Paddle::Paddle(sf::Keyboard::Key up, sf::Keyboard::Key down, int posx, int posy, int sizex, int sizey) : m_up(up), m_down(down){
-	m_rect.setSize(sf::Vector2f(sizex, sizey));
-	m_rect.setPosition(posx, posy);
-	m_velocity = 50;
+	m_velocity = 200;
+	startPosition = sf::Vector2f(posx, posy);
+	m_size = sf::Vector2f(sizex, sizey);
 	
-	m_shapes.push_back(new Circle(radious, sf::Vector2f(posx, posy)));
-	m_shapes.push_back(new Circle(radious, sf::Vector2f(posx, posy + sizey)));
-	m_shapes.push_back(new Circle(radious, sf::Vector2f(posx + sizex, posy)));
-	m_shapes.push_back(new Circle(radious, sf::Vector2f(posx + sizex, posy + sizey)));
-	m_shapes.push_back(new Rectangle(sf::FloatRect(posx, posy - radious, sizex, sizey + 2 * radious)));
-	m_shapes.push_back(new Rectangle(sf::FloatRect(posx - radious, posy, sizex + 2 * radious, sizey)));
-	
-	// DEBUG
-	c1.setRadius(radious);
-	c2.setRadius(radious);
-	c3.setRadius(radious);
-	c4.setRadius(radious);
-	c1.setPosition(posx - radious, posy - radious);
-	c2.setPosition(posx - radious, posy - radious + sizey);
-	c3.setPosition(posx - radious + sizex, posy - radious);
-	c4.setPosition(posx - radious + sizex, posy - radious + sizey);
-	r1.setPosition(posx, posy - radious);
-	r2.setPosition(posx - radious, posy);
-	r1.setSize(sf::Vector2f(sizex, sizey + 2 * radious));
-	r2.setSize(sf::Vector2f(sizex + 2 * radious, sizey));
-	
-	c1.setFillColor(sf::Color(0, 255, 0, 127));
-	c2.setFillColor(sf::Color(0, 255, 0, 127));
-	c3.setFillColor(sf::Color(0, 255, 0, 127));
-	c4.setFillColor(sf::Color(0, 255, 0, 127));
-	r1.setFillColor(sf::Color(255, 0, 0, 127));
-	r2.setFillColor(sf::Color(255, 0, 0, 127));
-	// END
+	restart();
 }
 
-std::tuple<bool, Line> Paddle::findBounce(const sf::Vector2f& o, const sf::Vector2f& n){
+std::tuple<bool, bool, Line> Paddle::findBounce(const sf::Vector2f& o, const sf::Vector2f& n){
 	Segment shift = Segment(o, n);
 	
 	sf::Vector2f closest = n;
@@ -104,5 +63,18 @@ std::tuple<bool, Line> Paddle::findBounce(const sf::Vector2f& o, const sf::Vecto
 		}
 	}
 	
-	return std::make_tuple(closest != n, bounceLine);
+	return std::make_tuple(closest != n, m_up != sf::Keyboard::KeyCount, bounceLine);
+}
+
+void Paddle::restart(){
+	m_rect.setSize(m_size);
+	m_rect.setPosition(startPosition);
+	
+	m_shapes.clear();
+	m_shapes.push_back(new Circle(radious, sf::Vector2f(startPosition.x, startPosition.y)));
+	m_shapes.push_back(new Circle(radious, sf::Vector2f(startPosition.x, startPosition.y + m_size.y)));
+	m_shapes.push_back(new Circle(radious, sf::Vector2f(startPosition.x + m_size.x, startPosition.y)));
+	m_shapes.push_back(new Circle(radious, sf::Vector2f(startPosition.x + m_size.x, startPosition.y + m_size.y)));
+	m_shapes.push_back(new Rectangle(sf::FloatRect(startPosition.x, startPosition.y - radious, m_size.x, m_size.y + 2 * radious)));
+	m_shapes.push_back(new Rectangle(sf::FloatRect(startPosition.x - radious, startPosition.y, m_size.x + 2 * radious, m_size.y)));
 }

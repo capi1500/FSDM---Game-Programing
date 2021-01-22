@@ -10,10 +10,13 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 class Object{
+	protected:
+		sf::Vector2f startPosition;
 	public:
 		virtual void draw(sf::RenderWindow& window) = 0;
 		virtual void update(const sf::Time& time) = 0;
 		virtual void input(const sf::Event& input) = 0;
+		virtual void restart() = 0;
 		
 		virtual ~Object() = default;
 };

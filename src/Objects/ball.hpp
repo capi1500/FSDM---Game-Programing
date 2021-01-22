@@ -21,7 +21,9 @@ class Ball : public Object{
 		void update(const sf::Time& time) override;
 		void input(const sf::Event& input) override;
 		
-		void bounce(const Line& line);
+		void restart() override;
+		
+		void bounce(const Line& line, const bool speedup);
 		
 		sf::Vector2f getPosition() const; // returns center
 		const sf::Vector2f& getOldPosition() const; // returns old center

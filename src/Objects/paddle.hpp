@@ -19,20 +19,15 @@ class Paddle : public Object{
 		
 		std::vector<Shape*> m_shapes;
 		
-		/// DEBUG
-		sf::CircleShape c1;
-		sf::CircleShape c2;
-		sf::CircleShape c3;
-		sf::CircleShape c4;
-		sf::RectangleShape r1;
-		sf::RectangleShape r2;
-		/// END
+		sf::Vector2f m_size;
 	public:
 		void draw(sf::RenderWindow& window) override;
 		void update(const sf::Time& time) override;
 		void input(const sf::Event& input) override;
 		
-		std::tuple<bool, Line> findBounce(const sf::Vector2f& o, const sf::Vector2f& n);
+		void restart() override;
+		
+		std::tuple<bool, bool, Line> findBounce(const sf::Vector2f& o, const sf::Vector2f& n);
 		
 		Paddle(sf::Keyboard::Key up, sf::Keyboard::Key down, int posx, int posy, int sizex, int sizey);
 };
