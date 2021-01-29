@@ -2,6 +2,7 @@
 // Created by Kacper on 04/12/2020.
 //
 
+#include <iostream>
 #include "finiteStateMachine.hpp"
 
 void FiniteStateMachine::updateStates(){

@@ -6,6 +6,7 @@
 #include <iostream>
 #include <Utils/vector.hpp>
 #include <common.hpp>
+#include <Signal/event.hpp>
 #include "ball.hpp"
 
 void Ball::draw(sf::RenderWindow& window){
@@ -16,8 +17,11 @@ void Ball::update(const sf::Time& time){
 	m_oldPosition = {getPosition().x, getPosition().y};
 	m_circle.move(m_velocity * cos(m_angle) * time.asSeconds(), m_velocity * sin(m_angle) * time.asSeconds());
 	
-	if(m_oldPosition.x < 0 or m_oldPosition.x > windowSizeX){
-	
+	if(m_oldPosition.x + radious < 0 or m_oldPosition.x - radious > windowSizeX){
+		Event event;
+		event.type = Event::BallOutOfScreen;
+		event.ballOut.isLeftPlayer = m_oldPosition.x + radious < 0;
+		eventQueue.notify(event);
 	}
 }
 

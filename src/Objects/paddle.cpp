@@ -3,7 +3,6 @@
 //
 
 #include <Utils/circle.hpp>
-#include <iostream>
 #include "paddle.hpp"
 #include "common.hpp"
 
@@ -13,13 +12,16 @@ void Paddle::draw(sf::RenderWindow& window){
 
 void Paddle::update(const sf::Time& time){
 	sf::Vector2f shift = {0, 0};
-	if(sf::Keyboard::isKeyPressed(m_up)){
+	bool flg = false;
+	if(m_up != sf::Keyboard::KeyCount && sf::Keyboard::isKeyPressed(m_up)){
 		shift = {0, -m_velocity * time.asSeconds()};
+		flg = true;
 	}
-	if(sf::Keyboard::isKeyPressed(m_down)){
+	if(m_down != sf::Keyboard::KeyCount && sf::Keyboard::isKeyPressed(m_down)){
 		shift = {0, m_velocity * time.asSeconds()};
+		flg = true;
 	}
-	if(shift != sf::Vector2f(0, 0)){
+	if(flg){
 		if(shift.y + m_rect.getPosition().y < 0)
 			shift.y = -m_rect.getPosition().y;
 		if(shift.y + m_rect.getPosition().y + m_rect.getSize().y > windowSizeY)
