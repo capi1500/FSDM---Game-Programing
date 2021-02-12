@@ -9,11 +9,13 @@
 #include <SFML/System.hpp>
 #include <Signal/signal.hpp>
 #include <SFML/Graphics/Font.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 
 const float radious = 40;
 extern int windowSizeY, windowSizeX;
 extern Signal eventQueue;
 extern sf::Font font;
+extern sf::SoundBuffer clickSound, unclickSound, hoverSound;
 double distance(const sf::Vector2f& a, const sf::Vector2f& b);
 
 #endif //PROGRAMOWANIEGIER_COMMON_HPP

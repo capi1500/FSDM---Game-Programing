@@ -9,6 +9,7 @@
 #include <Signal/listener.hpp>
 #include <Signal/signal.hpp>
 #include <Objects/counter.hpp>
+#include <Objects/button.hpp>
 #include "common.hpp"
 
 sf::RenderWindow window;
@@ -21,6 +22,8 @@ class MainMenu : public State{
 		}
 		
 		void input(const sf::Event& event) override;
+		
+		MainMenu();
 };
 
 class Game : public State, public Listener{
@@ -65,6 +68,12 @@ void MainMenu::input(const sf::Event& event){
 			machine.removeState();
 		}
 	}
+}
+
+MainMenu::MainMenu(){
+	m_objects.push_back(new Button([&](){
+		machine.addState(new Game);
+	}, sf::Vector2f(windowSizeX / 2, windowSizeY / 2), "Play"));
 }
 
 void Game::input(const sf::Event& event){
@@ -113,13 +122,16 @@ int main(){
 	srand(time(NULL));
 	
 	font.loadFromFile("../assets/fonts/Pixeled.ttf");
-	
-	machine.addState(new MainMenu);
-	State* state;
+	clickSound.loadFromFile("../assets/sounds/ClickSound.wav");
+	unclickSound.loadFromFile("../assets/sounds/UnclickSound.wav");
+	hoverSound.loadFromFile("../assets/sounds/LeaveSound.wav");
 	
 	window.create(sf::VideoMode(500, 500), "pong", sf::Style::Fullscreen);
 	windowSizeX = window.getSize().x;
 	windowSizeY = window.getSize().y;
+	
+	machine.addState(new MainMenu);
+	State* state;
 	
 	window.setFramerateLimit(60);
 	
