@@ -60,8 +60,8 @@ Button::Button(std::function<void()> f, const sf::Vector2f& position, const std:
 	m_text.setFont(font);
 	m_text.setString(label);
 	m_text.setFillColor(sf::Color::White);
-	m_text.setPosition(position);
 	m_text.setCharacterSize(30);
+	m_text.setPosition(position.x - m_text.getLocalBounds().width / 2, position.y - m_text.getLocalBounds().height / 2);
 	startPosition = position;
 	m_state = Default;
 }

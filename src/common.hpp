@@ -20,7 +20,7 @@ extern SoundBoard soundBoard;
 extern sf::RenderWindow window;
 extern FiniteStateMachine machine;
 extern sf::Font font;
-extern sf::SoundBuffer clickSound, unclickSound, hoverSound;
+extern sf::SoundBuffer clickSound, unclickSound, hoverSound, bounceSound;
 double distance(const sf::Vector2f& a, const sf::Vector2f& b);
 
 #endif //PROGRAMOWANIEGIER_COMMON_HPP

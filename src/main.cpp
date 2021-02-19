@@ -10,6 +10,7 @@
 #include <Signal/signal.hpp>
 #include <Objects/counter.hpp>
 #include <Objects/button.hpp>
+#include <Objects/label.hpp>
 #include "common.hpp"
 
 class MainMenu : public State{
@@ -38,6 +39,7 @@ class Game : public State, public Listener{
 		void update(const sf::Time& time) override;
 		
 		Game(){
+			window.setMouseCursorVisible(false);
 			eventQueue.addListener(this);
 			int sizex = radious;
 			int sizey = window.getSize().y / 3;
@@ -46,43 +48,81 @@ class Game : public State, public Listener{
 			m_objects.push_back(new Paddle(sf::Keyboard::Up, sf::Keyboard::Down, window.getSize().x - 4 * sizex, (window.getSize().y - sizey) / 2, sizex, sizey));
 			m_objects.push_back(new Paddle(sf::Keyboard::KeyCount, sf::Keyboard::KeyCount, -100, -100, window.getSize().x + 200, 100));
 			m_objects.push_back(new Paddle(sf::Keyboard::KeyCount, sf::Keyboard::KeyCount, -100, window.getSize().y, window.getSize().x + 200, 100));
-			m_objects.push_back(new Counter(true, window.getSize().x / 2 - 100, window.getSize().y / 10));
-			m_objects.push_back(new Counter(false, window.getSize().x / 2 + 10, window.getSize().y / 10));
+			m_objects.push_back(new Counter(true, window.getSize().x / 2 - 50, window.getSize().y / 10));
+			m_objects.push_back(new Counter(false, window.getSize().x / 2 + 50, window.getSize().y / 10));
 		}
 		
 		~Game(){
+			window.setMouseCursorVisible(true);
 			eventQueue.removeListener(this);
+		}
+};
+
+class WinState : public State{
+	public:
+		WinState(){
+			m_objects.push_back(new Label(sf::Vector2f(windowSizeX / 2, windowSizeY * 2 / 10), "Game over", 40));
+			m_objects.push_back(new Button([&](){
+				machine.removeState();
+				machine.addState(new Game);
+			}, sf::Vector2f(windowSizeX / 2, windowSizeY * 4 / 10), "Play again"));
+			m_objects.push_back(new Button([&](){
+				machine.removeState();
+				machine.addState(new MainMenu);
+			}, sf::Vector2f(windowSizeX / 2, windowSizeY * 5 / 10), "Main Menu"));
+			m_objects.push_back(new Button([&](){
+				window.close();
+			}, sf::Vector2f(windowSizeX / 2, windowSizeY * 6 / 10), "Exit"));
+		}
+};
+
+class Pause : public State{
+	public:
+		void input(const sf::Event& event) override{
+			State::input(event);
+			if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+				machine.removeState();
+		}
+		
+		Pause(){
+			window.setMouseCursorVisible(true);
+			m_objects.push_back(new Label(sf::Vector2f(windowSizeX / 2, windowSizeY * 2 / 10), "Game paused", 40));
+			m_objects.push_back(new Button([&](){
+				machine.removeState();
+			}, sf::Vector2f(windowSizeX / 2, windowSizeY * 4 / 10), "Resume"));
+			m_objects.push_back(new Button([&](){
+				machine.removeState(2);
+				machine.addState(new MainMenu);
+			}, sf::Vector2f(windowSizeX / 2, windowSizeY * 5 / 10), "Main Menu"));
+			m_objects.push_back(new Button([&](){
+				window.close();
+			}, sf::Vector2f(windowSizeX / 2, windowSizeY * 6 / 10), "Exit"));
+		}
+		
+		~Pause(){
+			window.setMouseCursorVisible(false);
 		}
 };
 
 void MainMenu::input(const sf::Event& event){
 	State::input(event);
-	if(event.type == sf::Event::KeyPressed){
-		if(event.key.code == sf::Keyboard::Num1){
-			machine.addState(new Game);
-		}
-		if(event.key.code == sf::Keyboard::Backspace){
-			machine.removeState();
-		}
-	}
 }
 
 MainMenu::MainMenu(){
+	m_objects.push_back(new Label(sf::Vector2f(windowSizeX / 2, windowSizeY * 2 / 10), "PONG", 70));
 	m_objects.push_back(new Button([&](){
+		machine.removeState();
 		machine.addState(new Game);
-	}, sf::Vector2f(windowSizeX / 2, windowSizeY / 2), "Play"));
+	}, sf::Vector2f(windowSizeX / 2, windowSizeY * 9 / 20), "Play"));
+	m_objects.push_back(new Button([&](){
+		window.close();
+	}, sf::Vector2f(windowSizeX / 2, windowSizeY * 11 / 20), "Exit"));
 }
 
 void Game::input(const sf::Event& event){
 	State::input(event);
-	if(event.type == sf::Event::KeyPressed){
-		if(event.key.code == sf::Keyboard::Num2){
-			machine.addState(new MainMenu);
-		}
-		if(event.key.code == sf::Keyboard::Backspace){
-			machine.removeState();
-		}
-	}
+	if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+		machine.addState(new Pause);
 }
 
 void Game::checkBounce(){
@@ -113,6 +153,10 @@ void Game::onNotify(const Event& event){
 		for(auto o : m_objects)
 			o->restart();
 	}
+	if(event.type == Event::GameOver){
+		machine.removeState();
+		machine.addState(new WinState);
+	}
 }
 
 int main(){
@@ -122,6 +166,7 @@ int main(){
 	clickSound.loadFromFile("../assets/sounds/ClickSound.wav");
 	unclickSound.loadFromFile("../assets/sounds/UnclickSound.wav");
 	hoverSound.loadFromFile("../assets/sounds/LeaveSound.wav");
+	bounceSound.loadFromFile("../assets/sounds/BonusCube.ogg");
 	
 	window.create(sf::VideoMode(500, 500), "pong", sf::Style::Fullscreen);
 	windowSizeX = window.getSize().x;
@@ -136,7 +181,7 @@ int main(){
 	
 	sf::Clock clock;
 	sf::Time time;
-	while (window.isOpen()){
+	while(window.isOpen()){
 		time = clock.restart();
 		
 		state = machine.getState();
@@ -144,8 +189,6 @@ int main(){
 		while (window.pollEvent(event)){
 			state->input(event);
 			if(event.type == sf::Event::Closed)
-				window.close();
-			if(event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape)
 				window.close();
 		}
 		

@@ -21,4 +21,4 @@ sf::RenderWindow window;
 FiniteStateMachine machine;
 Signal eventQueue;
 sf::Font font;
-sf::SoundBuffer clickSound, unclickSound, hoverSound;
+sf::SoundBuffer clickSound, unclickSound, hoverSound, bounceSound;

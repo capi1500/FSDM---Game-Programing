@@ -11,6 +11,7 @@
 
 class FiniteStateMachine{
 	private:
+		unsigned m_toDelete;
 		std::stack<State*> m_stateMachine;
 		std::queue<State*> m_toAdd;
 		
@@ -18,7 +19,7 @@ class FiniteStateMachine{
 	public:
 		State* getState();
 		void addState(State* state);
-		void removeState();
+		void removeState(unsigned count = 1);
 		
 		virtual ~FiniteStateMachine();
 };

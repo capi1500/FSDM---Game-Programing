@@ -8,7 +8,8 @@
 class Event{
 	public:
 		enum EventType{
-			BallOutOfScreen
+			BallOutOfScreen,
+			GameOver
 		};
 		
 		EventType type;

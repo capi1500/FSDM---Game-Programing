@@ -44,8 +44,10 @@ void Ball::bounce(const Line& line, const bool speedup){
 	u = Vector(c, np);
 	m_angle = atan2(u.y, u.x);
 	
-	if(speedup)
+	if(speedup){
 		m_velocity = m_velocity * 11 / 10;
+		soundBoard.play(bounceSound);
+	}
 }
 
 Ball::Ball(sf::Vector2u windowSize){

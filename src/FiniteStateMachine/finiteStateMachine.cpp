@@ -6,13 +6,14 @@
 #include "finiteStateMachine.hpp"
 
 void FiniteStateMachine::updateStates(){
+	while(!m_stateMachine.empty() && m_toDelete != 0){
+		delete m_stateMachine.top();
+		m_stateMachine.pop();
+		m_toDelete--;
+	}
 	while(!m_toAdd.empty()){
 		m_stateMachine.push(m_toAdd.front());
 		m_toAdd.pop();
-	}
-	while(!m_stateMachine.empty() and m_stateMachine.top()->isDelete()){
-		delete m_stateMachine.top();
-		m_stateMachine.pop();
 	}
 }
 
@@ -25,8 +26,8 @@ void FiniteStateMachine::addState(State* state){
 	m_toAdd.push(state);
 }
 
-void FiniteStateMachine::removeState(){
-	m_stateMachine.top()->setDelete(true);
+void FiniteStateMachine::removeState(unsigned count){
+	m_toDelete += count;
 }
 
 FiniteStateMachine::~FiniteStateMachine(){

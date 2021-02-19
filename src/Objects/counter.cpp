@@ -27,6 +27,11 @@ void Counter::onNotify(const Event& event){
 		if(event.ballOut.isLeftPlayer != m_isLeft){
 			m_counter++;
 			m_text.setString(std::to_string(m_counter));
+			if(m_counter == 10){
+				Event event2;
+				event2.type = Event::GameOver;
+				eventQueue.notify(event2);
+			}
 		}
 	}
 }
@@ -38,7 +43,7 @@ Counter::Counter(bool isLeft, int posx, int posy){
 	m_text.setString("0");
 	m_text.setFont(font);
 	m_text.setCharacterSize(30);
-	m_text.setPosition(posx, posy);
+	m_text.setPosition(posx - m_text.getLocalBounds().width / 2, posy - m_text.getLocalBounds().height / 2);
 	eventQueue.addListener(this);
 }
 
