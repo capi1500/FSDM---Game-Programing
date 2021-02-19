@@ -20,8 +20,9 @@ class FiniteStateMachine{
 		State* getState();
 		void addState(State* state);
 		void removeState(unsigned count = 1);
+		void destroy();
 		
-		virtual ~FiniteStateMachine();
+		~FiniteStateMachine() = default;
 };
 
 #endif //PROGRAMOWANIEGIER_FINITESTATEMACHINE_HPP

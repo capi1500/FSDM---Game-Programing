@@ -52,7 +52,7 @@ class Game : public State, public Listener{
 			m_objects.push_back(new Counter(false, window.getSize().x / 2 + 50, window.getSize().y / 10));
 		}
 		
-		~Game(){
+		virtual ~Game(){
 			window.setMouseCursorVisible(true);
 			eventQueue.removeListener(this);
 		}
@@ -99,7 +99,7 @@ class Pause : public State{
 			}, sf::Vector2f(windowSizeX / 2, windowSizeY * 6 / 10), "Exit"));
 		}
 		
-		~Pause(){
+		virtual ~Pause(){
 			window.setMouseCursorVisible(false);
 		}
 };
@@ -198,4 +198,5 @@ int main(){
 		state->draw(window);
 		window.display();
 	}
+	machine.destroy();
 }

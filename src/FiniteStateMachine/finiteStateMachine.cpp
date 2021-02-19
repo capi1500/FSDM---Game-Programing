@@ -30,9 +30,13 @@ void FiniteStateMachine::removeState(unsigned count){
 	m_toDelete += count;
 }
 
-FiniteStateMachine::~FiniteStateMachine(){
+void FiniteStateMachine::destroy(){
 	while(!m_stateMachine.empty()){
 		delete m_stateMachine.top();
 		m_stateMachine.pop();
+	}
+	while(!m_toAdd.empty()){
+		delete m_toAdd.front();
+		m_toAdd.pop();
 	}
 }

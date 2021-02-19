@@ -16,6 +16,7 @@ class SoundBoard{
 		void play(const sf::SoundBuffer& sound);
 		
 		SoundBoard();
+		~SoundBoard();
 };
 
 #endif //PROGRAMOWANIEGIER_SOUNDBOARD_HPP

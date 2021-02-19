@@ -4,13 +4,14 @@
 
 #include <iostream>
 #include "signal.hpp"
+#include <set>
 
 void Signal::addListener(Listener* listener){
 	m_listeners.insert(listener);
 }
 
 void Signal::removeListener(Listener* listener){
-	m_listeners.erase(listener);
+	m_listeners.erase(m_listeners.find(listener));
 }
 
 void Signal::notify(const Event& event){

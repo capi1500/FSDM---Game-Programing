@@ -33,6 +33,8 @@ State::State(){
 }
 
 State::~State(){
-	for(Object* p : m_objects)
+	for(Object* p : m_objects){
 		delete p;
+		p = nullptr;
+	}
 }
