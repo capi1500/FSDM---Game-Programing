@@ -12,9 +12,6 @@
 #include <Objects/button.hpp>
 #include "common.hpp"
 
-sf::RenderWindow window;
-FiniteStateMachine machine;
-
 class MainMenu : public State{
 	public:
 		void draw(sf::RenderWindow& window) override{

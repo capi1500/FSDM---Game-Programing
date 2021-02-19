@@ -14,6 +14,7 @@ void Button::update(const sf::Time& time){
 	if(m_state == Clicked){
 		m_time += time;
 		if(m_time > sf::milliseconds(500)){
+			soundBoard.play(unclickSound);
 			m_state = Default;
 			m_text.setFillColor(sf::Color::White);
 		}
@@ -22,14 +23,14 @@ void Button::update(const sf::Time& time){
 	if(m_text.getGlobalBounds().contains(pos.x, pos.y)){
 		if(m_state == Default){
 			m_text.setFillColor(sf::Color(127, 127, 127));
-			// TODO dzwiek
+			soundBoard.play(hoverSound);
 			m_state = Hover;
 		}
 	}
 	else{
 		if(m_state == Hover){
 			m_text.setFillColor(sf::Color::White);
-			// TODO dzwiek
+			soundBoard.play(hoverSound);
 			m_state = Default;
 		}
 	}
@@ -40,7 +41,7 @@ void Button::input(const sf::Event& input){
 		if(input.type == sf::Event::MouseButtonPressed){
 			if(input.mouseButton.button == sf::Mouse::Left){
 				if(m_text.getGlobalBounds().contains(input.mouseButton.x, input.mouseButton.y)){
-					// TODO dzwiek
+					soundBoard.play(clickSound);
 					m_function();
 					m_state = Clicked;
 					m_time = sf::milliseconds(0);
