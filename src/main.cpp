@@ -183,7 +183,6 @@ int main(){
 	sf::Time time;
 	while(window.isOpen()){
 		time = clock.restart();
-		
 		state = machine.getState();
 		
 		while (window.pollEvent(event)){
