@@ -7,6 +7,8 @@ template<typename T>
 class Singleton{
 	private:
 		static T* instance;
+	protected:
+		virtual void init(){};
 	public:
 		static T& get(){
 			if(instance == nullptr)
@@ -16,10 +18,6 @@ class Singleton{
 		
 		static void remove(){
 			delete instance;
-		}
-		
-		static void print(){
-			std::cout << "print\n";
 		}
 		
 		virtual ~Singleton() = default;

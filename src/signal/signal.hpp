@@ -1,26 +1,38 @@
-//
-// Created by Kacper on 11/12/2020.
-//
-
 #ifndef PROGRAMOWANIEGIER_SIGNAL_HPP
 #define PROGRAMOWANIEGIER_SIGNAL_HPP
 
 #include <queue>
 #include <set>
-#include "event.hpp"
 #include "listener.hpp"
 
+template<typename T>
 class Signal{
 	private:
-		std::queue<Event> m_events;
-		std::set<Listener*> m_listeners;
+		std::queue<T> m_events;
+		std::set<Listener<T>*> m_listeners;
 	public:
-		void addListener(Listener* listener);
-		void removeListener(Listener* listener);
+		void addListener(Listener<T>* listener){
+			m_listeners.insert(listener);
+		}
+		void removeListener(Listener<T>* listener){
+			m_listeners.erase(m_listeners.find(listener));
+		}
 		
-		void notify(const Event& event);
+		void notify(const T& event){
+			m_events.push(event);
+		}
 		
-		void handleEvents();
+		void handleEvents(){
+			T event;
+			while(!m_events.empty()){
+				event = m_events.front();
+				m_events.pop();
+				for(auto l : m_listeners){
+					l->onNotify(event);
+				}
+			}
+		}
+	
 };
 
 #endif //PROGRAMOWANIEGIER_SIGNAL_HPP

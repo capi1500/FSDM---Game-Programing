@@ -5,11 +5,10 @@
 #ifndef PROGRAMOWANIEGIER_LISTENER_HPP
 #define PROGRAMOWANIEGIER_LISTENER_HPP
 
-#include "event.hpp"
-
+template<typename T>
 class Listener{
 	public:
-		virtual void onNotify(const Event& event) = 0;
+		virtual void onNotify(const T& event) = 0;
 		virtual ~Listener() = default;
 };
 
