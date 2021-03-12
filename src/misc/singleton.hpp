@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+// TODO naprawić singleton
+
 template<typename T>
 class Singleton{
 	private:
@@ -22,7 +24,7 @@ class Singleton{
 		
 		virtual ~Singleton() = default;
 		
-		Singleton(Singleton&) = delete;
+		//Singleton(Singleton&) = delete;
 };
 
 template <typename T>

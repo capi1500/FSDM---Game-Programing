@@ -55,7 +55,7 @@ void FiniteStateMachine::onNotify(const FiniteStateEvent& event){
 	else if(event.type == FiniteStateEvent::Replace){
 		if(states.empty()){
 			message.notify(Message("No states in Finite State Machine", Message::Error));
-			break;
+			return;
 		}
 		delete states.top();
 		states.pop();
