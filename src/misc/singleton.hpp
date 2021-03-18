@@ -3,31 +3,19 @@
 
 #include <iostream>
 
-// TODO naprawić singleton
-
 template<typename T>
 class Singleton{
-	private:
-		static T* instance;
 	protected:
-		virtual void init(){};
+		Singleton(){}
 	public:
 		static T& get(){
-			if(instance == nullptr)
-				instance = new T();
-			return *instance;
+			static T get;
+			return get;
 		}
 		
-		static void remove(){
-			delete instance;
-		}
+		Singleton(Singleton const&) = delete;
 		
-		virtual ~Singleton() = default;
-		
-		//Singleton(Singleton&) = delete;
+		void operator =(Singleton const&) = delete;
 };
-
-template <typename T>
-T* Singleton<T>::instance = nullptr;
 
 #endif //PROGRAMOWANIEGIER_SINGLETON_HPP

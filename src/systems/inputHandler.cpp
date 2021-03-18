@@ -10,3 +10,7 @@ void InputHandler::handleEvents(){
 		notify(event);
 	Signal::handleEvents();
 }
+
+void InputHandler::init(){
+
+}

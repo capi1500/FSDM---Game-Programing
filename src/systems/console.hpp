@@ -7,13 +7,11 @@
 #include <misc/singleton.hpp>
 #include <set>
 
-class Console : public Singleton<Console>, public Listener<Message>{
+class Console : public Listener<Message>{
 	private:
 		std::set<Message::Type> types;
-	protected:
-		void init() override;
 	public:
-		Console(Singleton<Console>& singleton);
+		void init();
 		
 		void listenType(Message::Type type);
 		void onNotify(const Message& event) override;
