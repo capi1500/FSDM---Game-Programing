@@ -1,4 +1,5 @@
 #include "console.hpp"
+#include <iostream>
 
 Signal<Message> message;
 

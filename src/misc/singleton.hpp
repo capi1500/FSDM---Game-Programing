@@ -1,8 +1,6 @@
 #ifndef PROGRAMOWANIEGIER_SINGLETON_HPP
 #define PROGRAMOWANIEGIER_SINGLETON_HPP
 
-#include <iostream>
-
 template<typename T>
 class Singleton{
 	protected:

@@ -6,6 +6,8 @@
 #include <systems/inputHandler.hpp>
 #include <entities/smallPoint.hpp>
 #include <systems/assetManager.hpp>
+#include <entities/fruit.hpp>
+#include <entities/pacman.hpp>
 
 Signal<GameEvent> gameEventSignal;
 
@@ -23,6 +25,13 @@ Game::Game(){
 	
 	Scene* scene = new Scene(scenes);
 	scene->addEntity(new SmallPoint);
+	/*scene->addEntity(new Fruit(Fruit::Cherry));
+	scene->addEntity(new Fruit(Fruit::Strawberry));
+	scene->addEntity(new Fruit(Fruit::Orange));
+	scene->addEntity(new Fruit(Fruit::Bell));
+	scene->addEntity(new Fruit(Fruit::Apple));
+	scene->addEntity(new Fruit(Fruit::Grapes));*/
+	scene->addEntity(new Pacman());
 	
 	scenes.add(scene);
 }
