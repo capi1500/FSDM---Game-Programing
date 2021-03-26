@@ -8,25 +8,16 @@
 #include <misc/singleton.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <misc/animation.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 class AssetManager : public Singleton<AssetManager>{
 	private:
 		sf::Image image;
+		sf::Texture texture;
 		unsigned sizex;
 		unsigned sizey;
 	public:
 		sf::Font font;
-		
-		sf::Texture smallCircle;
-		sf::Texture mediumCircle;
-		sf::Texture bigCircle;
-		
-		sf::Texture cherry;
-		sf::Texture strawberry;
-		sf::Texture orange;
-		sf::Texture bell;
-		sf::Texture apple;
-		sf::Texture grapes;
 		
 		struct EntityAssetPack{
 			Animation up;
@@ -42,6 +33,42 @@ class AssetManager : public Singleton<AssetManager>{
 		EntityAssetPack blueGhost;
 		EntityAssetPack deadGhost;
 		EntityAssetPack pacman;
+		
+		sf::Sprite doubleLeftUp;
+		sf::Sprite doubleLeftDown;
+		sf::Sprite doubleRightUp;
+		sf::Sprite doubleRightDown;
+		sf::Sprite doubleVertical;
+		sf::Sprite doubleHorizontal;
+		sf::Sprite doubleSpecialUp1;
+		sf::Sprite doubleSpecialUp2;
+		sf::Sprite doubleSpecialLeft1;
+		sf::Sprite doubleSpecialLeft2;
+		sf::Sprite doubleSpecialRight1;
+		sf::Sprite doubleSpecialRight2;
+		
+		sf::Sprite singleLeftUp;
+		sf::Sprite singleLeftDown;
+		sf::Sprite singleRightUp;
+		sf::Sprite singleRightDown;
+		sf::Sprite singleVertical;
+		sf::Sprite singleHorizontal;
+		
+		sf::Sprite door;
+		sf::Sprite rectLeftUp;
+		sf::Sprite rectLeftDown;
+		sf::Sprite rectRightUp;
+		sf::Sprite rectRightDown;
+		
+		sf::Sprite smallCircle;
+		sf::Sprite bigCircle;
+		
+		sf::Sprite cherry;
+		sf::Sprite strawberry;
+		sf::Sprite orange;
+		sf::Sprite bell;
+		sf::Sprite apple;
+		sf::Sprite grapes;
 		
 		void load();
 };

@@ -6,28 +6,27 @@
 
 void AssetManager::load(){
 	image.loadFromFile("../assets/textures/spritemap.png");
+	texture.loadFromImage(image);
 	sizex = 24;
 	sizey = 24;
 	
-	smallCircle.loadFromImage(image, 
-			sf::IntRect(sizex * 8, 0, sizex / 2, sizey / 2));
-	mediumCircle.loadFromImage(image, 
-			sf::IntRect(sizex * 9, 0, sizex / 2, sizey / 2));
-	bigCircle.loadFromImage(image, 
-			sf::IntRect(sizex * 10, 0, sizex / 2, sizey / 2));
+	smallCircle.setTexture(texture);
+	smallCircle.setTextureRect(sf::IntRect(sizex * 8, 0, sizex / 2, sizey / 2));
+	bigCircle.setTexture(texture);
+	bigCircle.setTextureRect(sf::IntRect(sizex * 10, 0, sizex / 2, sizey / 2));
 	
-	cherry.loadFromImage(image, 
-			sf::IntRect(sizex * 0, sizey * 5, sizex, sizey));
-	strawberry.loadFromImage(image,
-			sf::IntRect(sizex * 1, sizey * 5, sizex, sizey));
-	orange.loadFromImage(image, 
-			sf::IntRect(sizex * 2, sizey * 5, sizex, sizey));
-	bell.loadFromImage(image, 
-			sf::IntRect(sizex * 3, sizey * 5, sizex, sizey));
-	apple.loadFromImage(image, 
-			sf::IntRect(sizex * 4, sizey * 5, sizex, sizey));
-	grapes.loadFromImage(image, 
-			sf::IntRect(sizex * 5, sizey * 5, sizex, sizey));
+	cherry.setTexture(texture);
+	cherry.setTextureRect(sf::IntRect(sizex * 0, sizey * 5, sizex, sizey));
+	strawberry.setTexture(texture);
+	strawberry.setTextureRect(sf::IntRect(sizex * 1, sizey * 5, sizex, sizey));
+	orange.setTexture(texture);
+	orange.setTextureRect(sf::IntRect(sizex * 2, sizey * 5, sizex, sizey));
+	bell.setTexture(texture);
+	bell.setTextureRect(sf::IntRect(sizex * 3, sizey * 5, sizex, sizey));
+	apple.setTexture(texture);
+	apple.setTextureRect(sf::IntRect(sizex * 4, sizey * 5, sizex, sizey));
+	grapes.setTexture(texture);
+	grapes.setTextureRect(sf::IntRect(sizex * 5, sizey * 5, sizex, sizey));
 	
 	redGhost.right.addFrame(image, sf::IntRect(sizex * 0, sizey * 6, sizex, sizey));
 	redGhost.right.addFrame(image, sf::IntRect(sizex * 1, sizey * 6, sizex, sizey));
