@@ -7,32 +7,32 @@
 
 void Fruit::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 	states.transform.combine(getTransform());
-	target.draw(fruit, states);
+	target.draw(*fruit, states);
 }
 
 void Fruit::update(const sf::Time& time){
 
 }
 
-Fruit::Fruit(Fruit::Type type) : type(type){
+Fruit::Fruit(Fruit::Type type){
 	switch(type){
 		case Cherry:
-			fruit.setTexture(AssetManager::get().cherry);
+			fruit = &AssetManager::get().cherry;
 			break;
 		case Strawberry:
-			fruit.setTexture(AssetManager::get().strawberry);
+			fruit = &AssetManager::get().strawberry;
 			break;
 		case Orange:
-			fruit.setTexture(AssetManager::get().orange);
+			fruit = &AssetManager::get().orange;
 			break;
 		case Bell:
-			fruit.setTexture(AssetManager::get().bell);
+			fruit = &AssetManager::get().bell;
 			break;
 		case Apple:
-			fruit.setTexture(AssetManager::get().apple);
+			fruit = &AssetManager::get().apple;
 			break;
 		case Grapes:
-			fruit.setTexture(AssetManager::get().grapes);
+			fruit = &AssetManager::get().grapes;
 			break;
 	}
 }

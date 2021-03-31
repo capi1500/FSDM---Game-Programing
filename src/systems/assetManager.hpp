@@ -60,6 +60,8 @@ class AssetManager : public Singleton<AssetManager>{
 		sf::Sprite rectRightUp;
 		sf::Sprite rectRightDown;
 		
+		sf::Sprite empty;
+		
 		sf::Sprite smallCircle;
 		sf::Sprite bigCircle;
 		

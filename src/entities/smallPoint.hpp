@@ -10,7 +10,7 @@
 
 class SmallPoint : public Entity{
 	private:
-		sf::Sprite circle;
+		sf::Sprite* circle;
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:

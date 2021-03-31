@@ -22,7 +22,7 @@ class Fruit : public Entity{
 			Grapes
 		};
 	private:
-		sf::Sprite fruit;
+		sf::Sprite* fruit;
 		Type type;
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

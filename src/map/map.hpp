@@ -7,11 +7,14 @@
 
 #include "field.hpp"
 
-class Map{
+class Map : public sf::Drawable{
 	private:
-		Field[28][31] fields;
+		std::vector<std::vector<Field>> fields;
+	protected:
+		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	
 	public:
-		Map(int fields);
+		Map();
 };
 
 #endif //PROGRAMOWANIEGIER_MAP_HPP

@@ -56,6 +56,7 @@ void Game::run(){
 		scene->update(time);
 		
 		window.clear();
+		window.draw(map);
 		window.draw(*scene);
 		window.display();
 	}

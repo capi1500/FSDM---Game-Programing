@@ -8,6 +8,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <finiteStateMachine/finiteStateMachine.hpp>
 #include <systems/scene.hpp>
+#include <map/map.hpp>
 #include "gameEvent.hpp"
 
 class Game : public Listener<GameEvent>{
@@ -17,6 +18,8 @@ class Game : public Listener<GameEvent>{
 		bool active;
 		
 		Scene* getScene();
+		
+		Map map;
 	public:
 		void run();
 		

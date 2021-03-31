@@ -10,6 +10,8 @@ void AssetManager::load(){
 	sizex = 24;
 	sizey = 24;
 	
+	// colectibles
+	
 	smallCircle.setTexture(texture);
 	smallCircle.setTextureRect(sf::IntRect(sizex * 8, 0, sizex / 2, sizey / 2));
 	bigCircle.setTexture(texture);
@@ -27,6 +29,66 @@ void AssetManager::load(){
 	apple.setTextureRect(sf::IntRect(sizex * 4, sizey * 5, sizex, sizey));
 	grapes.setTexture(texture);
 	grapes.setTextureRect(sf::IntRect(sizex * 5, sizey * 5, sizex, sizey));
+	
+	// map
+	
+	doubleLeftUp.setTexture(texture);
+	doubleLeftDown.setTexture(texture);
+	doubleRightUp.setTexture(texture);
+	doubleRightDown.setTexture(texture);
+	doubleVertical.setTexture(texture);
+	doubleHorizontal.setTexture(texture);
+	doubleSpecialUp1.setTexture(texture);
+	doubleSpecialUp2.setTexture(texture);
+	doubleSpecialLeft1.setTexture(texture);
+	doubleSpecialLeft2.setTexture(texture);
+	doubleSpecialRight1.setTexture(texture);
+	doubleSpecialRight2.setTexture(texture);
+	
+	singleLeftUp.setTexture(texture);
+	singleLeftDown.setTexture(texture);
+	singleRightUp.setTexture(texture);
+	singleRightDown.setTexture(texture);
+	singleVertical.setTexture(texture);
+	singleHorizontal.setTexture(texture);
+	
+	door.setTexture(texture);
+	rectLeftUp.setTexture(texture);
+	rectLeftDown.setTexture(texture);
+	rectRightUp.setTexture(texture);
+	rectRightDown.setTexture(texture);
+	
+	empty.setTexture(texture);
+	
+	doubleLeftUp.setTextureRect(sf::IntRect(sizex * 17 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
+	doubleLeftDown.setTextureRect(sf::IntRect(sizex * 21 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
+	doubleRightUp.setTextureRect(sf::IntRect(sizex * 16 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
+	doubleRightDown.setTextureRect(sf::IntRect(sizex * 20 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
+	doubleVertical.setTextureRect(sf::IntRect(sizex * 18 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
+	doubleHorizontal.setTextureRect(sf::IntRect(sizex * 26 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
+	doubleSpecialUp1.setTextureRect(sf::IntRect(sizex * 27 / 2, sizey * 5 / 2, sizex / 2, sizey / 2));
+	doubleSpecialUp2.setTextureRect(sf::IntRect(sizex * 26 / 2, sizey * 5 / 2, sizex / 2, sizey / 2));
+	doubleSpecialLeft1.setTextureRect(sf::IntRect(sizex * 23 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
+	doubleSpecialLeft2.setTextureRect(sf::IntRect(sizex * 25 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
+	doubleSpecialRight1.setTextureRect(sf::IntRect(sizex * 22 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
+	doubleSpecialRight2.setTextureRect(sf::IntRect(sizex * 24 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
+	
+	singleLeftUp.setTextureRect(sf::IntRect(sizex * 18 / 2, sizey * 5 / 2, sizex / 2, sizey / 2));
+	singleLeftDown.setTextureRect(sf::IntRect(sizex * 20 / 2, sizey * 5 / 2, sizex / 2, sizey / 2));
+	singleRightUp.setTextureRect(sf::IntRect(sizex * 19 / 2, sizey * 5 / 2, sizex / 2, sizey / 2));
+	singleRightDown.setTextureRect(sf::IntRect(sizex * 21 / 2, sizey * 5 / 2, sizex / 2, sizey / 2));
+	singleVertical.setTextureRect(sf::IntRect(sizex * 24 / 2, sizey * 3 / 2, sizex / 2, sizey / 2));
+	singleHorizontal.setTextureRect(sf::IntRect(sizex * 20 / 2, sizey * 3 / 2, sizex / 2, sizey / 2));
+	
+	door.setTextureRect(sf::IntRect(sizex * 31 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
+	rectLeftUp.setTextureRect(sf::IntRect(sizex * 29 / 2, sizey * 3 / 2, sizex / 2, sizey / 2));
+	rectLeftDown.setTextureRect(sf::IntRect(sizex * 31 / 2, sizey * 3 / 2, sizex / 2, sizey / 2));
+	rectRightUp.setTextureRect(sf::IntRect(sizex * 28 / 2, sizey * 3 / 2, sizex / 2, sizey / 2));
+	rectRightDown.setTextureRect(sf::IntRect(sizex * 30 / 2, sizey * 3 / 2, sizex / 2, sizey / 2));
+	
+	empty.setTextureRect(sf::IntRect(sizex * 11, 0, sizex / 2, sizey / 2));
+	
+	// entities
 	
 	redGhost.right.addFrame(image, sf::IntRect(sizex * 0, sizey * 6, sizex, sizey));
 	redGhost.right.addFrame(image, sf::IntRect(sizex * 1, sizey * 6, sizex, sizey));

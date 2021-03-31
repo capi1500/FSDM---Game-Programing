@@ -11,10 +11,10 @@ void SmallPoint::update(const sf::Time& time){
 
 void SmallPoint::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 	states.transform.combine(getTransform());
-	target.draw(circle, states);
+	target.draw(*circle, states);
 }
 
 SmallPoint::SmallPoint(){
-	circle.setTexture(AssetManager::get().smallCircle);
+	circle = &AssetManager::get().smallCircle;
 	setPosition(50, 50);
 }
