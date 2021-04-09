@@ -32,6 +32,10 @@ class Field : public Entity{
 	public:
 		void update(const sf::Time& time) override;
 		
+		Type getType() const;
+		
+		bool isCanPass() const;
+		
 		Field(Type type, sf::Sprite& sprite);
 };
 

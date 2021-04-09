@@ -6,6 +6,7 @@
 #define PROGRAMOWANIEGIER_PACMAN_HPP
 
 #include <misc/animatedSprite.hpp>
+#include <map/map.hpp>
 #include "entity.hpp"
 
 class Pacman : public Entity{
@@ -14,16 +15,25 @@ class Pacman : public Entity{
 			Up,
 			Down,
 			Left,
-			Right
+			Right,
+			None
 		};
 		Direction dir;
+		Direction dirKeyboard;
+		
+		int dx[4] = {0, 0, -1, 1};
+		int dy[4] = {-1, 1, 0, 0};
+		
+		Map& map;
+		
+		sf::Vector2u pos;
 		AnimatedSprite sprite;
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:
 		void update(const sf::Time& time) override;
 		
-		Pacman();
+		Pacman(Map& map);
 };
 
 #endif //PROGRAMOWANIEGIER_PACMAN_HPP

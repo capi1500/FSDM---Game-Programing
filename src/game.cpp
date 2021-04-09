@@ -19,19 +19,21 @@ Game::Game(){
 	AssetManager::get().load();
 	
 	window.create(sf::VideoMode(500, 500), "Pacman");
+	window.setFramerateLimit(60);
+	
 	InputHandler::get().registerWindow(&window);
 	active = true;
 	gameEventSignal.addListener(this);
 	
 	Scene* scene = new Scene(scenes);
-	scene->addEntity(new SmallPoint);
-	/*scene->addEntity(new Fruit(Fruit::Cherry));
+	/*scene->addEntity(new SmallPoint);
+	scene->addEntity(new Fruit(Fruit::Cherry));
 	scene->addEntity(new Fruit(Fruit::Strawberry));
 	scene->addEntity(new Fruit(Fruit::Orange));
 	scene->addEntity(new Fruit(Fruit::Bell));
 	scene->addEntity(new Fruit(Fruit::Apple));
 	scene->addEntity(new Fruit(Fruit::Grapes));*/
-	scene->addEntity(new Pacman());
+	scene->addEntity(new Pacman(map));
 	
 	scenes.add(scene);
 }

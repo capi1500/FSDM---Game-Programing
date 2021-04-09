@@ -15,6 +15,7 @@ class AnimatedSprite : public sf::Drawable, public sf::Transformable{
 		sf::Sprite sprite;
 		sf::Time frameTime;
 		sf::Time deltaTime;
+		
 		size_t frame;
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

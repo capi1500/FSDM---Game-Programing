@@ -12,8 +12,10 @@ class Map : public sf::Drawable{
 		std::vector<std::vector<Field>> fields;
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	
 	public:
+		Field& getField(const sf::Vector2u& pos);
+		Field& getField(const unsigned x, const unsigned y);
+		
 		Map();
 };
 

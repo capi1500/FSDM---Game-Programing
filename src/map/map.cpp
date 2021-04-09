@@ -133,3 +133,11 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 		states.transform.translate(-12 * 28, 12);
 	}
 }
+
+Field& Map::getField(const sf::Vector2u& pos){
+	return fields[pos.x][pos.y];
+}
+
+Field& Map::getField(const unsigned int x, const unsigned int y){
+	return fields[x][y];
+}
