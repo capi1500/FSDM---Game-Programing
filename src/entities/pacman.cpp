@@ -98,6 +98,7 @@ Pacman::Pacman(Map& map) : map(map){
 	pos.y = 23;
 	sprite.setAnimation(AssetManager::get().pacman.left);
 	sprite.setPosition(pos.x * 12, pos.y * 12);
+	sprite.scale(0.7f, 0.7f);
 	dirKeyboard = None;
 	dir = Left;
 }
