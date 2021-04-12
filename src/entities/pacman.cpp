@@ -59,7 +59,7 @@ void Pacman::update(const sf::Time& time){
 	
 	std::cout << "\t" << dist << " " << sprite.getPosition().x << " " << sprite.getPosition().y << "\n";
 	
-	if(map.getField(pos2).isCanPass()){
+	if(map.getField(sf::Vector2u(pos2.y, pos2.x)).isCanPass()){
 		if(realDist >= dist){
 			sprite.setPosition(pos2.x * 12, pos2.y * 12);
 			
@@ -80,7 +80,7 @@ void Pacman::update(const sf::Time& time){
 			}
 		}
 		
-		if(map.getField(pos2).isCanPass()){
+		if(map.getField(sf::Vector2u(pos2.y, pos2.x)).isCanPass()){
 			sprite.move(dx[dir] * realDist, dy[dir] * realDist);
 			
 			sprite.update(time);
