@@ -43,15 +43,18 @@ void Pacman::update(const sf::Time& time){
 	
 	if(dist == 12){
 		if(dir != dirKeyboard){
-			dir = dirKeyboard;
-			if(dir == Up)
-				sprite.setAnimation(AssetManager::get().pacman.up);
-			else if(dir == Down)
-				sprite.setAnimation(AssetManager::get().pacman.down);
-			else if(dir == Left)
-				sprite.setAnimation(AssetManager::get().pacman.left);
-			else if(dir == Right)
-				sprite.setAnimation(AssetManager::get().pacman.right);
+			sf::Vector2u pos3 = sf::Vector2u(pos.x + dx[dirKeyboard], pos.y + dy[dirKeyboard]);
+			if(map.getField(sf::Vector2u(pos3.y, pos3.x)).isCanPass()){
+				dir = dirKeyboard;
+				if(dir == Up)
+					sprite.setAnimation(AssetManager::get().pacman.up);
+				else if(dir == Down)
+					sprite.setAnimation(AssetManager::get().pacman.down);
+				else if(dir == Left)
+					sprite.setAnimation(AssetManager::get().pacman.left);
+				else if(dir == Right)
+					sprite.setAnimation(AssetManager::get().pacman.right);
+			}
 		}
 	}
 
@@ -65,15 +68,18 @@ void Pacman::update(const sf::Time& time){
 			
 			realDist -= dist;
 			if(dir != dirKeyboard){
-				dir = dirKeyboard;
-				if(dir == Up)
-					sprite.setAnimation(AssetManager::get().pacman.up);
-				else if(dir == Down)
-					sprite.setAnimation(AssetManager::get().pacman.down);
-				else if(dir == Left)
-					sprite.setAnimation(AssetManager::get().pacman.left);
-				else if(dir == Right)
-					sprite.setAnimation(AssetManager::get().pacman.right);
+				sf::Vector2u pos3 = sf::Vector2u(pos.x + dx[dirKeyboard], pos.y + dy[dirKeyboard]);
+				if(map.getField(sf::Vector2u(pos3.y, pos3.x)).isCanPass()){
+					dir = dirKeyboard;
+					if(dir == Up)
+						sprite.setAnimation(AssetManager::get().pacman.up);
+					else if(dir == Down)
+						sprite.setAnimation(AssetManager::get().pacman.down);
+					else if(dir == Left)
+						sprite.setAnimation(AssetManager::get().pacman.left);
+					else if(dir == Right)
+						sprite.setAnimation(AssetManager::get().pacman.right);
+				}
 			}
 		}
 		
