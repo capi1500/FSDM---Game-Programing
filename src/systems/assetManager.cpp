@@ -32,14 +32,20 @@ void AssetManager::load(){
 	
 	// map
 	
-	doubleLeftUp.setTexture(texture);
-	doubleLeftDown.setTexture(texture);
-	doubleRightUp.setTexture(texture);
-	doubleRightDown.setTexture(texture);
+	doubleLeftUpBig.setTexture(texture);
+	doubleLeftDownBig.setTexture(texture);
+	doubleRightUpBig.setTexture(texture);
+	doubleRightDownBig.setTexture(texture);
+	doubleLeftUpSmall.setTexture(texture);
+	doubleLeftDownSmall.setTexture(texture);
+	doubleRightUpSmall.setTexture(texture);
+	doubleRightDownSmall.setTexture(texture);
+	
 	doubleVerticalLeft.setTexture(texture);
 	doubleVerticalRight.setTexture(texture);
 	doubleHorizontalUpper.setTexture(texture);
 	doubleHorizontalLower.setTexture(texture);
+	
 	doubleSpecialUp1.setTexture(texture);
 	doubleSpecialUp2.setTexture(texture);
 	doubleSpecialLeft1.setTexture(texture);
@@ -57,6 +63,8 @@ void AssetManager::load(){
 	singleHorizontalLower.setTexture(texture);
 	
 	door.setTexture(texture);
+	rectLeftEnd.setTexture(texture);
+	rectRightEnd.setTexture(texture);
 	rectLeftUp.setTexture(texture);
 	rectLeftDown.setTexture(texture);
 	rectRightUp.setTexture(texture);
@@ -64,14 +72,20 @@ void AssetManager::load(){
 	
 	empty.setTexture(texture);
 	
-	doubleLeftUp.setTextureRect(sf::IntRect(sizex * 17 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
-	doubleLeftDown.setTextureRect(sf::IntRect(sizex * 21 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
-	doubleRightUp.setTextureRect(sf::IntRect(sizex * 16 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
-	doubleRightDown.setTextureRect(sf::IntRect(sizex * 20 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
+	doubleLeftUpBig.setTextureRect(sf::IntRect(sizex * 17 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
+	doubleLeftDownBig.setTextureRect(sf::IntRect(sizex * 21 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
+	doubleRightUpBig.setTextureRect(sf::IntRect(sizex * 16 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
+	doubleRightDownBig.setTextureRect(sf::IntRect(sizex * 20 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
+	doubleLeftUpSmall.setTextureRect(sf::IntRect(sizex * 23 / 2, sizey * 3 / 2, sizex / 2, sizey / 2));
+	doubleLeftDownSmall.setTextureRect(sf::IntRect(sizex * 27 / 2, sizey * 3 / 2, sizex / 2, sizey / 2));
+	doubleRightUpSmall.setTextureRect(sf::IntRect(sizex * 22 / 2, sizey * 3 / 2, sizex / 2, sizey / 2));
+	doubleRightDownSmall.setTextureRect(sf::IntRect(sizex * 26 / 2, sizey * 3 / 2, sizex / 2, sizey / 2));
+	
 	doubleVerticalLeft.setTextureRect(sf::IntRect(sizex * 18 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
 	doubleVerticalRight.setTextureRect(sf::IntRect(sizex * 17 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
 	doubleHorizontalUpper.setTextureRect(sf::IntRect(sizex * 26 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
 	doubleHorizontalLower.setTextureRect(sf::IntRect(sizex * 28 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
+	
 	doubleSpecialUp1.setTextureRect(sf::IntRect(sizex * 27 / 2, sizey * 5 / 2, sizex / 2, sizey / 2));
 	doubleSpecialUp2.setTextureRect(sf::IntRect(sizex * 26 / 2, sizey * 5 / 2, sizex / 2, sizey / 2));
 	doubleSpecialLeft1.setTextureRect(sf::IntRect(sizex * 23 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
@@ -89,6 +103,8 @@ void AssetManager::load(){
 	singleHorizontalLower.setTextureRect(sf::IntRect(sizex * 29 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
 	
 	door.setTextureRect(sf::IntRect(sizex * 31 / 2, sizey * 4 / 2, sizex / 2, sizey / 2));
+	rectLeftEnd.setTextureRect(sf::IntRect(sizex * 17 / 2, sizey * 5 / 2, sizex / 2, sizey / 2));
+	rectRightEnd.setTextureRect(sf::IntRect(sizex * 16 / 2, sizey * 5 / 2, sizex / 2, sizey / 2));
 	rectLeftUp.setTextureRect(sf::IntRect(sizex * 29 / 2, sizey * 3 / 2, sizex / 2, sizey / 2));
 	rectLeftDown.setTextureRect(sf::IntRect(sizex * 31 / 2, sizey * 3 / 2, sizex / 2, sizey / 2));
 	rectRightUp.setTextureRect(sf::IntRect(sizex * 28 / 2, sizey * 3 / 2, sizex / 2, sizey / 2));

@@ -34,10 +34,14 @@ class AssetManager : public Singleton<AssetManager>{
 		EntityAssetPack deadGhost;
 		EntityAssetPack pacman;
 		
-		sf::Sprite doubleLeftUp;
-		sf::Sprite doubleLeftDown;
-		sf::Sprite doubleRightUp;
-		sf::Sprite doubleRightDown;
+		sf::Sprite doubleLeftUpBig;
+		sf::Sprite doubleLeftDownBig;
+		sf::Sprite doubleRightUpBig;
+		sf::Sprite doubleRightDownBig;
+		sf::Sprite doubleLeftUpSmall;
+		sf::Sprite doubleLeftDownSmall;
+		sf::Sprite doubleRightUpSmall;
+		sf::Sprite doubleRightDownSmall;
 		sf::Sprite doubleVerticalLeft;
 		sf::Sprite doubleVerticalRight;
 		sf::Sprite doubleHorizontalUpper;
@@ -59,6 +63,8 @@ class AssetManager : public Singleton<AssetManager>{
 		sf::Sprite singleHorizontalLower;
 		
 		sf::Sprite door;
+		sf::Sprite rectLeftEnd;
+		sf::Sprite rectRightEnd;
 		sf::Sprite rectLeftUp;
 		sf::Sprite rectLeftDown;
 		sf::Sprite rectRightUp;

@@ -19,19 +19,19 @@ Map::Map(){
 			switch(c){
 				case 'q':
 					type = Field::Wall;
-					sprite = &AssetManager::get().doubleLeftUp;
+					sprite = &AssetManager::get().doubleLeftUpBig;
 					break;
 				case 'e':
 					type = Field::Wall;
-					sprite = &AssetManager::get().doubleRightUp;
+					sprite = &AssetManager::get().doubleRightUpBig;
 					break;
 				case 'z':
 					type = Field::Wall;
-					sprite = &AssetManager::get().doubleLeftDown;
+					sprite = &AssetManager::get().doubleLeftDownBig;
 					break;
 				case 'c':
 					type = Field::Wall;
-					sprite = &AssetManager::get().doubleRightDown;
+					sprite = &AssetManager::get().doubleRightDownBig;
 					break;
 				case 'w':
 					type = Field::Wall;
@@ -92,6 +92,10 @@ Map::Map(){
 				case '_':
 					type = Field::Wall;
 					sprite = &AssetManager::get().singleHorizontalUpper;
+					break;
+				case '-':
+					type = Field::Wall;
+					sprite = &AssetManager::get().door;
 					break;
 				case '|':
 					type = Field::Wall;
