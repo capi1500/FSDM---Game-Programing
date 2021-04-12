@@ -36,7 +36,7 @@ void Pacman::update(const sf::Time& time){
 		
 	}
 	
-	std::cout << pos.x << " " << pos.y << " " << dir << " " << dirKeyboard << "\n";
+	//std::cout << pos.x << " " << pos.y << " " << dir << " " << dirKeyboard << "\n";
 	
 	sf::Vector2u pos2(pos.x + dx[dir], pos.y + dy[dir]);
 	
@@ -57,7 +57,7 @@ void Pacman::update(const sf::Time& time){
 		}
 	}
 	
-	std::cout << "\t" << dist << " " << sprite.getPosition().x << " " << sprite.getPosition().y << "\n";
+	//std::cout << "\t" << dist << " " << sprite.getPosition().x << " " << sprite.getPosition().y << "\n";
 	
 	if(map.getField(sf::Vector2u(pos2.y, pos2.x)).isCanPass()){
 		if(realDist >= dist){

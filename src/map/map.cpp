@@ -35,11 +35,11 @@ Map::Map(){
 					break;
 				case 'w':
 					type = Field::Wall;
-					sprite = &AssetManager::get().doubleHorizontal;
+					sprite = &AssetManager::get().doubleHorizontalUpper;
 					break;
 				case 'a':
 					type = Field::Wall;
-					sprite = &AssetManager::get().doubleVertical;
+					sprite = &AssetManager::get().doubleVerticalLeft;
 					break;
 				case 't':
 					type = Field::Wall;
@@ -91,11 +91,11 @@ Map::Map(){
 					break;
 				case '_':
 					type = Field::Wall;
-					sprite = &AssetManager::get().singleHorizontal;
+					sprite = &AssetManager::get().singleHorizontalUpper;
 					break;
 				case '|':
 					type = Field::Wall;
-					sprite = &AssetManager::get().singleVertical;
+					sprite = &AssetManager::get().singleVerticalLeft;
 					break;
 				case 'i':
 					type = Field::Wall;
