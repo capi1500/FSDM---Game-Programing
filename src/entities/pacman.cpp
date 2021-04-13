@@ -93,11 +93,11 @@ void Pacman::update(const sf::Time& time){
 
     if(pos.y == 14){
         if(pos2.x == 0){
-            pos.x = 27;
+            pos.x = 28;
             sprite.setPosition(pos.x * 12, pos.y * 12);
         }
         else if(pos2.x == 28){
-            pos.x = 1;
+            pos.x = 0;
             sprite.setPosition(pos.x * 12, pos.y * 12);
         }
 
