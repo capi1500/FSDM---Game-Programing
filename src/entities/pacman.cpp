@@ -89,20 +89,23 @@ void Pacman::update(const sf::Time& time){
 		}
 	}
 
-	std::cout << pos.x << " " << pos.y << " " << pos2.x << " " << pos2.y <<"\n";
-
     if(pos.y == 14){
         if(pos2.x == 0){
-            pos.x = 28;
+            pos.x = 27;
             sprite.setPosition(pos.x * 12, pos.y * 12);
         }
         else if(pos2.x == 28){
-            pos.x = 0;
+            pos.x = 1;
             sprite.setPosition(pos.x * 12, pos.y * 12);
         }
 
-    }
+        if (pos.x >= 27 && dir == Right) {
+            dir = Left;
+        } else if (pos.x <= 1 && dir == Left) {
+            dir = Right;
+        }
 
+    }
 }
 
 void Pacman::draw(sf::RenderTarget& target, sf::RenderStates states) const{
@@ -115,7 +118,7 @@ Pacman::Pacman(Map& map) : map(map){
 	pos.y = 23;
 	sprite.setAnimation(AssetManager::get().pacman.left);
 	sprite.setPosition(pos.x * 12, pos.y * 12);
-	sprite.scale(0.68f, 0.68f);
+	sprite.scale(0.58f, 0.58f);
 	dirKeyboard = None;
 	dir = Left;
 }
