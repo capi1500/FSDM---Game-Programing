@@ -57,7 +57,6 @@ void Pacman::update(const sf::Time& time){
 			}
 		}
 	}
-
 	
 	if(map.getField(sf::Vector2u(pos2.y, pos2.x)).isCanPass()){
 		if(realDist >= dist){
@@ -89,6 +88,21 @@ void Pacman::update(const sf::Time& time){
 			sprite.update(time);
 		}
 	}
+
+	std::cout << pos.x << " " << pos.y << " " << pos2.x << " " << pos2.y <<"\n";
+
+    if(pos.y == 14){
+        if(pos2.x == 0){
+            pos.x = 27;
+            sprite.setPosition(pos.x * 12, pos.y * 12);
+        }
+        else if(pos2.x == 28){
+            pos.x = 1;
+            sprite.setPosition(pos.x * 12, pos.y * 12);
+        }
+
+    }
+
 }
 
 void Pacman::draw(sf::RenderTarget& target, sf::RenderStates states) const{
