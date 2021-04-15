@@ -200,11 +200,11 @@ Map::Map(){
 				type = Field::Wall;
 				sprite = &AssetManager::get().doubleSpecialUp2;
 				break;
-			case 's':
+			case 'u':
 				type = Field::Wall;
 				sprite = &AssetManager::get().doubleSpecialRight1;
 				break;
-			case 'S':
+			case 'U':
 				type = Field::Wall;
 				sprite = &AssetManager::get().doubleSpecialLeft1;
 				break;
@@ -270,6 +270,29 @@ Map::Map(){
 			case '0':
 				type = Field::BigPoint;
 				sprite = &AssetManager::get().bigCircle;
+				break;
+			case 'C':
+				type = Field::Cherry;
+				sprite = &AssetManager::get().cherry;
+			case 'S':
+				type = Field::Strawberry;
+				sprite = &AssetManager::get().strawberry;
+				break;
+			case 'O':
+				type = Field::Orange;
+				sprite = &AssetManager::get().orange;
+				break;
+			case 'H':
+				type = Field::Bell;
+				sprite = &AssetManager::get().bell;
+				break;
+			case 'A':
+				type = Field::Apple;
+				sprite = &AssetManager::get().apple;
+				break;
+			case 'G':
+				type = Field::Grapes;
+				sprite = &AssetManager::get().grapes;
 				break;
 			default:
 				type = Field::Empty;
