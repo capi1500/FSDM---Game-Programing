@@ -16,96 +16,105 @@ Map::Map(){
 			file.get(c);
 			Field::Type type;
 			sf::Sprite* sprite;
-			/*switch(c){
-				case 'q':
-					type = Field::Wall;
-					sprite = &AssetManager::get().doubleLeftUpBig;
-					break;
-				case 'e':
-					type = Field::Wall;
-					sprite = &AssetManager::get().doubleRightUpBig;
-					break;
-				case 'z':
-					type = Field::Wall;
-					sprite = &AssetManager::get().doubleLeftDownBig;
-					break;
-				case 'c':
-					type = Field::Wall;
-					sprite = &AssetManager::get().doubleRightDownBig;
-					break;
-				case 'w':
+			switch (c){
+				case 'T':
 					type = Field::Wall;
 					sprite = &AssetManager::get().doubleHorizontalUpper;
 					break;
-				case 'a':
+				case 'B':
+					type = Field::Wall;
+					sprite = &AssetManager::get().doubleHorizontalLower;
+					break;
+				case 'L':
 					type = Field::Wall;
 					sprite = &AssetManager::get().doubleVerticalLeft;
 					break;
+				case 'R':
+					type = Field::Wall;
+					sprite = &AssetManager::get().doubleVerticalRight;
+					break;
+
+				case 'X':
+					type = Field::Wall;
+					sprite = &AssetManager::get().doubleLeftUpBig;
+					break;
+				case 'Y':
+					type = Field::Wall;
+					sprite = &AssetManager::get().doubleRightUpBig;
+					break;
+				case 'Z':
+					type = Field::Wall;
+					sprite = &AssetManager::get().doubleLeftDownBig;
+					break;
+				case 'W':
+					type = Field::Wall;
+					sprite = &AssetManager::get().doubleRightDownBig;
+					break;
+
 				case 't':
-					type = Field::Wall;
-					sprite = &AssetManager::get().doubleSpecialUp1;
-					break;
-				case 'r':
-					type = Field::Wall;
-					sprite = &AssetManager::get().doubleSpecialUp2;
-					break;
-				case 'f':
-					type = Field::Wall;
-					sprite = &AssetManager::get().doubleSpecialLeft1;
-					break;
-				case 'g':
-					type = Field::Wall;
-					sprite = &AssetManager::get().doubleSpecialLeft2;
-					break;
-				case 'v':
-					type = Field::Wall;
-					sprite = &AssetManager::get().doubleSpecialRight1;
-					break;
-				case 'b':
-					type = Field::Wall;
-					sprite = &AssetManager::get().doubleSpecialRight2;
-					break;
-				case '.':
-					type = Field::Point;
-					sprite = &AssetManager::get().smallCircle;
-					break;
-				case 'O':
-					type = Field::BigPoint;
-					sprite = &AssetManager::get().bigCircle;
-					break;
-				case 'y':
-					type = Field::Wall;
-					sprite = &AssetManager::get().singleLeftUp;
-					break;
-				case 'u':
-					type = Field::Wall;
-					sprite = &AssetManager::get().singleRightUp;
-					break;
-				case 'h':
-					type = Field::Wall;
-					sprite = &AssetManager::get().singleLeftDown;
-					break;
-				case 'j':
-					type = Field::Wall;
-					sprite = &AssetManager::get().singleRightDown;
-					break;
-				case '_':
 					type = Field::Wall;
 					sprite = &AssetManager::get().singleHorizontalUpper;
 					break;
-				case '-':
+				case 'b':
 					type = Field::Wall;
-					sprite = &AssetManager::get().door;
+					sprite = &AssetManager::get().singleHorizontalLower;
 					break;
-				case '|':
+				case 'l':
 					type = Field::Wall;
 					sprite = &AssetManager::get().singleVerticalLeft;
 					break;
-				case 'i':
+				case 'r':
+					type = Field::Wall;
+					sprite = &AssetManager::get().singleVerticalRight;
+					break;
+
+				case 'x':
+					type = Field::Wall;
+					sprite = &AssetManager::get().singleLeftUp;
+					break;
+				case 'y':
+					type = Field::Wall;
+					sprite = &AssetManager::get().singleRightUp;
+					break;
+				case 'z':
+					type = Field::Wall;
+					sprite = &AssetManager::get().singleLeftDown;
+					break;
+				case 'w':
+					type = Field::Wall;
+					sprite = &AssetManager::get().singleRightDown;
+					break;
+
+				case 'q':
+					type = Field::Wall;
+					sprite = &AssetManager::get().doubleSpecialUp1;
+					break;
+				case 'Q':
+					type = Field::Wall;
+					sprite = &AssetManager::get().doubleSpecialUp2;
+					break;
+				case 'u':
+					type = Field::Wall;
+					sprite = &AssetManager::get().doubleSpecialRight1;
+					break;
+				case 'U':
+					type = Field::Wall;
+					sprite = &AssetManager::get().doubleSpecialLeft1;
+					break;
+				case 'v':
+					type = Field::Wall;
+					sprite = &AssetManager::get().doubleSpecialRight2;
+					break;
+				case 'V':
+					type = Field::Wall;
+					sprite = &AssetManager::get().doubleSpecialLeft2;
+					break;
+
+				case 'e':
 					type = Field::Wall;
 					sprite = &AssetManager::get().rectLeftUp;
 					break;
-				case 'o':
+				case 'E':
 					type = Field::Wall;
 					sprite = &AssetManager::get().rectRightUp;
 					break;
@@ -113,191 +122,75 @@ Map::Map(){
 					type = Field::Wall;
 					sprite = &AssetManager::get().rectLeftDown;
 					break;
-				case 'l':
+				case 'K':
 					type = Field::Wall;
 					sprite = &AssetManager::get().rectRightDown;
+					break;
+				case ']':
+					type = Field::Wall;
+					sprite = &AssetManager::get().rectLeftEnd;
+					break;
+				case '[':
+					type = Field::Wall;
+					sprite = &AssetManager::get().rectRightEnd;
+					break;
+				case 'd':
+					type = Field::Door;
+					sprite = &AssetManager::get().door;
+					break;
+
+				case 'f':
+					type = Field::Wall;
+					sprite = &AssetManager::get().singleSpecialRightUp;
+					break;
+				case 'F':
+					type = Field::Wall;
+					sprite = &AssetManager::get().singleSpecialLeftUp;
+					break;
+				case 'j':
+					type = Field::Wall;
+					sprite = &AssetManager::get().singleSpecialLeftDown;
+					break;
+				case 'J':
+					type = Field::Wall;
+					sprite = &AssetManager::get().singleSpecialRightDown;
+					break;
+
+				case '.':
+					type = Field::Point;
+					sprite = &AssetManager::get().smallCircle;
+					break;
+				case '0':
+					type = Field::BigPoint;
+					sprite = &AssetManager::get().bigCircle;
+					break;
+				case 'C':
+					type = Field::Cherry;
+					sprite = &AssetManager::get().cherry;
+				case 'S':
+					type = Field::Strawberry;
+					sprite = &AssetManager::get().strawberry;
+					break;
+				case 'O':
+					type = Field::Orange;
+					sprite = &AssetManager::get().orange;
+					break;
+				case 'H':
+					type = Field::Bell;
+					sprite = &AssetManager::get().bell;
+					break;
+				case 'A':
+					type = Field::Apple;
+					sprite = &AssetManager::get().apple;
+					break;
+				case 'G':
+					type = Field::Grapes;
+					sprite = &AssetManager::get().grapes;
 					break;
 				default:
 					type = Field::Empty;
 					sprite = &AssetManager::get().empty;
 					break;
-			}*/
-			switch (c)
-			{
-			case 'T':
-				type = Field::Wall;
-				sprite = &AssetManager::get().doubleHorizontalUpper;
-				break;
-			case 'B':
-				type = Field::Wall;
-				sprite = &AssetManager::get().doubleHorizontalLower;
-				break;
-			case 'L':
-				type = Field::Wall;
-				sprite = &AssetManager::get().doubleVerticalLeft;
-				break;
-			case 'R':
-				type = Field::Wall;
-				sprite = &AssetManager::get().doubleVerticalRight;
-				break;
-
-			case 'X':
-				type = Field::Wall;
-				sprite = &AssetManager::get().doubleLeftUpBig;
-				break;
-			case 'Y':
-				type = Field::Wall;
-				sprite = &AssetManager::get().doubleRightUpBig;
-				break;
-			case 'Z':
-				type = Field::Wall;
-				sprite = &AssetManager::get().doubleLeftDownBig;
-				break;
-			case 'W':
-				type = Field::Wall;
-				sprite = &AssetManager::get().doubleRightDownBig;
-				break;
-
-			case 't':
-				type = Field::Wall;
-				sprite = &AssetManager::get().singleHorizontalUpper;
-				break;
-			case 'b':
-				type = Field::Wall;
-				sprite = &AssetManager::get().singleHorizontalLower;
-				break;
-			case 'l':
-				type = Field::Wall;
-				sprite = &AssetManager::get().singleVerticalLeft;
-				break;
-			case 'r':
-				type = Field::Wall;
-				sprite = &AssetManager::get().singleVerticalRight;
-				break;
-
-			case 'x':
-				type = Field::Wall;
-				sprite = &AssetManager::get().singleLeftUp;
-				break;
-			case 'y':
-				type = Field::Wall;
-				sprite = &AssetManager::get().singleRightUp;
-				break;
-			case 'z':
-				type = Field::Wall;
-				sprite = &AssetManager::get().singleLeftDown;
-				break;
-			case 'w':
-				type = Field::Wall;
-				sprite = &AssetManager::get().singleRightDown;
-				break;
-
-			case 'q':
-				type = Field::Wall;
-				sprite = &AssetManager::get().doubleSpecialUp1;
-				break;
-			case 'Q':
-				type = Field::Wall;
-				sprite = &AssetManager::get().doubleSpecialUp2;
-				break;
-			case 'u':
-				type = Field::Wall;
-				sprite = &AssetManager::get().doubleSpecialRight1;
-				break;
-			case 'U':
-				type = Field::Wall;
-				sprite = &AssetManager::get().doubleSpecialLeft1;
-				break;
-			case 'v':
-				type = Field::Wall;
-				sprite = &AssetManager::get().doubleSpecialRight2;
-				break;
-			case 'V':
-				type = Field::Wall;
-				sprite = &AssetManager::get().doubleSpecialLeft2;
-				break;
-
-			case 'e':
-				type = Field::Wall;
-				sprite = &AssetManager::get().rectLeftUp;
-				break;
-			case 'E':
-				type = Field::Wall;
-				sprite = &AssetManager::get().rectRightUp;
-				break;
-			case 'k':
-				type = Field::Wall;
-				sprite = &AssetManager::get().rectLeftDown;
-				break;
-			case 'K':
-				type = Field::Wall;
-				sprite = &AssetManager::get().rectRightDown;
-				break;
-			case ']':
-				type = Field::Wall;
-				sprite = &AssetManager::get().rectLeftEnd;
-				break;
-			case '[':
-				type = Field::Wall;
-				sprite = &AssetManager::get().rectRightEnd;
-				break;
-			case 'd':
-				type = Field::Door;
-				sprite = &AssetManager::get().door;
-				break;
-
-			case 'f':
-				type = Field::Wall;
-				sprite = &AssetManager::get().singleSpecialRightUp;
-				break;
-			case 'F':
-				type = Field::Wall;
-				sprite = &AssetManager::get().singleSpecialLeftUp;
-				break;
-			case 'j':
-				type = Field::Wall;
-				sprite = &AssetManager::get().singleSpecialLeftDown;
-				break;
-			case 'J':
-				type = Field::Wall;
-				sprite = &AssetManager::get().singleSpecialRightDown;
-				break;
-
-			case '.':
-				type = Field::Point;
-				sprite = &AssetManager::get().smallCircle;
-				break;
-			case '0':
-				type = Field::BigPoint;
-				sprite = &AssetManager::get().bigCircle;
-				break;
-			case 'C':
-				type = Field::Cherry;
-				sprite = &AssetManager::get().cherry;
-			case 'S':
-				type = Field::Strawberry;
-				sprite = &AssetManager::get().strawberry;
-				break;
-			case 'O':
-				type = Field::Orange;
-				sprite = &AssetManager::get().orange;
-				break;
-			case 'H':
-				type = Field::Bell;
-				sprite = &AssetManager::get().bell;
-				break;
-			case 'A':
-				type = Field::Apple;
-				sprite = &AssetManager::get().apple;
-				break;
-			case 'G':
-				type = Field::Grapes;
-				sprite = &AssetManager::get().grapes;
-				break;
-			default:
-				type = Field::Empty;
-				sprite = &AssetManager::get().empty;
-				break;
 			}
 			fields.back().push_back(Field(type, *sprite));
 		}
