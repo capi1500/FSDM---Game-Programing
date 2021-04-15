@@ -38,10 +38,6 @@ class AssetManager : public Singleton<AssetManager>{
 		sf::Sprite doubleLeftDownBig;
 		sf::Sprite doubleRightUpBig;
 		sf::Sprite doubleRightDownBig;
-		sf::Sprite doubleLeftUpSmall;
-		sf::Sprite doubleLeftDownSmall;
-		sf::Sprite doubleRightUpSmall;
-		sf::Sprite doubleRightDownSmall;
 		sf::Sprite doubleVerticalLeft;
 		sf::Sprite doubleVerticalRight;
 		sf::Sprite doubleHorizontalUpper;
@@ -61,6 +57,10 @@ class AssetManager : public Singleton<AssetManager>{
 		sf::Sprite singleVerticalRight;
 		sf::Sprite singleHorizontalUpper;
 		sf::Sprite singleHorizontalLower;
+		sf::Sprite singleSpecialLeftUp;
+		sf::Sprite singleSpecialRightUp;
+		sf::Sprite singleSpecialLeftDown;
+		sf::Sprite singleSpecialRightDown;
 		
 		sf::Sprite door;
 		sf::Sprite rectLeftEnd;
