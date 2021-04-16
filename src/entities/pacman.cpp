@@ -33,7 +33,6 @@ void Pacman::update(const sf::Time& time){
 	else if(dirKeyboard == Down && dir == Up){
 		dir = Down;
 		sprite.setAnimation(AssetManager::get().pacman.down);
-		
 	}
 	
 	sf::Vector2u pos2(pos.x + dx[dir], pos.y + dy[dir]);
@@ -61,7 +60,7 @@ void Pacman::update(const sf::Time& time){
 	if(map.getField(sf::Vector2u(pos2.y, pos2.x)).isCanPass()){
 		if(realDist >= dist){
 			sprite.setPosition(pos2.x * 12, pos2.y * 12);
-			
+			std::cout << pos2.x * 12 << " " << pos2.y * 12 << "moving1\n";
 			pos = pos2;
 			pos2 = sf::Vector2u(pos.x + dx[dir], pos.y + dy[dir]);
 			
@@ -84,6 +83,7 @@ void Pacman::update(const sf::Time& time){
 		
 		if(map.getField(sf::Vector2u(pos2.y, pos2.x)).isCanPass()){
 			sprite.move(dx[dir] * realDist, dy[dir] * realDist);
+			std::cout << sprite.getPosition().x << " " << sprite.getPosition().y << "moving2\n";
 			
 			sprite.update(time);
 		}
@@ -91,15 +91,15 @@ void Pacman::update(const sf::Time& time){
 
     if(pos.y == 14){
         if(pos2.x == 0){
-            pos.x = 27;
+            pos.x = 32;
             sprite.setPosition(pos.x * 12, pos.y * 12);
         }
-        else if(pos2.x == 28){
+        else if(pos2.x == 33){
             pos.x = 1;
             sprite.setPosition(pos.x * 12, pos.y * 12);
         }
 
-        if (pos.x >= 27 && dir == Right) {
+        if (pos.x >= 32 && dir == Right) {
             dir = Left;
         } else if (pos.x <= 1 && dir == Left) {
             dir = Right;
@@ -110,15 +110,16 @@ void Pacman::update(const sf::Time& time){
 
 void Pacman::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 	states.transform.combine(getTransform());
+	states.transform.translate(-6, -6);
 	target.draw(sprite, states);
 }
 
 Pacman::Pacman(Map& map) : map(map){
-	pos.x = 13;
+	pos.x = 16;
 	pos.y = 23;
 	sprite.setAnimation(AssetManager::get().pacman.left);
 	sprite.setPosition(pos.x * 12, pos.y * 12);
-	sprite.scale(0.58f, 0.58f);
+	//sprite.scale(0.58f, 0.58f);
 	dirKeyboard = None;
 	dir = Left;
 }

@@ -6,24 +6,28 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 void AnimatedSprite::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-	states.transform.combine(getTransform());
-	target.draw(sprite, states);
+	if(animation != nullptr){
+		states.transform.combine(getTransform());
+		target.draw(sprite, states);
+	}
 }
 
 void AnimatedSprite::update(const sf::Time& time){
-	deltaTime += time;
-	while(deltaTime > frameTime){
-		deltaTime -= frameTime;
-		frame++;
-		if(frame == animation->frameCount())
-			frame = 0;
-		sprite.setTexture(animation->getFrame(frame));
+	if(animation != nullptr){
+		deltaTime += time;
+		while(deltaTime > frameTime){
+			deltaTime -= frameTime;
+			frame++;
+			if(frame == animation->frameCount())
+				frame = 0;
+			sprite.setTexture(animation->getFrame(frame));
+		}
 	}
 }
 
 void AnimatedSprite::setAnimation(Animation& animation){
 	this->animation = &animation;
-	deltaTime = sf::milliseconds(0);
+	//deltaTime = sf::milliseconds(0);
 }
 
 void AnimatedSprite::setFrameTime(const sf::Time& time){
@@ -32,4 +36,5 @@ void AnimatedSprite::setFrameTime(const sf::Time& time){
 
 AnimatedSprite::AnimatedSprite(){
 	setFrameTime(sf::milliseconds(100));
+	frame = 0;
 }

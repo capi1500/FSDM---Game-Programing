@@ -12,6 +12,14 @@ Map::Map(){
 	char c;
 	for(int y = 0; y < 31; y++){
 		fields.push_back(std::vector<Field>());
+		{
+			Field::Type type = Field::Wall;
+			if(y == 14)
+				type = Field::Empty;
+			fields.back().push_back(Field(type, AssetManager::get().empty));
+			fields.back().push_back(Field(type, AssetManager::get().empty));
+			fields.back().push_back(Field(type, AssetManager::get().empty));
+		}
 		for(int x = 0; x < 28; x++){
 			file.get(c);
 			Field::Type type;
@@ -194,6 +202,13 @@ Map::Map(){
 			}
 			fields.back().push_back(Field(type, *sprite));
 		}
+		{
+			Field::Type type = Field::Wall;
+			if(y == 14)
+				type = Field::Empty;
+			fields.back().push_back(Field(type, AssetManager::get().empty));
+			fields.back().push_back(Field(type, AssetManager::get().empty));
+		}
 		file.get(c);
 	}
 }
@@ -204,7 +219,7 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 			target.draw(e, states);
 			states.transform.translate(12, 0);
 		}
-		states.transform.translate(-12 * 28, 12);
+		states.transform.translate(-12 * 33, 12);
 	}
 }
 

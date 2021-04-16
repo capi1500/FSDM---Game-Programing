@@ -16,6 +16,7 @@ void Animation::addFrame(const sf::Image& image, const sf::IntRect& frame){
 	sf::Texture* t = new sf::Texture;
 	t->loadFromImage(image, frame);
 	frames.push_back(t);
+	
 }
 
 Animation::~Animation(){

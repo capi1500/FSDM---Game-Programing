@@ -11,9 +11,10 @@
 #include <map/map.hpp>
 #include "gameEvent.hpp"
 
-class Game : public Listener<GameEvent>{
+class Game : public Listener<GameEvent>, public Listener<sf::Event>{
 	private:
 		sf::RenderWindow window;
+		sf::View view;
 		FiniteStateMachine scenes;
 		bool active;
 		
@@ -24,6 +25,8 @@ class Game : public Listener<GameEvent>{
 		void run();
 		
 		void onNotify(const GameEvent& event) override;
+		
+		void onNotify(const sf::Event& event) override;
 		
 		Game();
 		~Game();

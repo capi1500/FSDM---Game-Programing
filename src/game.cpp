@@ -8,6 +8,7 @@
 #include <systems/assetManager.hpp>
 #include <entities/fruit.hpp>
 #include <entities/pacman.hpp>
+#include <iostream>
 
 Signal<GameEvent> gameEventSignal;
 
@@ -18,24 +19,25 @@ Scene* Game::getScene(){
 Game::Game(){
 	AssetManager::get().load();
 	
-	window.create(sf::VideoMode(500, 500), "Pacman");
+	window.create(sf::VideoMode(12 * 28, 12 * 40), "Pacman");
 	window.setFramerateLimit(60);
 	
 	InputHandler::get().registerWindow(&window);
 	active = true;
 	gameEventSignal.addListener(this);
+	InputHandler::get().addListener(this);
 	
 	Scene* scene = new Scene(scenes);
-	/*scene->addEntity(new SmallPoint);
-	scene->addEntity(new Fruit(Fruit::Cherry));
-	scene->addEntity(new Fruit(Fruit::Strawberry));
-	scene->addEntity(new Fruit(Fruit::Orange));
-	scene->addEntity(new Fruit(Fruit::Bell));
-	scene->addEntity(new Fruit(Fruit::Apple));
-	scene->addEntity(new Fruit(Fruit::Grapes));*/
 	scene->addEntity(new Pacman(map));
 	
 	scenes.add(scene);
+	
+	view = sf::View(sf::FloatRect(36, -36, 12 * 28, 12 * 40));
+	long double width = static_cast<long double>(28 * window.getSize().y) / static_cast<long double>(40 * window.getSize().x);
+	view.setViewport(sf::FloatRect((1 - width) / 2, 0, width, 1));
+	window.setView(view);
+	
+	window.setVerticalSyncEnabled(true);
 }
 
 Game::~Game(){
@@ -68,4 +70,12 @@ void Game::run(){
 void Game::onNotify(const GameEvent& event){
 	if(event.type == GameEvent::Closed)
 		active = false;
+}
+
+void Game::onNotify(const sf::Event& event){
+	if(event.type == sf::Event::Resized){
+		long double width = static_cast<long double>(28 * event.size.height) / static_cast<long double>(40 * event.size.width);
+		view.setViewport(sf::FloatRect((1 - width) / 2, 0, width, 1));
+		window.setView(view);
+	}
 }

@@ -7,8 +7,8 @@ class Singleton{
 		Singleton(){}
 	public:
 		static T& get(){
-			static T get;
-			return get;
+			static T instance;
+			return instance;
 		}
 		
 		Singleton(Singleton const&) = delete;
