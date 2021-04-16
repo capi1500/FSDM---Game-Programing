@@ -104,7 +104,7 @@ void AssetManager::load(){
 	singleSpecialLeftDown.setTextureRect(sf::IntRect(sizex * 5 / 2, sizey * 8 / 2, sizex / 2, sizey / 2));
 	singleSpecialRightDown.setTextureRect(sf::IntRect(sizex * 6 / 2, sizey * 8 / 2, sizex / 2, sizey / 2));
 	
-	door.setTextureRect(sf::IntRect(sizex * 27 / 2, sizey * 1 / 2, sizex / 2, sizey / 2));
+	door.setTextureRect(sf::IntRect(sizex * 31 / 2, sizey * 10 / 2, sizex / 2, sizey / 2));
 	rectLeftEnd.setTextureRect(sf::IntRect(sizex * 17 / 2, sizey * 5 / 2, sizex / 2, sizey / 2));
 	rectRightEnd.setTextureRect(sf::IntRect(sizex * 16 / 2, sizey * 5 / 2, sizex / 2, sizey / 2));
 	rectLeftUp.setTextureRect(sf::IntRect(sizex * 29 / 2, sizey * 3 / 2, sizex / 2, sizey / 2));
