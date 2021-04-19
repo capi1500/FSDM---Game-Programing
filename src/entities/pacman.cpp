@@ -18,33 +18,17 @@ void Pacman::update(const sf::Time& time){
 	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		dirKeyboard = Right;
 	
-	if(dirKeyboard == Left && dir == Right){
-		dir = Left;
-		sprite.setAnimation(AssetManager::get().pacman.left);
-	}
-	else if(dirKeyboard == Right && dir == Left){
-		dir = Right;
-		sprite.setAnimation(AssetManager::get().pacman.right);
-	}
-	else if(dirKeyboard == Up && dir == Down){
-		dir = Up;
-		sprite.setAnimation(AssetManager::get().pacman.up);
-	}
-	else if(dirKeyboard == Down && dir == Up){
-		dir = Down;
-		sprite.setAnimation(AssetManager::get().pacman.down);
-	}
-	
 	sf::Vector2u pos2(pos.x + dx[dir], pos.y + dy[dir]);
 	
 	int dist = abs(sprite.getPosition().x - pos2.x * 12) + abs(sprite.getPosition().y - pos2.y * 12);
 	int realDist = time.asMilliseconds() / 16;
 	
 	if(dist == 12){
-		if(dir != dirKeyboard){
+		if(dirKeyboard != None && dir != dirKeyboard){
 			sf::Vector2u pos3 = sf::Vector2u(pos.x + dx[dirKeyboard], pos.y + dy[dirKeyboard]);
 			if(map.getField(sf::Vector2u(pos3.y, pos3.x)).isCanPass()){
 				dir = dirKeyboard;
+				dirKeyboard = None;
 				if(dir == Up)
 					sprite.setAnimation(AssetManager::get().pacman.up);
 				else if(dir == Down)
@@ -53,22 +37,52 @@ void Pacman::update(const sf::Time& time){
 					sprite.setAnimation(AssetManager::get().pacman.left);
 				else if(dir == Right)
 					sprite.setAnimation(AssetManager::get().pacman.right);
+				pos2 = pos3;
+				dist = abs(sprite.getPosition().x - pos2.x * 12) + abs(sprite.getPosition().y - pos2.y * 12);
 			}
 		}
 	}
 	
 	if(map.getField(sf::Vector2u(pos2.y, pos2.x)).isCanPass()){
-		if(realDist >= dist){
+		if(dirKeyboard == Left && dir == Right){
+			std::swap(pos, pos2);
+			dir = Left;
+			dirKeyboard = None;
+			sprite.setAnimation(AssetManager::get().pacman.left);
+		}
+		else if(dirKeyboard == Right && dir == Left){
+			std::swap(pos, pos2);
+			dir = Right;
+			dirKeyboard = None;
+			sprite.setAnimation(AssetManager::get().pacman.right);
+		}
+		else if(dirKeyboard == Up && dir == Down){
+			std::swap(pos, pos2);
+			dir = Up;
+			dirKeyboard = None;
+			sprite.setAnimation(AssetManager::get().pacman.up);
+		}
+		else if(dirKeyboard == Down && dir == Up){
+			std::swap(pos, pos2);
+			dir = Down;
+			dirKeyboard = None;
+			sprite.setAnimation(AssetManager::get().pacman.down);
+		}
+		dist = abs(sprite.getPosition().x - pos2.x * 12) + abs(sprite.getPosition().y - pos2.y * 12);
+		
+		while(realDist >= dist && map.getField(sf::Vector2u(pos2.y, pos2.x)).isCanPass()){
 			sprite.setPosition(pos2.x * 12, pos2.y * 12);
-			std::cout << pos2.x * 12 << " " << pos2.y * 12 << "moving1\n";
 			pos = pos2;
 			pos2 = sf::Vector2u(pos.x + dx[dir], pos.y + dy[dir]);
 			
 			realDist -= dist;
-			if(dir != dirKeyboard){
+			dist = abs(sprite.getPosition().x - pos2.x * 12) + abs(sprite.getPosition().y - pos2.y * 12);
+			
+			if(dirKeyboard != None && dir != dirKeyboard){
 				sf::Vector2u pos3 = sf::Vector2u(pos.x + dx[dirKeyboard], pos.y + dy[dirKeyboard]);
 				if(map.getField(sf::Vector2u(pos3.y, pos3.x)).isCanPass()){
 					dir = dirKeyboard;
+					dirKeyboard = None;
 					if(dir == Up)
 						sprite.setAnimation(AssetManager::get().pacman.up);
 					else if(dir == Down)
@@ -77,14 +91,13 @@ void Pacman::update(const sf::Time& time){
 						sprite.setAnimation(AssetManager::get().pacman.left);
 					else if(dir == Right)
 						sprite.setAnimation(AssetManager::get().pacman.right);
+					pos2 = pos3;
 				}
 			}
 		}
 		
 		if(map.getField(sf::Vector2u(pos2.y, pos2.x)).isCanPass()){
 			sprite.move(dx[dir] * realDist, dy[dir] * realDist);
-			std::cout << sprite.getPosition().x << " " << sprite.getPosition().y << "moving2\n";
-			
 			sprite.update(time);
 		}
 	}
@@ -119,7 +132,6 @@ Pacman::Pacman(Map& map) : map(map){
 	pos.y = 23;
 	sprite.setAnimation(AssetManager::get().pacman.left);
 	sprite.setPosition(pos.x * 12, pos.y * 12);
-	//sprite.scale(0.58f, 0.58f);
 	dirKeyboard = None;
 	dir = Left;
 }
