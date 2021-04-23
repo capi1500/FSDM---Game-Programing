@@ -5,9 +5,10 @@
 #ifndef PROGRAMOWANIEGIER_MAP_HPP
 #define PROGRAMOWANIEGIER_MAP_HPP
 
+#include <gameEvent.hpp>
 #include "field.hpp"
 
-class Map : public sf::Drawable{
+class Map : public sf::Drawable, public Listener<GameEvent>{
 	private:
 		std::vector<std::vector<Field>> fields;
 	protected:
@@ -15,6 +16,8 @@ class Map : public sf::Drawable{
 	public:
 		Field& getField(const sf::Vector2u& pos);
 		Field& getField(const unsigned x, const unsigned y);
+		
+		void onNotify(const GameEvent& event) override;
 		
 		Map();
 };

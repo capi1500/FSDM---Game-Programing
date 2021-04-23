@@ -32,6 +32,4 @@ class Game : public Listener<GameEvent>, public Listener<sf::Event>{
 		~Game();
 };
 
-extern Signal<GameEvent> gameEventSignal;
-
 #endif //PROGRAMOWANIEGIER_GAME_HPP

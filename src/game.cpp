@@ -4,13 +4,10 @@
 
 #include "game.hpp"
 #include <systems/inputHandler.hpp>
-#include <entities/smallPoint.hpp>
 #include <systems/assetManager.hpp>
-#include <entities/fruit.hpp>
 #include <entities/pacman.hpp>
 #include <iostream>
-
-Signal<GameEvent> gameEventSignal;
+#include <entities/ghost.hpp>
 
 Scene* Game::getScene(){
 	return static_cast<Scene*>(scenes.get());
@@ -29,6 +26,7 @@ Game::Game(){
 	
 	Scene* scene = new Scene(scenes);
 	scene->addEntity(new Pacman(map));
+	scene->addEntity(new Ghost(map, {5, 5}));
 	
 	scenes.add(scene);
 	

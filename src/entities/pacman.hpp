@@ -11,13 +11,6 @@
 
 class Pacman : public Entity{
 	private:
-		enum Direction{
-			Up,
-			Down,
-			Left,
-			Right,
-			None
-		};
 		Direction dir;
 		Direction dirKeyboard;
 		
@@ -28,6 +21,8 @@ class Pacman : public Entity{
 		
 		sf::Vector2u pos;
 		AnimatedSprite sprite;
+		
+		void sendSignal();
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:

@@ -3,3 +3,9 @@
 //
 
 #include "gameEvent.hpp"
+
+Signal<GameEvent> gameEventSignal;
+
+GameEvent::GameEvent(){
+
+}

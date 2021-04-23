@@ -211,6 +211,8 @@ Map::Map(){
 		}
 		file.get(c);
 	}
+	
+	gameEventSignal.addListener(this);
 }
 
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const{
@@ -229,4 +231,18 @@ Field& Map::getField(const sf::Vector2u& pos){
 
 Field& Map::getField(const unsigned int x, const unsigned int y){
 	return fields[x][y];
+}
+
+void Map::onNotify(const GameEvent& event){
+	if(event.type == GameEvent::PacmanMove){
+		Field& f = getField(event.pacmanMove.position);
+		if(f.getType() == Field::Point)
+			f.setType(Field::Empty, AssetManager::get().empty);
+		else if(f.getType() == Field::BigPoint){
+			GameEvent event1;
+			event1.type = GameEvent::BigPointEaten;
+			gameEventSignal.notify(event1);
+			f.setType(Field::Empty, AssetManager::get().empty);
+		}
+	}
 }

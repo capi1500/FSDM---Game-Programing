@@ -4,8 +4,8 @@
 
 #include "field.hpp"
 
-Field::Field(Field::Type type, sf::Sprite& sprite) : type(type), sprite(sprite){
-	canPass = (type != Door && type != Wall);
+Field::Field(Field::Type type, sf::Sprite& sprite) : sprite(&sprite){
+	setType(type, sprite);
 }
 
 void Field::update(const sf::Time& time){
@@ -14,7 +14,7 @@ void Field::update(const sf::Time& time){
 
 void Field::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 	states.transform.combine(getTransform());
-	target.draw(sprite, states);
+	target.draw(*sprite, states);
 }
 
 Field::Type Field::getType() const{
@@ -23,4 +23,10 @@ Field::Type Field::getType() const{
 
 bool Field::isCanPass() const{
 	return canPass;
+}
+
+void Field::setType(Field::Type type, sf::Sprite& sprite){
+	Field::type = type;
+	this->sprite = &sprite;
+	canPass = (type != Door && type != Wall);
 }

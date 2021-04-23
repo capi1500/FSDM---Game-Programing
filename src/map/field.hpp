@@ -26,11 +26,13 @@ class Field : public Entity{
 	private:
 		Type type;
 		bool canPass;
-		sf::Sprite& sprite;
+		sf::Sprite* sprite;
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:
 		void update(const sf::Time& time) override;
+		
+		void setType(Type type, sf::Sprite& sprite);
 		
 		Type getType() const;
 		

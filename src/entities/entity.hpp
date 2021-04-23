@@ -16,6 +16,14 @@ class Entity : public sf::Transformable, public sf::Drawable{
 		bool active;
 		bool exists;
 	public:
+		enum Direction{
+			Up,
+			Down,
+			Left,
+			Right,
+			None
+		};
+		
 		bool isVisible() const;
 		bool isActive() const;
 		bool isExists() const;
