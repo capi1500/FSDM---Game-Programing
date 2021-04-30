@@ -16,9 +16,9 @@ class Ghost : public Entity, public Listener<GameEvent>{
 		
 		Direction dir;
 		sf::Vector2u pos;
+		sf::Vector2u pacmanPos;
 		
 		FiniteStateMachine fsm;
-		
 		GhostState* state;
 		
 		GhostState* getState();
@@ -29,6 +29,10 @@ class Ghost : public Entity, public Listener<GameEvent>{
 		void setDir(Direction dir);
 		const sf::Vector2u& getPos() const;
 		void setPos(const sf::Vector2u& pos);
+		
+		const sf::Vector2u& getPacmanPos() const;
+		
+		Map& getMap() const;
 		
 		void update(const sf::Time& time) override;
 		

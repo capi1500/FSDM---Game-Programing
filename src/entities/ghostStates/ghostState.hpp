@@ -8,20 +8,23 @@
 #include <finiteStateMachine/finiteState.hpp>
 #include <misc/animatedSprite.hpp>
 #include <systems/assetManager.hpp>
+#include <stack>
 
 class Ghost;
 
 class GhostState : public FiniteState{
-	private:
+	protected:
 		AnimatedSprite sprite;
 		Ghost& ghost;
 		AssetManager::EntityAssetPack& assetPack;
+		std::stack<sf::Vector2u> moves;
+		sf::Vector2u nextMove();
+		
+		virtual void calculateMove() = 0;
 	public:
 		const AnimatedSprite& getSprite() const;
 		
-		virtual void update(const sf::Time& time){
-			sprite.update(time);
-		};
+		void update(const sf::Time& time);
 		
 		GhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack);
 };

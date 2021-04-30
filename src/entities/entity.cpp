@@ -19,3 +19,6 @@ bool Entity::isActive() const{
 bool Entity::isExists() const{
 	return exists;
 }
+
+int dx[4] = {0, 0, -1, 1};
+int dy[4] = {-1, 1, 0, 0};

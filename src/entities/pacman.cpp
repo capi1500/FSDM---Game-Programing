@@ -80,6 +80,24 @@ void Pacman::update(const sf::Time& time){
 			pos = pos2;
 			pos2 = sf::Vector2u(pos.x + dx[dir], pos.y + dy[dir]);
 			
+			if(pos.y == 14){
+				if(pos2.x == 0){
+					pos.x = 32;
+					sprite.setPosition(pos.x * 12, pos.y * 12);
+				}
+				else if(pos2.x == 33){
+					pos.x = 1;
+					sprite.setPosition(pos.x * 12, pos.y * 12);
+				}
+				
+				if (pos.x >= 32 && dir == Right) {
+					dir = Left;
+				} else if (pos.x <= 1 && dir == Left) {
+					dir = Right;
+				}
+				pos2 = sf::Vector2u(pos.x + dx[dir], pos.y + dy[dir]);
+			}
+			
 			realDist -= dist;
 			dist = abs(sprite.getPosition().x - pos2.x * 12) + abs(sprite.getPosition().y - pos2.y * 12);
 			

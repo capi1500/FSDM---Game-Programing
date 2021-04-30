@@ -34,4 +34,7 @@ class Entity : public sf::Transformable, public sf::Drawable{
 		virtual ~Entity() = default;
 };
 
+extern int dx[4];
+extern int dy[4];
+
 #endif //PROGRAMOWANIEGIER_ENTITY_HPP

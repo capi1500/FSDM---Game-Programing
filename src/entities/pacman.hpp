@@ -14,9 +14,6 @@ class Pacman : public Entity{
 		Direction dir;
 		Direction dirKeyboard;
 		
-		int dx[4] = {0, 0, -1, 1};
-		int dy[4] = {-1, 1, 0, 0};
-		
 		Map& map;
 		
 		sf::Vector2u pos;

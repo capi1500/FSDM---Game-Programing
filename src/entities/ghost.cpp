@@ -3,6 +3,7 @@
 //
 
 #include "ghost.hpp"
+#include "ghostStates/defaultGhostState.hpp"
 
 Entity::Direction Ghost::getDir() const{
 	return dir;
@@ -37,9 +38,19 @@ void Ghost::update(const sf::Time& time){
 
 Ghost::Ghost(Map& map, sf::Vector2u position) : map(map){
 	pos = position;
-	fsm.add(new GhostState(fsm, *this, AssetManager::get().redGhost));
+	gameEventSignal.addListener(this);
+	fsm.add(new DefaultGhostState(fsm, *this, AssetManager::get().redGhost));
 }
 
 void Ghost::onNotify(const GameEvent& event){
+	if(event.type == GameEvent::PacmanMove)
+		pacmanPos = event.pacmanMove.position;
+}
 
+Map& Ghost::getMap() const{
+	return map;
+}
+
+const sf::Vector2u& Ghost::getPacmanPos() const{
+	return pacmanPos;
 }
