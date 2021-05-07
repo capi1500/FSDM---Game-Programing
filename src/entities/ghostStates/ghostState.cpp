@@ -46,16 +46,15 @@ void GhostState::update(const sf::Time& time){
 	int dist = abs(sprite.getPosition().x - pos2.x * 12) + abs(sprite.getPosition().y - pos2.y * 12);
 	int realDist = time.asMilliseconds() / 16;
 	
-	//std::clog << "update dist: " << dist << ", realDist: " << realDist << "\n";
-	
 	while(realDist >= dist){
 		sprite.setPosition(pos2.x * 12, pos2.y * 12);
 		ghost.setPos(pos2);
 		moves.pop();
 		pos2 = nextMove();
+		realDist -= dist;
+		
 		if(pos2 == ghost.getPos())
 			break;
-		// TODO teleportowanie przez ściany
 		
 		if(ghost.getPos().y == 14){
 			if(pos2.x == 32){
@@ -80,8 +79,6 @@ void GhostState::update(const sf::Time& time){
 			}
 		}
 		
-		// end TODO
-		realDist -= dist;
 		dist = abs(sprite.getPosition().x - pos2.x * 12) + abs(sprite.getPosition().y - pos2.y * 12);
 	}
 	

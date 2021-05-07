@@ -46,7 +46,7 @@ Game::~Game(){
 
 void Game::run(){
 	Console console;
-	console.listenType(Message::Debug);
+	//console.listenType(Message::Debug);
 	
 	Scene* scene;
 	sf::Time time;

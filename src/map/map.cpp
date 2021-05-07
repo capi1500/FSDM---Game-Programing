@@ -288,7 +288,7 @@ std::vector<sf::Vector2u> Map::findShortestPath(const sf::Vector2u& v, const sf:
 		}
 		
 		for(int d = 0; d < 4; d++){
-			sf::Vector2u next = sf::Vector2u((static_cast<int>(a.x) + dx[p[d]] + static_cast<int>(sizex)) % static_cast<int>(sizex), a.y + dy[p[d]]);
+			sf::Vector2u next = sf::Vector2u((sizex + a.x + dx[p[d]]) % sizex, a.y + dy[p[d]]); // ctrl+z?
 			if(getField(next).isCanPass()){
 				unsigned dist = distance[a.x][a.y] + 1;
 				if(dist < distance[next.x][next.y]){
