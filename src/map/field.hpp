@@ -39,6 +39,7 @@ class Field : public Entity{
 		bool isCanPass() const;
 		
 		Field(Type type, sf::Sprite& sprite);
+		Field();
 };
 
 #endif //PROGRAMOWANIEGIER_FIELD_HPP

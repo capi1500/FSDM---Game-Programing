@@ -2,6 +2,7 @@
 // Created by Kacper on 23/04/2021.
 //
 
+#include <systems/console.hpp>
 #include "ghost.hpp"
 #include "ghostStates/defaultGhostState.hpp"
 
@@ -10,7 +11,7 @@ Entity::Direction Ghost::getDir() const{
 }
 
 void Ghost::setDir(Entity::Direction dir){
-	Ghost::dir = dir;
+	this->dir = dir;
 }
 
 const sf::Vector2u& Ghost::getPos() const{
@@ -18,7 +19,8 @@ const sf::Vector2u& Ghost::getPos() const{
 }
 
 void Ghost::setPos(const sf::Vector2u& pos){
-	Ghost::pos = pos;
+	message.notify(Message("ghost moved (" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ")", Message::Debug));
+	this->pos = pos;
 }
 
 GhostState* Ghost::getState(){
@@ -36,15 +38,11 @@ void Ghost::update(const sf::Time& time){
 	state->update(time);
 }
 
-Ghost::Ghost(Map& map, sf::Vector2u position) : map(map){
-	pos = position;
-	gameEventSignal.addListener(this);
-	fsm.add(new DefaultGhostState(fsm, *this, AssetManager::get().redGhost));
-}
-
 void Ghost::onNotify(const GameEvent& event){
-	if(event.type == GameEvent::PacmanMove)
+	if(event.type == GameEvent::PacmanMove){
 		pacmanPos = event.pacmanMove.position;
+		getState()->forceRecalculate();
+	}
 }
 
 Map& Ghost::getMap() const{
@@ -53,4 +51,15 @@ Map& Ghost::getMap() const{
 
 const sf::Vector2u& Ghost::getPacmanPos() const{
 	return pacmanPos;
+}
+
+Ghost::Ghost(Map& map, sf::Vector2u position) : map(map){
+	pos = position;
+	gameEventSignal.addListener(this);
+	fsm.add(new DefaultGhostState(fsm, *this, AssetManager::get().redGhost));
+}
+
+Ghost::~Ghost(){
+	fsm.clear();
+	gameEventSignal.removeListener(this);
 }

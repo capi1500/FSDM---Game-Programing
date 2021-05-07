@@ -23,12 +23,12 @@ class Signal{
 		}
 		
 		void handleEvents(){
-			T event;
+			T* event;
 			while(!m_events.empty()){
-				event = m_events.front();
+				event = &m_events.front();
 				m_events.pop();
 				for(auto l : m_listeners){
-					l->onNotify(event);
+					l->onNotify(*event);
 				}
 			}
 		}

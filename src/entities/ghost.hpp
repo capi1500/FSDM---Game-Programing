@@ -29,16 +29,16 @@ class Ghost : public Entity, public Listener<GameEvent>{
 		void setDir(Direction dir);
 		const sf::Vector2u& getPos() const;
 		void setPos(const sf::Vector2u& pos);
-		
 		const sf::Vector2u& getPacmanPos() const;
-		
 		Map& getMap() const;
+		
+		void onNotify(const GameEvent& event) override;
 		
 		void update(const sf::Time& time) override;
 		
 		Ghost(Map& map, sf::Vector2u position);
 		
-		void onNotify(const GameEvent& event) override;
+		virtual ~Ghost();
 };
 
 #endif //PROGRAMOWANIEGIER_GHOST_HPP

@@ -6,15 +6,18 @@
 #include <misc/message.hpp>
 #include <misc/singleton.hpp>
 #include <set>
+#include <gameEvent.hpp>
 
-class Console : public Listener<Message>{
+class Console : public Listener<Message>, public Listener<GameEvent>{
 	private:
 		std::set<Message::Type> types;
 	public:
-		void init();
-		
 		void listenType(Message::Type type);
 		void onNotify(const Message& event) override;
+		
+		void onNotify(const GameEvent& event) override;
+		
+		Console();
 		virtual ~Console();
 };
 

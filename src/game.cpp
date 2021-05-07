@@ -8,6 +8,7 @@
 #include <entities/pacman.hpp>
 #include <iostream>
 #include <entities/ghost.hpp>
+#include <systems/console.hpp>
 
 Scene* Game::getScene(){
 	return static_cast<Scene*>(scenes.get());
@@ -44,6 +45,9 @@ Game::~Game(){
 }
 
 void Game::run(){
+	Console console;
+	console.listenType(Message::Debug);
+	
 	Scene* scene;
 	sf::Time time;
 	sf::Clock clock;
@@ -54,6 +58,7 @@ void Game::run(){
 		
 		InputHandler::get().handleEvents();
 		gameEventSignal.handleEvents();
+		message.handleEvents();
 		
 		scene->update(time);
 		

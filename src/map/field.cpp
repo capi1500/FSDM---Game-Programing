@@ -8,6 +8,12 @@ Field::Field(Field::Type type, sf::Sprite& sprite) : sprite(&sprite){
 	setType(type, sprite);
 }
 
+
+Field::Field(){
+	type = Type::Empty;
+	sprite = nullptr;
+}
+
 void Field::update(const sf::Time& time){
 
 }

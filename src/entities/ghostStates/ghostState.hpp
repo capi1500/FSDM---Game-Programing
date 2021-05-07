@@ -8,7 +8,7 @@
 #include <finiteStateMachine/finiteState.hpp>
 #include <misc/animatedSprite.hpp>
 #include <systems/assetManager.hpp>
-#include <stack>
+#include <queue>
 
 class Ghost;
 
@@ -17,7 +17,7 @@ class GhostState : public FiniteState{
 		AnimatedSprite sprite;
 		Ghost& ghost;
 		AssetManager::EntityAssetPack& assetPack;
-		std::stack<sf::Vector2u> moves;
+		std::queue<sf::Vector2u> moves;
 		sf::Vector2u nextMove();
 		
 		virtual void calculateMove() = 0;
@@ -25,6 +25,8 @@ class GhostState : public FiniteState{
 		const AnimatedSprite& getSprite() const;
 		
 		void update(const sf::Time& time);
+		
+		void forceRecalculate();
 		
 		GhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack);
 };

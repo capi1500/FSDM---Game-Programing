@@ -12,14 +12,23 @@ void Console::onNotify(const Message& event){
 	}
 }
 
+void Console::onNotify(const GameEvent& event){
+	if(event.type == GameEvent::PacmanMove)
+		message.notify(Message("pacman moved (" + std::to_string(event.pacmanMove.position.x) + ", " + std::to_string(event.pacmanMove.position.y) + ")", Message::Debug));
+	else if(event.type == GameEvent::BigPointEaten)
+		message.notify(Message("big point eaten", Message::Debug));
+}
+
 void Console::listenType(Message::Type type){
 	types.insert(type);
 }
 
-void Console::init(){
+Console::Console(){
 	message.addListener(this);
+	gameEventSignal.addListener(this);
 }
 
 Console::~Console(){
 	message.removeListener(this);
+	gameEventSignal.removeListener(this);
 }

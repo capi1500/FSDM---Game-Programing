@@ -8,18 +8,21 @@
 #include <iostream>
 #include <stack>
 
+const size_t sizex = 28 + 5;
+const size_t sizey = 31;
+
 Map::Map(){
 	std::ifstream file("../assets/map2.txt");
 	char c;
+	fields.resize(sizex, std::vector<Field>(sizey));
 	for(int y = 0; y < 31; y++){
-		fields.push_back(std::vector<Field>());
 		{
 			Field::Type type = Field::Wall;
 			if(y == 14)
 				type = Field::Empty;
-			fields.back().push_back(Field(type, AssetManager::get().empty));
-			fields.back().push_back(Field(type, AssetManager::get().empty));
-			fields.back().push_back(Field(type, AssetManager::get().empty));
+			fields[0][y] = Field(type, AssetManager::get().empty);
+			fields[1][y] = Field(type, AssetManager::get().empty);
+			fields[2][y] = Field(type, AssetManager::get().empty);
 		}
 		for(int x = 0; x < 28; x++){
 			file.get(c);
@@ -201,14 +204,14 @@ Map::Map(){
 					sprite = &AssetManager::get().empty;
 					break;
 			}
-			fields.back().push_back(Field(type, *sprite));
+			fields[3 + x][y] = Field(type, *sprite);
 		}
 		{
 			Field::Type type = Field::Wall;
 			if(y == 14)
 				type = Field::Empty;
-			fields.back().push_back(Field(type, AssetManager::get().empty));
-			fields.back().push_back(Field(type, AssetManager::get().empty));
+			fields[3 + 28 + 0][y] = Field(type, AssetManager::get().empty);
+			fields[3 + 28 + 1][y] = Field(type, AssetManager::get().empty);
 		}
 		file.get(c);
 	}
@@ -220,9 +223,9 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 	for(auto& vec : fields){
 		for(auto& e : vec){
 			target.draw(e, states);
-			states.transform.translate(12, 0);
+			states.transform.translate(0, 12);
 		}
-		states.transform.translate(-12 * 33, 12);
+		states.transform.translate(12, -12 * 31);
 	}
 }
 
@@ -257,10 +260,8 @@ void Map::onNotify(const GameEvent& event){
 }
 
 std::vector<sf::Vector2u> Map::findShortestPath(const sf::Vector2u& v, const sf::Vector2u& u) const{
-	std::cout << "bfs: " << v.x << " " << v.y << " -> " << u.x << " " << u.y << "\n";
-	
-	std::vector<std::vector<unsigned>> distance(fields.size(), std::vector<unsigned>(fields[0].size(), 4000000000));
-	std::vector<std::vector<sf::Vector2u>> parent(fields.size(), std::vector<sf::Vector2u>(fields[0].size()));
+	std::vector<std::vector<unsigned>> distance(sizex, std::vector<unsigned>(sizey, 4000000000));
+	std::vector<std::vector<sf::Vector2u>> parent(sizex, std::vector<sf::Vector2u>(sizey));
 	
 	std::queue<sf::Vector2u> toVisit;
 	
@@ -274,22 +275,20 @@ std::vector<sf::Vector2u> Map::findShortestPath(const sf::Vector2u& v, const sf:
 		sf::Vector2u a = toVisit.front();
 		toVisit.pop();
 		
-		//std::cout << "\t" << a.x << " " << a.y << " " << distance[a.x][a.y] << "\n";
-		
 		if(a == u){
 			std::vector<sf::Vector2u> out;
-			out.push_back(u);
+			out.push_back(a);
 			while(a != v){
 				a = parent[a.x][a.y];
 				out.push_back(a);
 			}
+			out.pop_back();
 			std::reverse(out.begin(), out.end());
 			return out;
 		}
 		
 		for(int d = 0; d < 4; d++){
-			sf::Vector2u next = sf::Vector2u((a.x + dx[p[d]] + fields.size()) % fields.size(), (a.y + dy[p[d]] + fields[0].size()) % fields[0].size());
-			//std::cout << "\t\t" << next.x << " " << next.y << "\n";
+			sf::Vector2u next = sf::Vector2u((static_cast<int>(a.x) + dx[p[d]] + static_cast<int>(sizex)) % static_cast<int>(sizex), a.y + dy[p[d]]);
 			if(getField(next).isCanPass()){
 				unsigned dist = distance[a.x][a.y] + 1;
 				if(dist < distance[next.x][next.y]){

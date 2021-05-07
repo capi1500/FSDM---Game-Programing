@@ -27,7 +27,7 @@ void Pacman::update(const sf::Time& time){
 	if(dist == 12){
 		if(dirKeyboard != None && dir != dirKeyboard){
 			sf::Vector2u pos3 = sf::Vector2u(pos.x + dx[dirKeyboard], pos.y + dy[dirKeyboard]);
-			if(map.getField(sf::Vector2u(pos3.y, pos3.x)).isCanPass()){
+			if(map.getField(pos3).isCanPass()){
 				dir = dirKeyboard;
 				dirKeyboard = None;
 				if(dir == Up)
@@ -44,7 +44,7 @@ void Pacman::update(const sf::Time& time){
 		}
 	}
 	
-	if(map.getField(sf::Vector2u(pos2.y, pos2.x)).isCanPass()){
+	if(map.getField(pos2).isCanPass()){
 		if(dirKeyboard == Left && dir == Right){
 			std::swap(pos, pos2);
 			dir = Left;
@@ -75,7 +75,7 @@ void Pacman::update(const sf::Time& time){
 		}
 		dist = abs(sprite.getPosition().x - pos2.x * 12) + abs(sprite.getPosition().y - pos2.y * 12);
 		
-		while(realDist >= dist && map.getField(sf::Vector2u(pos2.y, pos2.x)).isCanPass()){
+		while(realDist >= dist && map.getField(pos2).isCanPass()){
 			sprite.setPosition(pos2.x * 12, pos2.y * 12);
 			pos = pos2;
 			pos2 = sf::Vector2u(pos.x + dx[dir], pos.y + dy[dir]);
@@ -90,9 +90,10 @@ void Pacman::update(const sf::Time& time){
 					sprite.setPosition(pos.x * 12, pos.y * 12);
 				}
 				
-				if (pos.x >= 32 && dir == Right) {
+				if(pos.x >= 32 && dir == Right){
 					dir = Left;
-				} else if (pos.x <= 1 && dir == Left) {
+				}
+				else if(pos.x <= 1 && dir == Left){
 					dir = Right;
 				}
 				pos2 = sf::Vector2u(pos.x + dx[dir], pos.y + dy[dir]);
@@ -103,7 +104,7 @@ void Pacman::update(const sf::Time& time){
 			
 			if(dirKeyboard != None && dir != dirKeyboard){
 				sf::Vector2u pos3 = sf::Vector2u(pos.x + dx[dirKeyboard], pos.y + dy[dirKeyboard]);
-				if(map.getField(sf::Vector2u(pos3.y, pos3.x)).isCanPass()){
+				if(map.getField(pos3).isCanPass()){
 					dir = dirKeyboard;
 					dirKeyboard = None;
 					if(dir == Up)
@@ -121,29 +122,29 @@ void Pacman::update(const sf::Time& time){
 			sendSignal();
 		}
 		
-		if(map.getField(sf::Vector2u(pos2.y, pos2.x)).isCanPass()){
+		if(map.getField(pos2).isCanPass()){
 			sprite.move(dx[dir] * realDist, dy[dir] * realDist);
 			sprite.update(time);
 		}
 	}
-
-    if(pos.y == 14){
-        if(pos2.x == 0){
-            pos.x = 32;
-            sprite.setPosition(pos.x * 12, pos.y * 12);
-        }
-        else if(pos2.x == 33){
-            pos.x = 1;
-            sprite.setPosition(pos.x * 12, pos.y * 12);
-        }
-
-        if (pos.x >= 32 && dir == Right) {
-            dir = Left;
-        } else if (pos.x <= 1 && dir == Left) {
-            dir = Right;
-        }
-
-    }
+	
+	if(pos.y == 14){
+		if(pos2.x == 0){
+			pos.x = 32;
+			sprite.setPosition(pos.x * 12, pos.y * 12);
+		}
+		else if(pos2.x == 33){
+			pos.x = 1;
+			sprite.setPosition(pos.x * 12, pos.y * 12);
+		}
+		
+		if(pos.x >= 32 && dir == Right){
+			dir = Left;
+		}
+		else if(pos.x <= 1 && dir == Left){
+			dir = Right;
+		}
+	}
 }
 
 void Pacman::draw(sf::RenderTarget& target, sf::RenderStates states) const{
@@ -165,6 +166,6 @@ void Pacman::sendSignal(){
 	GameEvent event;
 	event.type = GameEvent::PacmanMove;
 	event.pacmanMove.direction = dir;
-	event.pacmanMove.position = sf::Vector2u(pos.y, pos.x);
+	event.pacmanMove.position = pos;
 	gameEventSignal.notify(event);
 }
