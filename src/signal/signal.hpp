@@ -26,10 +26,10 @@ class Signal{
 			T* event;
 			while(!m_events.empty()){
 				event = &m_events.front();
-				m_events.pop();
 				for(auto l : m_listeners){
 					l->onNotify(*event);
 				}
+				m_events.pop();
 			}
 		}
 	
