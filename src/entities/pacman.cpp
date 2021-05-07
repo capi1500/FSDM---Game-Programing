@@ -21,8 +21,8 @@ void Pacman::update(const sf::Time& time){
 	
 	sf::Vector2u pos2(pos.x + dx[dir], pos.y + dy[dir]);
 	
-	int dist = abs(sprite.getPosition().x - pos2.x * 12) + abs(sprite.getPosition().y - pos2.y * 12);
-	int realDist = time.asMilliseconds() / 16;
+	float dist = abs(sprite.getPosition().x - pos2.x * 12) + abs(sprite.getPosition().y - pos2.y * 12);
+	float realDist = time.asSeconds() * 50;
 	
 	if(dist == 12){
 		if(dirKeyboard != None && dir != dirKeyboard){

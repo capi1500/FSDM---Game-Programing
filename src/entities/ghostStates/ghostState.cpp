@@ -25,7 +25,7 @@ const AnimatedSprite& GhostState::getSprite() const{
 sf::Vector2u GhostState::nextMove(){
 	if(moves.empty())
 		calculateMove();
-	sf::Vector2 out = moves.front();
+	sf::Vector2u out = moves.front();
 	//std::clog << "next move: (" << out.x << " " << out.y << ")\n";
 	if(out.y > ghost.getPos().y && ghost.getDir() != Entity::Down){
 		ghost.setDir(Entity::Down);
@@ -47,10 +47,10 @@ sf::Vector2u GhostState::nextMove(){
 }
 
 void GhostState::update(const sf::Time& time){
-	sf::Vector2 pos2 = nextMove();
+	sf::Vector2u pos2 = nextMove();
 	
 	float dist = std::abs(sprite.getPosition().x - pos2.x * 12) + std::abs(sprite.getPosition().y - pos2.y * 12);
-	float realDist = speed * time.asMilliseconds() / 16;
+	float realDist = time.asSeconds() * 50 * speed;
 	
 	while(realDist >= dist){
 		sprite.setPosition(pos2.x * 12, pos2.y * 12);
