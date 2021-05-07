@@ -11,6 +11,8 @@ class DefaultGhostState : public GhostState{
 	protected:
 		void calculateMove() override;
 	public:
+		void onNotify(const GameEvent& event) override;
+		
 		DefaultGhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack);
 };
 

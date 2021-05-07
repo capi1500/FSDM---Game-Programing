@@ -54,6 +54,7 @@ const sf::Vector2u& Ghost::getPacmanPos() const{
 }
 
 Ghost::Ghost(Map& map, sf::Vector2u position) : map(map){
+	passDoor = true;
 	pos = position;
 	gameEventSignal.addListener(this);
 	fsm.add(new DefaultGhostState(fsm, *this, AssetManager::get().redGhost));
@@ -62,4 +63,12 @@ Ghost::Ghost(Map& map, sf::Vector2u position) : map(map){
 Ghost::~Ghost(){
 	fsm.clear();
 	gameEventSignal.removeListener(this);
+}
+
+bool Ghost::isPassDoor() const{
+	return passDoor;
+}
+
+void Ghost::setPassDoor(bool passDoor){
+	Ghost::passDoor = passDoor;
 }

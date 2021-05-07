@@ -5,8 +5,9 @@ class FiniteStateMachine;
 
 class FiniteState{
 	private:
-		FiniteStateMachine& fsm;
 		bool active;
+	protected:
+		FiniteStateMachine& fsm;
 	public:
 		bool isActive() const;
 		void setActive(bool active);

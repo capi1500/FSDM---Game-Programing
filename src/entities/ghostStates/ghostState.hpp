@@ -9,26 +9,29 @@
 #include <misc/animatedSprite.hpp>
 #include <systems/assetManager.hpp>
 #include <queue>
+#include <gameEvent.hpp>
 
 class Ghost;
 
-class GhostState : public FiniteState{
+class GhostState : public FiniteState, public Listener<GameEvent>{
 	protected:
 		AnimatedSprite sprite;
 		Ghost& ghost;
 		AssetManager::EntityAssetPack& assetPack;
 		std::queue<sf::Vector2u> moves;
 		sf::Vector2u nextMove();
+		float speed;
 		
 		virtual void calculateMove() = 0;
 	public:
 		const AnimatedSprite& getSprite() const;
 		
-		void update(const sf::Time& time);
+		virtual void update(const sf::Time& time);
 		
 		void forceRecalculate();
 		
 		GhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack);
+		virtual ~GhostState();
 };
 
 #endif //PROGRAMOWANIEGIER_GHOSTSTATE_HPP

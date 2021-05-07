@@ -11,6 +11,11 @@ GhostState::GhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::Enti
 		: FiniteState(fsm), ghost(ghost), assetPack(assetPack){
 	sprite.setAnimation(assetPack.left);
 	sprite.setPosition(ghost.getPos().x * 12, ghost.getPos().y * 12);
+	gameEventSignal.addListener(this);
+}
+
+GhostState::~GhostState(){
+	gameEventSignal.removeListener(this);
 }
 
 const AnimatedSprite& GhostState::getSprite() const{
@@ -21,6 +26,7 @@ sf::Vector2u GhostState::nextMove(){
 	if(moves.empty())
 		calculateMove();
 	sf::Vector2 out = moves.front();
+	//std::clog << "next move: (" << out.x << " " << out.y << ")\n";
 	if(out.y > ghost.getPos().y && ghost.getDir() != Entity::Down){
 		ghost.setDir(Entity::Down);
 		sprite.setAnimation(assetPack.down);
@@ -43,8 +49,8 @@ sf::Vector2u GhostState::nextMove(){
 void GhostState::update(const sf::Time& time){
 	sf::Vector2 pos2 = nextMove();
 	
-	int dist = abs(sprite.getPosition().x - pos2.x * 12) + abs(sprite.getPosition().y - pos2.y * 12);
-	int realDist = time.asMilliseconds() / 16;
+	float dist = std::abs(sprite.getPosition().x - pos2.x * 12) + std::abs(sprite.getPosition().y - pos2.y * 12);
+	float realDist = speed * time.asMilliseconds() / 16;
 	
 	while(realDist >= dist){
 		sprite.setPosition(pos2.x * 12, pos2.y * 12);
@@ -79,7 +85,7 @@ void GhostState::update(const sf::Time& time){
 			}
 		}
 		
-		dist = abs(sprite.getPosition().x - pos2.x * 12) + abs(sprite.getPosition().y - pos2.y * 12);
+		dist = std::abs(sprite.getPosition().x - pos2.x * 12) + std::abs(sprite.getPosition().y - pos2.y * 12);
 	}
 	
 	if(pos2 != ghost.getPos()){

@@ -17,6 +17,7 @@ class Ghost : public Entity, public Listener<GameEvent>{
 		Direction dir;
 		sf::Vector2u pos;
 		sf::Vector2u pacmanPos;
+		bool passDoor;
 		
 		FiniteStateMachine fsm;
 		GhostState* state;
@@ -30,6 +31,9 @@ class Ghost : public Entity, public Listener<GameEvent>{
 		const sf::Vector2u& getPos() const;
 		void setPos(const sf::Vector2u& pos);
 		const sf::Vector2u& getPacmanPos() const;
+		bool isPassDoor() const;
+		void setPassDoor(bool passDoor);
+		
 		Map& getMap() const;
 		
 		void onNotify(const GameEvent& event) override;

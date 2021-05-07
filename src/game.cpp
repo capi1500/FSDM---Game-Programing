@@ -27,7 +27,7 @@ Game::Game(){
 	
 	Scene* scene = new Scene(scenes);
 	scene->addEntity(new Pacman(map));
-	scene->addEntity(new Ghost(map, {5, 5}));
+	scene->addEntity(new Ghost(map, {17, 14}));
 	
 	scenes.add(scene);
 	
@@ -46,7 +46,7 @@ Game::~Game(){
 
 void Game::run(){
 	Console console;
-	//console.listenType(Message::Debug);
+	console.listenType(Message::Debug);
 	
 	Scene* scene;
 	sf::Time time;
