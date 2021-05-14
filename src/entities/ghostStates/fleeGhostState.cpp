@@ -18,7 +18,7 @@ void FleeGhostState::calculateMove(){
 }
 
 FleeGhostState::FleeGhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack) : GhostState(fsm, ghost, assetPack){
-	speed = 0.7;
+	 velocity = sf::milliseconds(150);
 }
 
 void FleeGhostState::update(const sf::Time& time){

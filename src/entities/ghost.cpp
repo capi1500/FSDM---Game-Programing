@@ -19,7 +19,7 @@ const sf::Vector2u& Ghost::getPos() const{
 }
 
 void Ghost::setPos(const sf::Vector2u& pos){
-	message.notify(Message("ghost moved (" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ")", Message::Debug));
+	message.notify(Message("ghost moved (" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ") " + std::to_string(deltaTime.asMilliseconds()), Message::Debug));
 	this->pos = pos;
 }
 
@@ -56,6 +56,7 @@ const sf::Vector2u& Ghost::getPacmanPos() const{
 Ghost::Ghost(Map& map, sf::Vector2u position) : map(map){
 	passDoor = true;
 	pos = position;
+	deltaTime = sf::Time::Zero;
 	gameEventSignal.addListener(this);
 	fsm.add(new DefaultGhostState(fsm, *this, AssetManager::get().redGhost));
 }
@@ -71,4 +72,12 @@ bool Ghost::isPassDoor() const{
 
 void Ghost::setPassDoor(bool passDoor){
 	Ghost::passDoor = passDoor;
+}
+
+const sf::Time& Ghost::getDeltaTime() const{
+	return deltaTime;
+}
+
+void Ghost::setDeltaTime(const sf::Time& deltaTime){
+	Ghost::deltaTime = deltaTime;
 }

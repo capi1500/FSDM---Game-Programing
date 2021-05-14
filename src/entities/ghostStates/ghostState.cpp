@@ -47,29 +47,21 @@ sf::Vector2u GhostState::nextMove(){
 }
 
 void GhostState::update(const sf::Time& time){
+	ghost.setDeltaTime(ghost.getDeltaTime() + time);
+	
 	sf::Vector2u pos2 = nextMove();
 	
-	float dist = std::abs(sprite.getPosition().x - pos2.x * 12) + std::abs(sprite.getPosition().y - pos2.y * 12);
-	float realDist = time.asSeconds() * 50 * speed;
-	
-	while(realDist >= dist){
-		sprite.setPosition(pos2.x * 12, pos2.y * 12);
+	while(ghost.getDeltaTime() >= velocity){
 		ghost.setPos(pos2);
 		moves.pop();
 		pos2 = nextMove();
-		realDist -= dist;
-		
-		if(pos2 == ghost.getPos())
-			break;
 		
 		if(ghost.getPos().y == 14){
 			if(pos2.x == 32){
 				ghost.setPos(sf::Vector2u(31, 14));
-				sprite.setPosition(31 * 12, 14 * 12);
 			}
 			else if(pos2.x == 0){
 				ghost.setPos(sf::Vector2u(1, 14));
-				sprite.setPosition(1 * 12, 14 * 12);
 			}
 			
 			forceRecalculate();
@@ -85,14 +77,23 @@ void GhostState::update(const sf::Time& time){
 			}
 		}
 		
-		dist = std::abs(sprite.getPosition().x - pos2.x * 12) + std::abs(sprite.getPosition().y - pos2.y * 12);
+		if(pos2 != ghost.getPos())
+			sprite.update(velocity);
+			
+		ghost.setDeltaTime(ghost.getDeltaTime() - velocity);
 	}
 	
 	if(pos2 != ghost.getPos()){
-		sprite.move(dx[ghost.getDir()] * realDist, dy[ghost.getDir()] * realDist);
+		double change = 12 * ghost.getDeltaTime().asSeconds() / velocity.asSeconds();
+		sprite.setPosition(
+				ghost.getPos().x * 12 + dx[ghost.getDir()] * change,
+				ghost.getPos().y * 12 + dy[ghost.getDir()] * change
+		);
+		sprite.update(time);
 	}
-	
-	sprite.update(time);
+	else{
+		ghost.setDeltaTime(sf::Time::Zero);
+	}
 }
 
 void GhostState::forceRecalculate(){

@@ -16,7 +16,7 @@ void DeadGhostState::calculateMove(){
 }
 
 DeadGhostState::DeadGhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack) : GhostState(fsm, ghost, assetPack){
-	speed = 2;
+	velocity = sf::milliseconds(150);
 }
 
 void DeadGhostState::onNotify(const GameEvent& event){

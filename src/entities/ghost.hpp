@@ -19,6 +19,8 @@ class Ghost : public Entity, public Listener<GameEvent>{
 		sf::Vector2u pacmanPos;
 		bool passDoor;
 		
+		sf::Time deltaTime; // time since last middle point
+		
 		FiniteStateMachine fsm;
 		GhostState* state;
 		
@@ -33,6 +35,10 @@ class Ghost : public Entity, public Listener<GameEvent>{
 		const sf::Vector2u& getPacmanPos() const;
 		bool isPassDoor() const;
 		void setPassDoor(bool passDoor);
+		
+		const sf::Time& getDeltaTime() const;
+		
+		void setDeltaTime(const sf::Time& deltaTime);
 		
 		Map& getMap() const;
 		

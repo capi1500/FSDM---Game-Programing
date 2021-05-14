@@ -19,6 +19,9 @@ class Pacman : public Entity{
 		sf::Vector2u pos;
 		AnimatedSprite sprite;
 		
+		sf::Time velocity; // second required to get through one tile
+		sf::Time deltaTime; // time since last middle point
+		
 		void sendSignal();
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

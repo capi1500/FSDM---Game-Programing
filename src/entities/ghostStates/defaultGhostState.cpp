@@ -8,7 +8,7 @@
 #include "fleeGhostState.hpp"
 
 DefaultGhostState::DefaultGhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack) : GhostState(fsm, ghost, assetPack){
-	speed = 1;
+	velocity = sf::milliseconds(210);
 }
 
 void DefaultGhostState::calculateMove(){

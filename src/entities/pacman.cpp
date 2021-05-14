@@ -4,12 +4,12 @@
 
 #include <SFML/Window/Keyboard.hpp>
 #include <systems/assetManager.hpp>
-#include <cmath>
 #include "pacman.hpp"
-#include <iostream>
 #include <gameEvent.hpp>
 
 void Pacman::update(const sf::Time& time){
+	deltaTime += time;
+	
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		dirKeyboard = Up;
 	else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
@@ -21,34 +21,12 @@ void Pacman::update(const sf::Time& time){
 	
 	sf::Vector2u pos2(pos.x + dx[dir], pos.y + dy[dir]);
 	
-	float dist = abs(sprite.getPosition().x - pos2.x * 12) + abs(sprite.getPosition().y - pos2.y * 12);
-	float realDist = time.asSeconds() * 50;
-	
-	if(dist == 12){
-		if(dirKeyboard != None && dir != dirKeyboard){
-			sf::Vector2u pos3 = sf::Vector2u(pos.x + dx[dirKeyboard], pos.y + dy[dirKeyboard]);
-			if(map.getField(pos3).isCanPass()){
-				dir = dirKeyboard;
-				dirKeyboard = None;
-				if(dir == Up)
-					sprite.setAnimation(AssetManager::get().pacman.up);
-				else if(dir == Down)
-					sprite.setAnimation(AssetManager::get().pacman.down);
-				else if(dir == Left)
-					sprite.setAnimation(AssetManager::get().pacman.left);
-				else if(dir == Right)
-					sprite.setAnimation(AssetManager::get().pacman.right);
-				pos2 = pos3;
-				dist = abs(sprite.getPosition().x - pos2.x * 12) + abs(sprite.getPosition().y - pos2.y * 12);
-			}
-		}
-	}
-	
 	if(map.getField(pos2).isCanPass()){
 		if(dirKeyboard == Left && dir == Right){
 			std::swap(pos, pos2);
 			dir = Left;
 			dirKeyboard = None;
+			deltaTime = velocity - deltaTime;
 			sprite.setAnimation(AssetManager::get().pacman.left);
 			sendSignal();
 		}
@@ -56,6 +34,7 @@ void Pacman::update(const sf::Time& time){
 			std::swap(pos, pos2);
 			dir = Right;
 			dirKeyboard = None;
+			deltaTime = velocity - deltaTime;
 			sprite.setAnimation(AssetManager::get().pacman.right);
 			sendSignal();
 		}
@@ -63,6 +42,7 @@ void Pacman::update(const sf::Time& time){
 			std::swap(pos, pos2);
 			dir = Up;
 			dirKeyboard = None;
+			deltaTime = velocity - deltaTime;
 			sprite.setAnimation(AssetManager::get().pacman.up);
 			sendSignal();
 		}
@@ -70,24 +50,23 @@ void Pacman::update(const sf::Time& time){
 			std::swap(pos, pos2);
 			dir = Down;
 			dirKeyboard = None;
+			deltaTime = velocity - deltaTime;
 			sprite.setAnimation(AssetManager::get().pacman.down);
 			sendSignal();
 		}
-		dist = abs(sprite.getPosition().x - pos2.x * 12) + abs(sprite.getPosition().y - pos2.y * 12);
-		
-		while(realDist >= dist && map.getField(pos2).isCanPass()){
-			sprite.setPosition(pos2.x * 12, pos2.y * 12);
+	}
+	
+	while(deltaTime >= velocity){
+		if(map.getField(pos2).isCanPass()){
 			pos = pos2;
 			pos2 = sf::Vector2u(pos.x + dx[dir], pos.y + dy[dir]);
 			
 			if(pos.y == 14){
 				if(pos2.x == 0){
 					pos.x = 32;
-					sprite.setPosition(pos.x * 12, pos.y * 12);
 				}
 				else if(pos2.x == 33){
 					pos.x = 1;
-					sprite.setPosition(pos.x * 12, pos.y * 12);
 				}
 				
 				if(pos.x >= 32 && dir == Right){
@@ -98,9 +77,6 @@ void Pacman::update(const sf::Time& time){
 				}
 				pos2 = sf::Vector2u(pos.x + dx[dir], pos.y + dy[dir]);
 			}
-			
-			realDist -= dist;
-			dist = abs(sprite.getPosition().x - pos2.x * 12) + abs(sprite.getPosition().y - pos2.y * 12);
 			
 			if(dirKeyboard != None && dir != dirKeyboard){
 				sf::Vector2u pos3 = sf::Vector2u(pos.x + dx[dirKeyboard], pos.y + dy[dirKeyboard]);
@@ -118,31 +94,34 @@ void Pacman::update(const sf::Time& time){
 					pos2 = pos3;
 				}
 			}
+			sprite.update(velocity);
 			
 			sendSignal();
 		}
-		
-		if(map.getField(pos2).isCanPass()){
-			sprite.move(dx[dir] * realDist, dy[dir] * realDist);
-			sprite.update(time);
-		}
+		deltaTime -= velocity;
 	}
 	
-	if(pos.y == 14){
-		if(pos2.x == 0){
-			pos.x = 32;
-			sprite.setPosition(pos.x * 12, pos.y * 12);
-		}
-		else if(pos2.x == 33){
-			pos.x = 1;
-			sprite.setPosition(pos.x * 12, pos.y * 12);
-		}
-		
-		if(pos.x >= 32 && dir == Right){
-			dir = Left;
-		}
-		else if(pos.x <= 1 && dir == Left){
-			dir = Right;
+	if(map.getField(pos2).isCanPass()){
+		double change = 12 * deltaTime.asSeconds() / velocity.asSeconds();
+		sprite.setPosition(pos.x * 12 + dx[dir] * change, pos.y * 12 + dy[dir] * change);
+		sprite.update(time);
+	}
+	else{
+		if(dirKeyboard != None && dir != dirKeyboard){
+			sf::Vector2u pos3 = sf::Vector2u(pos.x + dx[dirKeyboard], pos.y + dy[dirKeyboard]);
+			if(map.getField(pos3).isCanPass()){
+				dir = dirKeyboard;
+				dirKeyboard = None;
+				if(dir == Up)
+					sprite.setAnimation(AssetManager::get().pacman.up);
+				else if(dir == Down)
+					sprite.setAnimation(AssetManager::get().pacman.down);
+				else if(dir == Left)
+					sprite.setAnimation(AssetManager::get().pacman.left);
+				else if(dir == Right)
+					sprite.setAnimation(AssetManager::get().pacman.right);
+				pos2 = pos3;
+			}
 		}
 	}
 }
@@ -160,6 +139,9 @@ Pacman::Pacman(Map& map) : map(map){
 	sprite.setPosition(pos.x * 12, pos.y * 12);
 	dirKeyboard = None;
 	dir = Left;
+	
+	velocity = sf::milliseconds(200);
+	deltaTime = sf::Time::Zero;
 }
 
 void Pacman::sendSignal(){
