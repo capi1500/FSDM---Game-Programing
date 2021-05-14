@@ -92,6 +92,10 @@ void GhostState::update(const sf::Time& time){
 		sprite.update(time);
 	}
 	else{
+		sprite.setPosition(
+				ghost.getPos().x * 12,
+				ghost.getPos().y * 12
+		);
 		ghost.setDeltaTime(sf::Time::Zero);
 	}
 }
