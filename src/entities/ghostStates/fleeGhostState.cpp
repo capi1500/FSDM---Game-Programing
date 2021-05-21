@@ -9,7 +9,7 @@
 #include "deadGhostState.hpp"
 
 void FleeGhostState::calculateMove(){
-	std::vector<sf::Vector2u> possible = ghost.getMap().findShortestPath(ghost.getPos(), sf::Vector2u(17, 14), ghost.isPassDoor());
+	std::vector<sf::Vector2u> possible = ghost.getMap().findShortestPath(ghost.getPos(), sf::Vector2u(34, 28), ghost.isPassDoor());
 	if(possible.empty()){
 		moves.push(ghost.getPos());
 	}
@@ -18,12 +18,12 @@ void FleeGhostState::calculateMove(){
 }
 
 FleeGhostState::FleeGhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack) : GhostState(fsm, ghost, assetPack){
-	 velocity = sf::milliseconds(150);
+	 velocity = sf::milliseconds(200);
 }
 
 void FleeGhostState::update(const sf::Time& time){
 	GhostState::update(time);
-	if(ghost.getPos() == sf::Vector2u(17, 14)){
+	if(ghost.getPos() == sf::Vector2u(34, 28)){
 		if(!atBase){
 			atBase = true;
 			timeAtBase = sf::Time::Zero;

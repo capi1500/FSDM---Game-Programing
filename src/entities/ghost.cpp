@@ -3,6 +3,7 @@
 //
 
 #include <systems/console.hpp>
+#include <graphicSettings.hpp>
 #include "ghost.hpp"
 #include "ghostStates/defaultGhostState.hpp"
 
@@ -29,7 +30,7 @@ GhostState* Ghost::getState(){
 
 void Ghost::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 	states.transform.combine(getTransform());
-	states.transform.translate(-6, -6);
+	states.transform.translate(-GraphicSettings::fieldSize * 2, -GraphicSettings::fieldSize * 2);
 	target.draw(state->getSprite(), states);
 }
 

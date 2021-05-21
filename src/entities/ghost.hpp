@@ -16,7 +16,7 @@ class Ghost : public Entity, public Listener<GameEvent>{
 		
 		Direction dir;
 		sf::Vector2u pos;
-		sf::Vector2u pacmanPos;
+		sf::Vector2u pacmanPos = sf::Vector2u(1000, 1000);
 		bool passDoor;
 		
 		sf::Time deltaTime; // time since last middle point

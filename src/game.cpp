@@ -27,7 +27,7 @@ Game::Game(){
 	
 	Scene* scene = new Scene(scenes);
 	scene->addEntity(new Pacman(map));
-	scene->addEntity(new Ghost(map, {17, 14}));
+	scene->addEntity(new Ghost(map, {35, 29}));
 	
 	scenes.add(scene);
 	

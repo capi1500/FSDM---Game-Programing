@@ -6,11 +6,12 @@
 #include <entities/ghost.hpp>
 #include <systems/console.hpp>
 #include <iostream>
+#include <graphicSettings.hpp>
 
 GhostState::GhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack)
 		: FiniteState(fsm), ghost(ghost), assetPack(assetPack){
 	sprite.setAnimation(assetPack.left);
-	sprite.setPosition(ghost.getPos().x * 12, ghost.getPos().y * 12);
+	sprite.setPosition(ghost.getPos().x * GraphicSettings::fieldSize, ghost.getPos().y * GraphicSettings::fieldSize);
 	gameEventSignal.addListener(this);
 }
 
@@ -26,7 +27,6 @@ sf::Vector2u GhostState::nextMove(){
 	if(moves.empty())
 		calculateMove();
 	sf::Vector2u out = moves.front();
-	//std::clog << "next move: (" << out.x << " " << out.y << ")\n";
 	if(out.y > ghost.getPos().y && ghost.getDir() != Entity::Down){
 		ghost.setDir(Entity::Down);
 		sprite.setAnimation(assetPack.down);
@@ -49,29 +49,64 @@ sf::Vector2u GhostState::nextMove(){
 void GhostState::update(const sf::Time& time){
 	ghost.setDeltaTime(ghost.getDeltaTime() + time);
 	
-	sf::Vector2u pos2 = nextMove();
+	//Entity::Direction lastDir = ghost.getDir();
+	//sf::Vector2u lastPos = ghost.getPos();
+	//sf::Vector2u lastPos2(lastPos.x + dx[lastDir], lastPos.y + dy[lastDir]);
+	
+	pos2 = nextMove();
+	
+	// bug jest gdy np:
+	//
+	// duszek szedł w prawo, przed dotarciem zmienił się kierunek podróży na lewo
+	
+	/*if(ghost.getMap().getField(lastPos2).isCanPass() || (ghost.isPassDoor() && ghost.getMap().getField(lastPos2).getType() == Field::Door)){
+		if(lastDir == Entity::Left && ghost.getDir() == Entity::Right){
+			pos2 = ghost.getPos();
+			moves.push(pos2);
+			ghost.setPos(lastPos2);
+			ghost.setDeltaTime(velocity - ghost.getDeltaTime());
+		}
+		else if(lastDir == Entity::Right && ghost.getDir() == Entity::Left){
+			pos2 = ghost.getPos();
+			moves.push(pos2);
+			ghost.setPos(lastPos2);
+			ghost.setDeltaTime(velocity - ghost.getDeltaTime());
+		}
+		else if(lastDir == Entity::Up && ghost.getDir() == Entity::Down){
+			pos2 = ghost.getPos();
+			moves.push(pos2);
+			ghost.setPos(lastPos2);
+			ghost.setDeltaTime(velocity - ghost.getDeltaTime());
+		}
+		else if(lastDir == Entity::Down && ghost.getDir() == Entity::Up){
+			pos2 = ghost.getPos();
+			moves.push(pos2);
+			ghost.setPos(lastPos2);
+			ghost.setDeltaTime(velocity - ghost.getDeltaTime());
+		}
+	}*/
 	
 	while(ghost.getDeltaTime() >= velocity){
 		ghost.setPos(pos2);
 		moves.pop();
 		pos2 = nextMove();
 		
-		if(ghost.getPos().y == 14){
-			if(pos2.x == 32){
-				ghost.setPos(sf::Vector2u(31, 14));
+		if(ghost.getPos().y == 28){
+			if(pos2.x == 64){
+				ghost.setPos(sf::Vector2u(62, 28));
 			}
 			else if(pos2.x == 0){
-				ghost.setPos(sf::Vector2u(1, 14));
+				ghost.setPos(sf::Vector2u(2, 28));
 			}
 			
 			forceRecalculate();
 			pos2 = nextMove();
 			
-			if(ghost.getPos().x == 31 && ghost.getDir() == Entity::Right){
+			if(ghost.getPos().x == 62 && ghost.getDir() == Entity::Right){
 				ghost.setDir(Entity::Left);
 				sprite.setAnimation(assetPack.left);
 			}
-			else if(ghost.getPos().x == 1 && ghost.getDir() == Entity::Left){
+			else if(ghost.getPos().x == 2 && ghost.getDir() == Entity::Left){
 				ghost.setDir(Entity::Right);
 				sprite.setAnimation(assetPack.right);
 			}
@@ -84,17 +119,17 @@ void GhostState::update(const sf::Time& time){
 	}
 	
 	if(pos2 != ghost.getPos()){
-		double change = 12 * ghost.getDeltaTime().asSeconds() / velocity.asSeconds();
+		double change = GraphicSettings::fieldSize * ghost.getDeltaTime().asSeconds() / velocity.asSeconds();
 		sprite.setPosition(
-				ghost.getPos().x * 12 + dx[ghost.getDir()] * change,
-				ghost.getPos().y * 12 + dy[ghost.getDir()] * change
+				ghost.getPos().x * GraphicSettings::fieldSize + dx[ghost.getDir()] * change,
+				ghost.getPos().y * GraphicSettings::fieldSize + dy[ghost.getDir()] * change
 		);
 		sprite.update(time);
 	}
 	else{
 		sprite.setPosition(
-				ghost.getPos().x * 12,
-				ghost.getPos().y * 12
+				ghost.getPos().x * GraphicSettings::fieldSize,
+				ghost.getPos().y * GraphicSettings::fieldSize
 		);
 		ghost.setDeltaTime(sf::Time::Zero);
 	}

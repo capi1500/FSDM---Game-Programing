@@ -19,6 +19,8 @@ class GhostState : public FiniteState, public Listener<GameEvent>{
 		Ghost& ghost;
 		AssetManager::EntityAssetPack& assetPack;
 		std::queue<sf::Vector2u> moves;
+		
+		sf::Vector2u pos2;
 		sf::Vector2u nextMove();
 	
 		sf::Time velocity; // second required to get through one tile

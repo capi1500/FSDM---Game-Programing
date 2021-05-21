@@ -8,7 +8,7 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include "../entities/entity.hpp"
 
-class Field : public Entity{
+class Field{
 	public:
 		enum Type{
 			Point,
@@ -26,18 +26,13 @@ class Field : public Entity{
 	private:
 		Type type;
 		bool canPass;
-		sf::Sprite* sprite;
-	protected:
-		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:
-		void update(const sf::Time& time) override;
-		
-		void setType(Type type, sf::Sprite& sprite);
+		void setType(Type type);
 		Type getType() const;
 		
 		bool isCanPass() const;
 		
-		Field(Type type, sf::Sprite& sprite);
+		Field(Type type);
 		Field();
 };
 

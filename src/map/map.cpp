@@ -7,22 +7,52 @@
 #include <fstream>
 #include <iostream>
 #include <stack>
+#include <graphicSettings.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 
-const size_t sizex = 28 + 5;
-const size_t sizey = 31;
+const size_t sizex = (28 + 5) * 2;
+const size_t sizey = 31 * 2;
 
 Map::Map(){
 	std::ifstream file("../assets/map2.txt");
 	char c;
 	fields.resize(sizex, std::vector<Field>(sizey));
+	sprites.resize(sizex / 2, std::vector<sf::Sprite*>(sizey / 2));
+	
+	
+	auto produceTile = [this](unsigned x, unsigned y, Field::Type type, sf::Sprite& sprite){
+		sprites[x][y] = &sprite;
+		
+		fields[2 * x + 1][2 * y + 1] = Field(type);
+		fields[2 * x][2 * y] = Field(Field::Type::Wall);
+		if(fields[2 * x + 1][2 * y + 1].isCanPass()){
+			if(x == 0)
+				fields[2 * x][2 * y + 1] = Field(Field::Type::Wall);
+			else
+				fields[2 * x][2 * y + 1] = Field(fields[2 * x - 1][2 * y + 1].isCanPass() ? Field::Type::Empty : Field::Type::Wall);
+			
+			if(y == 0)
+				fields[2 * x + 1][2 * y] = Field(Field::Type::Wall);
+			else
+				fields[2 * x + 1][2 * y] = Field(fields[2 * x + 1][2 * y - 1].isCanPass() ? Field::Type::Empty : Field::Type::Wall);
+			
+			if(x != 0 && y != 0 &&
+					fields[2 * x + 1][2 * y - 1].isCanPass() &&
+					fields[2 * x - 1][2 * y + 1].isCanPass() &&
+					fields[2 * x - 1][2 * y - 1].isCanPass())
+				fields[2 * x][2 * y] = Field(Field::Type::Empty);
+		}
+	};
+	
+	
 	for(int y = 0; y < 31; y++){
 		{
 			Field::Type type = Field::Wall;
 			if(y == 14)
 				type = Field::Empty;
-			fields[0][y] = Field(type, AssetManager::get().empty);
-			fields[1][y] = Field(type, AssetManager::get().empty);
-			fields[2][y] = Field(type, AssetManager::get().empty);
+			produceTile(0, y, type, AssetManager::get().empty);
+			produceTile(1, y, type, AssetManager::get().empty);
+			produceTile(2, y, type, AssetManager::get().empty);
 		}
 		for(int x = 0; x < 28; x++){
 			file.get(c);
@@ -147,7 +177,7 @@ Map::Map(){
 					sprite = &AssetManager::get().rectRightEnd;
 					break;
 				case 'd':
-					type = Field::Door;
+					type = Field::Wall;
 					sprite = &AssetManager::get().door;
 					break;
 
@@ -204,29 +234,59 @@ Map::Map(){
 					sprite = &AssetManager::get().empty;
 					break;
 			}
-			fields[3 + x][y] = Field(type, *sprite);
+			produceTile(3 + x, y, type, *sprite);
 		}
 		{
 			Field::Type type = Field::Wall;
 			if(y == 14)
 				type = Field::Empty;
-			fields[3 + 28 + 0][y] = Field(type, AssetManager::get().empty);
-			fields[3 + 28 + 1][y] = Field(type, AssetManager::get().empty);
+			produceTile(3 + 28 + 0, y, type, AssetManager::get().empty);
+			produceTile(3 + 28 + 1, y, type, AssetManager::get().empty);
 		}
 		file.get(c);
 	}
+	
+	fields[34][24] = Field(Field::Type::Door);
+	fields[34][25] = Field(Field::Type::Door);
+	fields[34][26] = Field(Field::Type::Door);
 	
 	gameEventSignal.addListener(this);
 }
 
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-	for(auto& vec : fields){
+	for(auto& vec : sprites){
 		for(auto& e : vec){
-			target.draw(e, states);
-			states.transform.translate(0, 12);
+			target.draw(*e, states);
+			states.transform.translate(0, GraphicSettings::fieldSize * 2);
 		}
-		states.transform.translate(12, -12 * 31);
+		states.transform.translate(GraphicSettings::fieldSize * 2, -(GraphicSettings::fieldSize * 2) * 31);
 	}
+	/*states.transform.translate(-(GraphicSettings::fieldSize * 2) * 33, 0);
+	
+	sf::RectangleShape rect;
+	rect.setSize(sf::Vector2f(GraphicSettings::fieldSize, GraphicSettings::fieldSize));
+	rect.setOutlineThickness(1);
+	//rect.setFillColor(sf::Color::Transparent);
+	int x = 0, y = 0;
+	for(auto& vec : fields){
+		x = 0;
+		for(auto& e : vec){
+			if(x % 2 == 1 && y % 2 == 1)
+				rect.setOutlineThickness(2);
+			else
+				rect.setOutlineThickness(1);
+			
+			rect.setOutlineColor(e.isCanPass() ? sf::Color::Green : sf::Color::Red);
+			if(e.getType() == Field::Type::Door)
+				rect.setOutlineColor(sf::Color::Blue);
+			
+			target.draw(rect, states);
+			states.transform.translate(0, GraphicSettings::fieldSize);
+			x++;
+		}
+		states.transform.translate(GraphicSettings::fieldSize, -(GraphicSettings::fieldSize) * 62);
+		y++;
+	}*/
 }
 
 Field& Map::getField(const sf::Vector2u& pos){
@@ -248,13 +308,16 @@ const Field& Map::getField(const unsigned int x, const unsigned int y) const{
 void Map::onNotify(const GameEvent& event){
 	if(event.type == GameEvent::PacmanMove){
 		Field& f = getField(event.pacmanMove.position);
-		if(f.getType() == Field::Point)
-			f.setType(Field::Empty, AssetManager::get().empty);
+		if(f.getType() == Field::Point){
+			f.setType(Field::Empty);
+			sprites[event.pacmanMove.position.x / 2][event.pacmanMove.position.y / 2] = &AssetManager::get().empty;
+		}
 		else if(f.getType() == Field::BigPoint){
 			GameEvent event1;
 			event1.type = GameEvent::BigPointEaten;
 			gameEventSignal.notify(event1);
-			f.setType(Field::Empty, AssetManager::get().empty);
+			f.setType(Field::Empty);
+			sprites[event.pacmanMove.position.x / 2][event.pacmanMove.position.y / 2] = &AssetManager::get().empty;
 		}
 	}
 }

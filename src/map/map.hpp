@@ -11,6 +11,7 @@
 class Map : public sf::Drawable, public Listener<GameEvent>{
 	private:
 		std::vector<std::vector<Field>> fields;
+		std::vector<std::vector<sf::Sprite*>> sprites;
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:

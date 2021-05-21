@@ -6,6 +6,7 @@
 #include <systems/assetManager.hpp>
 #include "pacman.hpp"
 #include <gameEvent.hpp>
+#include <graphicSettings.hpp>
 
 void Pacman::update(const sf::Time& time){
 	deltaTime += time;
@@ -61,18 +62,18 @@ void Pacman::update(const sf::Time& time){
 			pos = pos2;
 			pos2 = sf::Vector2u(pos.x + dx[dir], pos.y + dy[dir]);
 			
-			if(pos.y == 14){
+			if(pos.y == 28){
 				if(pos2.x == 0){
-					pos.x = 32;
+					pos.x = 64;
 				}
-				else if(pos2.x == 33){
-					pos.x = 1;
+				else if(pos2.x == 66){
+					pos.x = 2;
 				}
 				
-				if(pos.x >= 32 && dir == Right){
+				if(pos.x >= 64 && dir == Right){
 					dir = Left;
 				}
-				else if(pos.x <= 1 && dir == Left){
+				else if(pos.x <= 2 && dir == Left){
 					dir = Right;
 				}
 				pos2 = sf::Vector2u(pos.x + dx[dir], pos.y + dy[dir]);
@@ -94,7 +95,7 @@ void Pacman::update(const sf::Time& time){
 					pos2 = pos3;
 				}
 			}
-			sprite.update(velocity);
+			//sprite.update(velocity);
 			
 			sendSignal();
 		}
@@ -102,8 +103,8 @@ void Pacman::update(const sf::Time& time){
 	}
 	
 	if(map.getField(pos2).isCanPass()){
-		double change = 12 * deltaTime.asSeconds() / velocity.asSeconds();
-		sprite.setPosition(pos.x * 12 + dx[dir] * change, pos.y * 12 + dy[dir] * change);
+		double change = GraphicSettings::fieldSize * deltaTime.asSeconds() / velocity.asSeconds();
+		sprite.setPosition(pos.x * GraphicSettings::fieldSize + dx[dir] * change, pos.y * GraphicSettings::fieldSize + dy[dir] * change);
 		sprite.update(time);
 	}
 	else{
@@ -128,19 +129,19 @@ void Pacman::update(const sf::Time& time){
 
 void Pacman::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 	states.transform.combine(getTransform());
-	states.transform.translate(-6, -6);
+	states.transform.translate(-GraphicSettings::fieldSize * 2, -GraphicSettings::fieldSize * 2);
 	target.draw(sprite, states);
 }
 
 Pacman::Pacman(Map& map) : map(map){
-	pos.x = 16;
-	pos.y = 23;
+	pos.x = 33;
+	pos.y = 47;
 	sprite.setAnimation(AssetManager::get().pacman.left);
-	sprite.setPosition(pos.x * 12, pos.y * 12);
+	sprite.setPosition(pos.x * GraphicSettings::fieldSize, pos.y * GraphicSettings::fieldSize);
 	dirKeyboard = None;
 	dir = Left;
 	
-	velocity = sf::milliseconds(200);
+	velocity = sf::milliseconds(100);
 	deltaTime = sf::Time::Zero;
 }
 
