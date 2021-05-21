@@ -112,8 +112,8 @@ void GhostState::update(const sf::Time& time){
 			}
 		}
 		
-		if(pos2 != ghost.getPos())
-			sprite.update(velocity);
+		//if(pos2 != ghost.getPos())
+		//	sprite.update(velocity);
 			
 		ghost.setDeltaTime(ghost.getDeltaTime() - velocity);
 	}
