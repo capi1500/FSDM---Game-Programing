@@ -13,12 +13,6 @@ class Field{
 		enum Type{
 			Point,
 			BigPoint,
-			Cherry,
-			Strawberry,
-			Orange,
-			Bell,
-			Apple,
-			Grapes,
 			Empty,
 			Wall,
 			Door

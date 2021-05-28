@@ -8,6 +8,7 @@
 #include <signal/signal.hpp>
 #include <entities/entity.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <entities/fruit.hpp>
 
 struct GameEvent{
 	GameEvent();
@@ -15,7 +16,11 @@ struct GameEvent{
 	enum Type{
 		Closed,
 		PacmanMove,
-		BigPointEaten
+		PacmanEaten,
+		BigPointEaten,
+		SmallPointEaten,
+		FruitEaten,
+		NextLevel
 	};
 	
 	struct PacmanMoveEvent{
@@ -23,10 +28,15 @@ struct GameEvent{
 		Entity::Direction direction;
 	};
 	
+	struct FruitEatenEvent{
+		Fruit& fruit;
+	};
+	
 	Type type;
 	
 	union{
 		PacmanMoveEvent pacmanMove;
+		FruitEatenEvent fruitEaten;
 	};
 };
 

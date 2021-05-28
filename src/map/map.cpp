@@ -205,7 +205,7 @@ Map::Map(){
 				case '0':
 					type = Field::BigPoint;
 					sprite = &AssetManager::get().bigCircle;
-					break;
+					break;/*
 				case 'C':
 					type = Field::Cherry;
 					sprite = &AssetManager::get().cherry;
@@ -228,7 +228,7 @@ Map::Map(){
 				case 'G':
 					type = Field::Grapes;
 					sprite = &AssetManager::get().grapes;
-					break;
+					break;*/
 				default:
 					type = Field::Empty;
 					sprite = &AssetManager::get().empty;
@@ -309,6 +309,9 @@ void Map::onNotify(const GameEvent& event){
 	if(event.type == GameEvent::PacmanMove){
 		Field& f = getField(event.pacmanMove.position);
 		if(f.getType() == Field::Point){
+			GameEvent event1;
+			event1.type = GameEvent::SmallPointEaten;
+			gameEventSignal.notify(event1);
 			f.setType(Field::Empty);
 			sprites[event.pacmanMove.position.x / 2][event.pacmanMove.position.y / 2] = &AssetManager::get().empty;
 		}

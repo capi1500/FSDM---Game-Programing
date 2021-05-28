@@ -9,7 +9,7 @@
 #include <map/map.hpp>
 #include "entity.hpp"
 
-class Pacman : public Entity{
+class Pacman : public Entity, public Listener<GameEvent>{
 	private:
 		Direction dir;
 		Direction dirKeyboard;
@@ -29,6 +29,10 @@ class Pacman : public Entity{
 		void update(const sf::Time& time) override;
 		
 		Pacman(Map& map);
+		
+		virtual ~Pacman();
+		
+		void onNotify(const GameEvent& event) override;
 };
 
 #endif //PROGRAMOWANIEGIER_PACMAN_HPP

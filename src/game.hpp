@@ -10,12 +10,14 @@
 #include <systems/scene.hpp>
 #include <map/map.hpp>
 #include "gameEvent.hpp"
+#include "statistics.hpp"
 
 class Game : public Listener<GameEvent>, public Listener<sf::Event>{
 	private:
 		sf::RenderWindow window;
 		sf::View view;
 		FiniteStateMachine scenes;
+		
 		bool active;
 		
 		Scene* getScene();

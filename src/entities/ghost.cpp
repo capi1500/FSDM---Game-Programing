@@ -44,6 +44,10 @@ void Ghost::onNotify(const GameEvent& event){
 		pacmanPos = event.pacmanMove.position;
 		getState()->forceRecalculate();
 	}
+	else if(event.type == GameEvent::PacmanEaten){
+		pos = startingPos;
+		getState()->forceRecalculate();
+	}
 }
 
 Map& Ghost::getMap() const{
@@ -55,6 +59,7 @@ const sf::Vector2u& Ghost::getPacmanPos() const{
 }
 
 Ghost::Ghost(Map& map, sf::Vector2u position) : map(map){
+	startingPos = position;
 	passDoor = true;
 	pos = position;
 	deltaTime = sf::Time::Zero;

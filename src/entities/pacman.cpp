@@ -143,6 +143,8 @@ Pacman::Pacman(Map& map) : map(map){
 	
 	velocity = sf::milliseconds(100);
 	deltaTime = sf::Time::Zero;
+	
+	gameEventSignal.addListener(this);
 }
 
 void Pacman::sendSignal(){
@@ -151,4 +153,19 @@ void Pacman::sendSignal(){
 	event.pacmanMove.direction = dir;
 	event.pacmanMove.position = pos;
 	gameEventSignal.notify(event);
+}
+
+void Pacman::onNotify(const GameEvent& event){
+	if(event.type == GameEvent::PacmanEaten){
+		pos = sf::Vector2u(33, 47);
+		sprite.setAnimation(AssetManager::get().pacman.left);
+		sprite.setPosition(pos.x * GraphicSettings::fieldSize, pos.y * GraphicSettings::fieldSize);
+		dirKeyboard = None;
+		dir = Left;
+		deltaTime = sf::Time::Zero;
+	}
+}
+
+Pacman::~Pacman(){
+	gameEventSignal.removeListener(this);
 }

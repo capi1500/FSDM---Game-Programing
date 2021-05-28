@@ -14,6 +14,7 @@ class Ghost : public Entity, public Listener<GameEvent>{
 	private:
 		Map& map;
 		
+		sf::Vector2u startingPos;
 		Direction dir;
 		sf::Vector2u pos;
 		sf::Vector2u pacmanPos = sf::Vector2u(1000, 1000);

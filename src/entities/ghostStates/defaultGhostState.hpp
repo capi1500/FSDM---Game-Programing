@@ -13,6 +13,8 @@ class DefaultGhostState : public GhostState{
 	public:
 		void onNotify(const GameEvent& event) override;
 		
+		void update(const sf::Time& time) override;
+		
 		DefaultGhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack);
 };
 

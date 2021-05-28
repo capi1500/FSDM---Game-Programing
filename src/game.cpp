@@ -48,6 +48,9 @@ void Game::run(){
 	Console console;
 	console.listenType(Message::Debug);
 	
+	Statistics statistics;
+	gameEventSignal.addListener(&statistics);
+	
 	Scene* scene;
 	sf::Time time;
 	sf::Clock clock;
@@ -57,16 +60,20 @@ void Game::run(){
 		scene = getScene();
 		
 		InputHandler::get().handleEvents();
-		gameEventSignal.handleEvents();
-		message.handleEvents();
 		
 		scene->update(time);
+		
+		gameEventSignal.handleEvents();
+		message.handleEvents();
 		
 		window.clear();
 		window.draw(map);
 		window.draw(*scene);
+		window.draw(statistics);
 		window.display();
 	}
+	gameEventSignal.removeListener(&statistics);
+	
 	window.close();
 }
 

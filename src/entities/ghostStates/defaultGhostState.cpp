@@ -24,4 +24,20 @@ void DefaultGhostState::onNotify(const GameEvent& event){
 		message.notify(Message("change ghost to flee", Message::Debug));
 		fsm.replace(new FleeGhostState(fsm, ghost, assetPack));
 	}
+	else if(event.type == GameEvent::PacmanMove){
+		if(event.pacmanMove.position == ghost.getPos()){
+			GameEvent event1;
+			event1.type = GameEvent::PacmanEaten;
+			gameEventSignal.notify(event1);
+		}
+	}
+}
+
+void DefaultGhostState::update(const sf::Time& time){
+	GhostState::update(time);
+	if(ghost.getPacmanPos() == ghost.getPos()){
+		GameEvent event;
+		event.type = GameEvent::PacmanEaten;
+		gameEventSignal.notify(event);
+	}
 }
