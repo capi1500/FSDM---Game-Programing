@@ -255,16 +255,6 @@ Map::Map(){
 	fields[34][26] = Field(Field::Type::Door);
 	
 	gameEventSignal.addListener(this);
-	
-	for(auto row : fields){
-		for(auto x : row){
-			if(x.isCanPass())
-				std::cout << ".";
-			else
-				std::cout << "#";
-		}
-		std::cout << "\n";
-	}
 }
 
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const{

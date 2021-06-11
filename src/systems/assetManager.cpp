@@ -30,6 +30,10 @@ void AssetManager::load(){
 		apple.setTextureRect(sf::IntRect(sizex * 4, sizey * 5, sizex, sizey));
 		melon.setTexture(texture);
 		melon.setTextureRect(sf::IntRect(sizex * 5, sizey * 5, sizex, sizey));
+		boss.setTexture(texture);
+		boss.setTextureRect(sf::IntRect(sizex * 6, sizey * 5, sizex, sizey));
+		key.setTexture(texture);
+		key.setTextureRect(sf::IntRect(sizex * 7, sizey * 5, sizex, sizey));
 	}
 	
 	// map

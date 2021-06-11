@@ -79,8 +79,8 @@ void Game::run(){
 }
 
 void Game::onNotify(const GameEvent& event){
-	//if(statistics->getPointsEaten() * 2 == statistics->getPointsTotal() + 1)
-	if(statistics->getPointsEaten() == 10){
+	if(statistics->getPointsEaten() * 2 == statistics->getPointsTotal() + 1)
+	//if(statistics->getPointsEaten() == 10){
 		Fruit* fruit = new Fruit(static_cast<Fruit::Type>((statistics->getLevel() - 1) % Fruit::Count), sf::Vector2u(34, 47));
 		gameEventSignal.addListener(fruit);
 		getScene()->addEntity(fruit);

@@ -47,7 +47,6 @@ void FleeGhostState::update(const sf::Time& time){
 void FleeGhostState::onNotify(const GameEvent& event){
 	if(event.type == GameEvent::PacmanMove){
 		if(event.pacmanMove.position == ghost.getPos()){
-			
 			GameEvent event;
 			event.type = GameEvent::GhostEaten;
 			
