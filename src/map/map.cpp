@@ -42,6 +42,10 @@ Map::Map(){
 					fields[2 * x - 1][2 * y - 1].isCanPass())
 				fields[2 * x][2 * y] = Field(Field::Type::Empty);
 		}
+		else{
+			fields[2 * x][2 * y + 1] = Field(Field::Type::Wall);
+			fields[2 * x + 1][2 * y] = Field(Field::Type::Wall);
+		}
 	};
 	
 	
@@ -251,6 +255,16 @@ Map::Map(){
 	fields[34][26] = Field(Field::Type::Door);
 	
 	gameEventSignal.addListener(this);
+	
+	for(auto row : fields){
+		for(auto x : row){
+			if(x.isCanPass())
+				std::cout << ".";
+			else
+				std::cout << "#";
+		}
+		std::cout << "\n";
+	}
 }
 
 void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const{
@@ -261,8 +275,8 @@ void Map::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 		}
 		states.transform.translate(GraphicSettings::fieldSize * 2, -(GraphicSettings::fieldSize * 2) * 31);
 	}
-	/*states.transform.translate(-(GraphicSettings::fieldSize * 2) * 33, 0);
-	
+	states.transform.translate(-(GraphicSettings::fieldSize * 2) * 33, 0);
+	/*
 	sf::RectangleShape rect;
 	rect.setSize(sf::Vector2f(GraphicSettings::fieldSize, GraphicSettings::fieldSize));
 	rect.setOutlineThickness(1);

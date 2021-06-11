@@ -4,6 +4,7 @@
 
 #include <systems/assetManager.hpp>
 #include "statistics.hpp"
+#include <entities/fruit.hpp>
 
 void Statistics::onNotify(const GameEvent& event){
 	if(event.type == GameEvent::PacmanEaten){
@@ -15,16 +16,23 @@ void Statistics::onNotify(const GameEvent& event){
 		}
 	}
 	else if(event.type == GameEvent::BigPointEaten){
-		setPoints(getPoints() + 100);
+		setPoints(getPoints() + 50);
 	}
 	else if(event.type == GameEvent::SmallPointEaten){
-		setPoints(getPoints() + 1);
+		setPoints(getPoints() + 10);
+		pointsEaten++;
 	}
 	else if(event.type == GameEvent::FruitEaten){
-		setPoints(getPoints() + 500);
+		setPoints(getPoints() + event.fruitEaten.fruit->getPoints());
 	}
 	else if(event.type == GameEvent::NextLevel){
-	
+		pointsEaten = 0;
+	}
+	else if(event.type == GameEvent::GhostEaten){
+		setPoints(getPoints() + (1 << (ghostsEatenStreak + 1)) * 100);
+	}
+	else if(event.type == GameEvent::GhostsRegenerated){
+		ghostsEatenStreak = 0;
 	}
 }
 
@@ -51,6 +59,8 @@ unsigned int Statistics::getPoints() const{
 }
 
 void Statistics::setPoints(unsigned int points){
+	if(this->points < 10000 && points >= 10000)
+		setLives(getLives() + 1);
 	this->points = points;
 	pointsText.setString(std::to_string(points));
 }
@@ -71,6 +81,18 @@ unsigned int Statistics::getLevel() const{
 void Statistics::setLevel(unsigned int level){
 	Statistics::level = level;
 	levelText.setString(std::to_string(level));
+}
+
+unsigned int Statistics::getGhostsEatenStreak() const{
+	return ghostsEatenStreak;
+}
+
+unsigned int Statistics::getPointsEaten() const{
+	return pointsEaten;
+}
+
+unsigned int Statistics::getPointsTotal() const{
+	return pointsTotal;
 }
 
 Statistics::Statistics(){

@@ -34,6 +34,11 @@ void DeadGhostState::update(const sf::Time& time){
 			timeAtBase += time;
 			if(timeAtBase >= sf::seconds(6)){
 				atBase = false;
+				
+				GameEvent event;
+				event.type = GameEvent::GhostsRegenerated;
+				
+				gameEventSignal.notify(event);
 				message.notify(Message("change ghost to deafult", Message::Debug));
 				fsm.replace(new DefaultGhostState(fsm, ghost, assetPack));
 			}

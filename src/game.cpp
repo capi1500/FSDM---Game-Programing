@@ -9,6 +9,7 @@
 #include <iostream>
 #include <entities/ghost.hpp>
 #include <systems/console.hpp>
+#include <entities/fruit.hpp>
 
 Scene* Game::getScene(){
 	return static_cast<Scene*>(scenes.get());
@@ -28,8 +29,9 @@ Game::Game(){
 	Scene* scene = new Scene(scenes);
 	scene->addEntity(new Pacman(map));
 	scene->addEntity(new Ghost(map, {35, 29}));
-	
 	scenes.add(scene);
+	
+	statistics = new Statistics();
 	
 	view = sf::View(sf::FloatRect(36, -36, 12 * 28, 12 * 40));
 	long double width = static_cast<long double>(28 * window.getSize().y) / static_cast<long double>(40 * window.getSize().x);
@@ -48,8 +50,7 @@ void Game::run(){
 	Console console;
 	console.listenType(Message::Debug);
 	
-	Statistics statistics;
-	gameEventSignal.addListener(&statistics);
+	gameEventSignal.addListener(statistics);
 	
 	Scene* scene;
 	sf::Time time;
@@ -69,15 +70,21 @@ void Game::run(){
 		window.clear();
 		window.draw(map);
 		window.draw(*scene);
-		window.draw(statistics);
+		window.draw(*statistics);
 		window.display();
 	}
-	gameEventSignal.removeListener(&statistics);
+	gameEventSignal.removeListener(statistics);
 	
 	window.close();
 }
 
 void Game::onNotify(const GameEvent& event){
+	//if(statistics->getPointsEaten() * 2 == statistics->getPointsTotal() + 1)
+	if(statistics->getPointsEaten() == 10){
+		Fruit* fruit = new Fruit(static_cast<Fruit::Type>((statistics->getLevel() - 1) % Fruit::Count), sf::Vector2u(34, 47));
+		gameEventSignal.addListener(fruit);
+		getScene()->addEntity(fruit);
+	}
 	if(event.type == GameEvent::Closed)
 		active = false;
 }

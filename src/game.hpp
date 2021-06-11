@@ -17,6 +17,7 @@ class Game : public Listener<GameEvent>, public Listener<sf::Event>{
 		sf::RenderWindow window;
 		sf::View view;
 		FiniteStateMachine scenes;
+		Statistics* statistics;
 		
 		bool active;
 		

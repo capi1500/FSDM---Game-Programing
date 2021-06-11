@@ -78,9 +78,11 @@ class AssetManager : public Singleton<AssetManager>{
 		sf::Sprite cherry;
 		sf::Sprite strawberry;
 		sf::Sprite orange;
-		sf::Sprite bell;
 		sf::Sprite apple;
-		sf::Sprite grapes;
+		sf::Sprite melon;
+		sf::Sprite boss;
+		sf::Sprite bell;
+		sf::Sprite key;
 		
 		void load();
 };

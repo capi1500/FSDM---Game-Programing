@@ -28,8 +28,8 @@ void AssetManager::load(){
 		bell.setTextureRect(sf::IntRect(sizex * 3, sizey * 5, sizex, sizey));
 		apple.setTexture(texture);
 		apple.setTextureRect(sf::IntRect(sizex * 4, sizey * 5, sizex, sizey));
-		grapes.setTexture(texture);
-		grapes.setTextureRect(sf::IntRect(sizex * 5, sizey * 5, sizex, sizey));
+		melon.setTexture(texture);
+		melon.setTextureRect(sf::IntRect(sizex * 5, sizey * 5, sizex, sizey));
 	}
 	
 	// map

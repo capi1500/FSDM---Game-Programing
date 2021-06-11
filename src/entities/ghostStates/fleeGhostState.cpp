@@ -32,6 +32,11 @@ void FleeGhostState::update(const sf::Time& time){
 			timeAtBase += time;
 			if(timeAtBase >= sf::seconds(3)){
 				atBase = false;
+				
+				GameEvent event;
+				event.type = GameEvent::GhostsRegenerated;
+				
+				gameEventSignal.notify(event);
 				message.notify(Message("change ghost to deafult", Message::Debug));
 				fsm.replace(new DefaultGhostState(fsm, ghost, assetPack));
 			}
@@ -42,6 +47,11 @@ void FleeGhostState::update(const sf::Time& time){
 void FleeGhostState::onNotify(const GameEvent& event){
 	if(event.type == GameEvent::PacmanMove){
 		if(event.pacmanMove.position == ghost.getPos()){
+			
+			GameEvent event;
+			event.type = GameEvent::GhostEaten;
+			
+			gameEventSignal.notify(event);
 			message.notify(Message("change ghost to dead", Message::Debug));
 			fsm.replace(new DeadGhostState(fsm, ghost, assetPack));
 		}

@@ -8,7 +8,8 @@
 #include <signal/signal.hpp>
 #include <entities/entity.hpp>
 #include <SFML/System/Vector2.hpp>
-#include <entities/fruit.hpp>
+
+class Fruit;
 
 struct GameEvent{
 	GameEvent();
@@ -17,6 +18,8 @@ struct GameEvent{
 		Closed,
 		PacmanMove,
 		PacmanEaten,
+		GhostEaten,
+		GhostsRegenerated,
 		BigPointEaten,
 		SmallPointEaten,
 		FruitEaten,
@@ -29,7 +32,7 @@ struct GameEvent{
 	};
 	
 	struct FruitEatenEvent{
-		Fruit& fruit;
+		Fruit* fruit;
 	};
 	
 	Type type;

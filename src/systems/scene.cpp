@@ -28,6 +28,7 @@ void Scene::update(const sf::Time& time){
 		if(e->isExists() && e->isActive())
 			e->update(time);
 	}
+	refresh();
 }
 
 void Scene::addEntity(Entity* entity){

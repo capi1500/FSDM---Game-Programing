@@ -16,6 +16,10 @@ class Statistics : public Listener<GameEvent>, public sf::Drawable{
 		unsigned highScore;
 		unsigned level;
 		
+		unsigned ghostsEatenStreak;
+		unsigned pointsEaten;
+		const unsigned pointsTotal = 187;
+		
 		sf::Sprite live;
 		sf::Text pointsText;
 		sf::Text highScoreText;
@@ -33,6 +37,9 @@ class Statistics : public Listener<GameEvent>, public sf::Drawable{
 		void setHighScore(unsigned int highScore);
 		unsigned int getLevel() const;
 		void setLevel(unsigned int level);
+		unsigned int getGhostsEatenStreak() const;
+		unsigned int getPointsEaten() const;
+		unsigned int getPointsTotal() const;
 		
 		Statistics();
 };
