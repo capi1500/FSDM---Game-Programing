@@ -28,7 +28,10 @@ Game::Game(){
 	
 	Scene* scene = new Scene(scenes);
 	scene->addEntity(new Pacman(map));
-	scene->addEntity(new Ghost(map, {35, 29}));
+	scene->addEntity(new Ghost(map, {34, 28}, Ghost::Follow));
+	scene->addEntity(new Ghost(map, {30, 30}, Ghost::Ambush));
+	scene->addEntity(new Ghost(map, {38, 30}, Ghost::Corner));
+	scene->addEntity(new Ghost(map, {34, 30}, Ghost::Mixed));
 	scenes.add(scene);
 	
 	statistics = new Statistics();

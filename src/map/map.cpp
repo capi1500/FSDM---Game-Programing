@@ -6,7 +6,6 @@
 #include <systems/assetManager.hpp>
 #include <fstream>
 #include <iostream>
-#include <stack>
 #include <graphicSettings.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
@@ -329,7 +328,7 @@ void Map::onNotify(const GameEvent& event){
 	}
 }
 
-std::vector<sf::Vector2u> Map::findShortestPath(const sf::Vector2u& v, const sf::Vector2u& u, bool canPassDoor) const{
+std::vector<sf::Vector2u> Map::findShortestPath(const sf::Vector2u& v, const sf::Vector2u& u, bool canPassDoor, const sf::Vector2u& blocked) const{
 	std::vector<std::vector<unsigned>> distance(sizex, std::vector<unsigned>(sizey, 4000000000));
 	std::vector<std::vector<sf::Vector2u>> parent(sizex, std::vector<sf::Vector2u>(sizey));
 	
@@ -358,8 +357,8 @@ std::vector<sf::Vector2u> Map::findShortestPath(const sf::Vector2u& v, const sf:
 		}
 		
 		for(int d = 0; d < 4; d++){
-			sf::Vector2u next = sf::Vector2u((sizex + a.x + dx[p[d]]) % sizex, a.y + dy[p[d]]); // ctrl+z?
-			if(getField(next).isCanPass() || (canPassDoor && getField(next).getType() == Field::Door)){
+			sf::Vector2u next = sf::Vector2u((sizex + a.x + dx[p[d]]) % sizex, a.y + dy[p[d]]);
+			if(next != blocked && (getField(next).isCanPass() || (canPassDoor && getField(next).getType() == Field::Door))){
 				unsigned dist = distance[a.x][a.y] + 1;
 				if(dist < distance[next.x][next.y]){
 					distance[next.x][next.y] = dist;

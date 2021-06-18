@@ -37,11 +37,13 @@ void Ghost::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 void Ghost::update(const sf::Time& time){
 	state = getState();
 	state->update(time);
+	aiTime += time;
 }
 
 void Ghost::onNotify(const GameEvent& event){
 	if(event.type == GameEvent::PacmanMove){
 		pacmanPos = event.pacmanMove.position;
+		pacmanDir = event.pacmanMove.direction;
 		getState()->forceRecalculate();
 	}
 	else if(event.type == GameEvent::PacmanEaten){
@@ -58,14 +60,29 @@ const sf::Vector2u& Ghost::getPacmanPos() const{
 	return pacmanPos;
 }
 
-Ghost::Ghost(Map& map, sf::Vector2u position) : map(map){
+Ghost::Ghost(Map& map, sf::Vector2u position, AIType type) : map(map), aiType(type), secondaryAIType(None){
 	dir = Up;
 	startingPos = position;
 	passDoor = true;
 	pos = position;
+	pacmanDir = Left;
+	pacmanPos.x = 33;
+	pacmanPos.y = 47;
 	deltaTime = sf::Time::Zero;
 	gameEventSignal.addListener(this);
-	fsm.add(new DefaultGhostState(fsm, *this, AssetManager::get().redGhost));
+	if(aiType == Follow)
+		fsm.add(new DefaultGhostState(fsm, *this, AssetManager::get().redGhost));
+	else if(aiType == Ambush)
+		fsm.add(new DefaultGhostState(fsm, *this, AssetManager::get().cyanGhost));
+	else if(aiType == Corner){
+		corner = rand() % 4;
+		fsm.add(new DefaultGhostState(fsm, *this, AssetManager::get().pinkGhost));
+	}
+	else if(aiType == Mixed){
+		fsm.add(new DefaultGhostState(fsm, *this, AssetManager::get().orangeGhost));
+		secondaryAIType = static_cast<AIType>(rand() % 3);
+		corner = rand() % 4;
+	}
 }
 
 Ghost::~Ghost(){
@@ -87,4 +104,36 @@ const sf::Time& Ghost::getDeltaTime() const{
 
 void Ghost::setDeltaTime(const sf::Time& deltaTime){
 	Ghost::deltaTime = deltaTime;
+}
+
+Ghost::AIType Ghost::getAiType() const{
+	return aiType;
+}
+
+const sf::Time& Ghost::getAiTime() const{
+	return aiTime;
+}
+
+void Ghost::setAiTime(const sf::Time& aiTime){
+	this->aiTime = aiTime;
+}
+
+Ghost::AIType Ghost::getSecondaryAiType() const{
+	return secondaryAIType;
+}
+
+void Ghost::setSecondaryAiType(Ghost::AIType secondaryAiType){
+	secondaryAIType = secondaryAiType;
+}
+
+Entity::Direction Ghost::getPacmanDir() const{
+	return pacmanDir;
+}
+
+unsigned int Ghost::getCorner() const{
+	return corner;
+}
+
+void Ghost::setCorner(unsigned int corner){
+	Ghost::corner = corner;
 }

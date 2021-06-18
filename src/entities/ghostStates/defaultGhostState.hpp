@@ -10,6 +10,7 @@
 class DefaultGhostState : public GhostState{
 	protected:
 		void calculateMove() override;
+		static const std::vector<sf::Vector2u>[4] points;
 	public:
 		void onNotify(const GameEvent& event) override;
 		

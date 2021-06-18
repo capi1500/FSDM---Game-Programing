@@ -20,7 +20,7 @@ class Map : public sf::Drawable, public Listener<GameEvent>{
 		const Field& getField(const sf::Vector2u& pos) const;
 		const Field& getField(const unsigned x, const unsigned y) const;
 		
-		std::vector<sf::Vector2u> findShortestPath(const sf::Vector2u& v, const sf::Vector2u& u, bool canPassDoor) const;
+		std::vector<sf::Vector2u> findShortestPath(const sf::Vector2u& v, const sf::Vector2u& u, bool canPassDoor, const sf::Vector2u& blocked = {}) const;
 		
 		void onNotify(const GameEvent& event) override;
 		
