@@ -59,6 +59,7 @@ const sf::Vector2u& Ghost::getPacmanPos() const{
 }
 
 Ghost::Ghost(Map& map, sf::Vector2u position) : map(map){
+	dir = Up;
 	startingPos = position;
 	passDoor = true;
 	pos = position;

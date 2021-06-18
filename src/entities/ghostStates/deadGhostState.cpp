@@ -15,7 +15,7 @@ void DeadGhostState::calculateMove(){
 		moves.push(v);
 }
 
-DeadGhostState::DeadGhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack) : GhostState(fsm, ghost, assetPack){
+DeadGhostState::DeadGhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack) : GhostState(fsm, ghost, AssetManager::get().deadGhost, assetPack){
 	velocity = sf::milliseconds(50);
 }
 
@@ -40,7 +40,7 @@ void DeadGhostState::update(const sf::Time& time){
 				
 				gameEventSignal.notify(event);
 				message.notify(Message("change ghost to deafult", Message::Debug));
-				fsm.replace(new DefaultGhostState(fsm, ghost, assetPack));
+				fsm.replace(new DefaultGhostState(fsm, ghost, defaultAssetPack));
 			}
 		}
 	}

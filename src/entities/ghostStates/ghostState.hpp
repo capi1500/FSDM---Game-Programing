@@ -18,6 +18,7 @@ class GhostState : public FiniteState, public Listener<GameEvent>{
 		AnimatedSprite sprite;
 		Ghost& ghost;
 		AssetManager::EntityAssetPack& assetPack;
+		AssetManager::EntityAssetPack& defaultAssetPack;
 		std::queue<sf::Vector2u> moves;
 		
 		sf::Vector2u pos2;
@@ -34,6 +35,7 @@ class GhostState : public FiniteState, public Listener<GameEvent>{
 		void forceRecalculate();
 		
 		GhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack);
+		GhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack, AssetManager::EntityAssetPack& defaultAssetPack);
 		virtual ~GhostState();
 };
 

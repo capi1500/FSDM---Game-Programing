@@ -30,7 +30,8 @@ class AssetManager : public Singleton<AssetManager>{
 		EntityAssetPack redGhost;
 		EntityAssetPack pinkGhost;
 		EntityAssetPack orangeGhost;
-		EntityAssetPack blueGhost;
+		EntityAssetPack cyanGhost;
+		EntityAssetPack fleeGhost;
 		EntityAssetPack deadGhost;
 		EntityAssetPack pacman;
 		
@@ -83,6 +84,11 @@ class AssetManager : public Singleton<AssetManager>{
 		sf::Sprite boss;
 		sf::Sprite bell;
 		sf::Sprite key;
+		
+		sf::Sprite p200;
+		sf::Sprite p400;
+		sf::Sprite p800;
+		sf::Sprite p1600;
 		
 		void load();
 };

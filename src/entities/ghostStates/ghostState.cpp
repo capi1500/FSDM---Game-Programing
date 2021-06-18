@@ -8,9 +8,20 @@
 #include <iostream>
 #include <graphicSettings.hpp>
 
-GhostState::GhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack)
-		: FiniteState(fsm), ghost(ghost), assetPack(assetPack){
-	sprite.setAnimation(assetPack.left);
+GhostState::GhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack) : GhostState(fsm, ghost, assetPack, assetPack){
+}
+
+GhostState::GhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack, AssetManager::EntityAssetPack& defaultAssetPack)
+		: FiniteState(fsm), ghost(ghost), assetPack(assetPack), defaultAssetPack(defaultAssetPack){
+	if(ghost.getDir() == Entity::Left)
+		sprite.setAnimation(assetPack.left);
+	else if(ghost.getDir() == Entity::Right)
+		sprite.setAnimation(assetPack.right);
+	else if(ghost.getDir() == Entity::Up)
+		sprite.setAnimation(assetPack.up);
+	else
+		sprite.setAnimation(assetPack.down);
+	
 	sprite.setPosition(ghost.getPos().x * GraphicSettings::fieldSize, ghost.getPos().y * GraphicSettings::fieldSize);
 	gameEventSignal.addListener(this);
 }
@@ -124,7 +135,6 @@ void GhostState::update(const sf::Time& time){
 				ghost.getPos().x * GraphicSettings::fieldSize + dx[ghost.getDir()] * change,
 				ghost.getPos().y * GraphicSettings::fieldSize + dy[ghost.getDir()] * change
 		);
-		sprite.update(time);
 	}
 	else{
 		sprite.setPosition(
@@ -133,6 +143,7 @@ void GhostState::update(const sf::Time& time){
 		);
 		ghost.setDeltaTime(sf::Time::Zero);
 	}
+	sprite.update(time);
 }
 
 void GhostState::forceRecalculate(){

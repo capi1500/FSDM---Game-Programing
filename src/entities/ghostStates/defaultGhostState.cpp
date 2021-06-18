@@ -22,7 +22,7 @@ void DefaultGhostState::calculateMove(){
 void DefaultGhostState::onNotify(const GameEvent& event){
 	if(event.type == GameEvent::BigPointEaten){
 		message.notify(Message("change ghost to flee", Message::Debug));
-		fsm.replace(new FleeGhostState(fsm, ghost, assetPack));
+		fsm.replace(new FleeGhostState(fsm, ghost, defaultAssetPack));
 	}
 	else if(event.type == GameEvent::PacmanMove){
 		if(event.pacmanMove.position == ghost.getPos()){

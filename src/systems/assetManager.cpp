@@ -133,10 +133,6 @@ void AssetManager::load(){
 		redGhost.left.addFrame(image, sf::IntRect(sizex * 5, sizey * 6, sizex, sizey));
 		redGhost.up.addFrame(image, sf::IntRect(sizex * 6, sizey * 6, sizex, sizey));
 		redGhost.up.addFrame(image, sf::IntRect(sizex * 7, sizey * 6, sizex, sizey));
-		redGhost.death.addFrame(image, sf::IntRect(sizex * 6, sizey * 4, sizex, sizey));
-		redGhost.death.addFrame(image, sf::IntRect(sizex * 7, sizey * 4, sizex, sizey));
-		redGhost.death.addFrame(image, sf::IntRect(sizex * 8, sizey * 4, sizex, sizey));
-		redGhost.death.addFrame(image, sf::IntRect(sizex * 9, sizey * 4, sizex, sizey));
 		
 		orangeGhost.right.addFrame(image, sf::IntRect(sizex * 0, sizey * 9, sizex, sizey));
 		orangeGhost.right.addFrame(image, sf::IntRect(sizex * 1, sizey * 9, sizex, sizey));
@@ -146,10 +142,6 @@ void AssetManager::load(){
 		orangeGhost.left.addFrame(image, sf::IntRect(sizex * 5, sizey * 9, sizex, sizey));
 		orangeGhost.up.addFrame(image, sf::IntRect(sizex * 6, sizey * 9, sizex, sizey));
 		orangeGhost.up.addFrame(image, sf::IntRect(sizex * 7, sizey * 9, sizex, sizey));
-		orangeGhost.death.addFrame(image, sf::IntRect(sizex * 6, sizey * 4, sizex, sizey));
-		orangeGhost.death.addFrame(image, sf::IntRect(sizex * 7, sizey * 4, sizex, sizey));
-		orangeGhost.death.addFrame(image, sf::IntRect(sizex * 8, sizey * 4, sizex, sizey));
-		orangeGhost.death.addFrame(image, sf::IntRect(sizex * 9, sizey * 4, sizex, sizey));
 		
 		pinkGhost.right.addFrame(image, sf::IntRect(sizex * 0, sizey * 8, sizex, sizey));
 		pinkGhost.right.addFrame(image, sf::IntRect(sizex * 1, sizey * 8, sizex, sizey));
@@ -159,32 +151,41 @@ void AssetManager::load(){
 		pinkGhost.left.addFrame(image, sf::IntRect(sizex * 5, sizey * 8, sizex, sizey));
 		pinkGhost.up.addFrame(image, sf::IntRect(sizex * 6, sizey * 8, sizex, sizey));
 		pinkGhost.up.addFrame(image, sf::IntRect(sizex * 7, sizey * 8, sizex, sizey));
-		pinkGhost.death.addFrame(image, sf::IntRect(sizex * 6, sizey * 4, sizex, sizey));
-		pinkGhost.death.addFrame(image, sf::IntRect(sizex * 7, sizey * 4, sizex, sizey));
-		pinkGhost.death.addFrame(image, sf::IntRect(sizex * 8, sizey * 4, sizex, sizey));
-		pinkGhost.death.addFrame(image, sf::IntRect(sizex * 9, sizey * 4, sizex, sizey));
 		
-		blueGhost.right.addFrame(image, sf::IntRect(sizex * 8, sizey * 8, sizex, sizey));
-		blueGhost.right.addFrame(image, sf::IntRect(sizex * 9, sizey * 8, sizex, sizey));
-		blueGhost.down.addFrame(image, sf::IntRect(sizex * 10, sizey * 8, sizex, sizey));
-		blueGhost.down.addFrame(image, sf::IntRect(sizex * 11, sizey * 8, sizex, sizey));
-		blueGhost.left.addFrame(image, sf::IntRect(sizex * 12, sizey * 8, sizex, sizey));
-		blueGhost.left.addFrame(image, sf::IntRect(sizex * 13, sizey * 8, sizex, sizey));
-		blueGhost.up.addFrame(image, sf::IntRect(sizex * 14, sizey * 8, sizex, sizey));
-		blueGhost.up.addFrame(image, sf::IntRect(sizex * 15, sizey * 8, sizex, sizey));
-		blueGhost.death.addFrame(image, sf::IntRect(sizex * 6, sizey * 4, sizex, sizey));
-		blueGhost.death.addFrame(image, sf::IntRect(sizex * 7, sizey * 4, sizex, sizey));
-		blueGhost.death.addFrame(image, sf::IntRect(sizex * 8, sizey * 4, sizex, sizey));
-		blueGhost.death.addFrame(image, sf::IntRect(sizex * 9, sizey * 4, sizex, sizey));
+		cyanGhost.right.addFrame(image, sf::IntRect(sizex * 8, sizey * 8, sizex, sizey));
+		cyanGhost.right.addFrame(image, sf::IntRect(sizex * 9, sizey * 8, sizex, sizey));
+		cyanGhost.down.addFrame(image, sf::IntRect(sizex * 10, sizey * 8, sizex, sizey));
+		cyanGhost.down.addFrame(image, sf::IntRect(sizex * 11, sizey * 8, sizex, sizey));
+		cyanGhost.left.addFrame(image, sf::IntRect(sizex * 12, sizey * 8, sizex, sizey));
+		cyanGhost.left.addFrame(image, sf::IntRect(sizex * 13, sizey * 8, sizex, sizey));
+		cyanGhost.up.addFrame(image, sf::IntRect(sizex * 14, sizey * 8, sizex, sizey));
+		cyanGhost.up.addFrame(image, sf::IntRect(sizex * 15, sizey * 8, sizex, sizey));
 		
-		deadGhost.right.addFrame(image, sf::IntRect(sizex * 8, sizey * 6, sizex, sizey));
-		deadGhost.right.addFrame(image, sf::IntRect(sizex * 9, sizey * 6, sizex, sizey));
-		deadGhost.down.addFrame(image, sf::IntRect(sizex * 10, sizey * 6, sizex, sizey));
-		deadGhost.down.addFrame(image, sf::IntRect(sizex * 11, sizey * 6, sizex, sizey));
-		deadGhost.left.addFrame(image, sf::IntRect(sizex * 12, sizey * 6, sizex, sizey));
-		deadGhost.left.addFrame(image, sf::IntRect(sizex * 13, sizey * 6, sizex, sizey));
-		deadGhost.up.addFrame(image, sf::IntRect(sizex * 14, sizey * 6, sizex, sizey));
-		deadGhost.up.addFrame(image, sf::IntRect(sizex * 15, sizey * 6, sizex, sizey));
+		deadGhost.right.addFrame(image, sf::IntRect(sizex * 8, sizey * 9, sizex, sizey));
+		deadGhost.right.addFrame(image, sf::IntRect(sizex * 9, sizey * 9, sizex, sizey));
+		deadGhost.down.addFrame(image, sf::IntRect(sizex * 10, sizey * 9, sizex, sizey));
+		deadGhost.down.addFrame(image, sf::IntRect(sizex * 11, sizey * 9, sizex, sizey));
+		deadGhost.left.addFrame(image, sf::IntRect(sizex * 12, sizey * 9, sizex, sizey));
+		deadGhost.left.addFrame(image, sf::IntRect(sizex * 13, sizey * 9, sizex, sizey));
+		deadGhost.up.addFrame(image, sf::IntRect(sizex * 14, sizey * 9, sizex, sizey));
+		deadGhost.up.addFrame(image, sf::IntRect(sizex * 15, sizey * 9, sizex, sizey));
+		
+		fleeGhost.right.addFrame(image, sf::IntRect(sizex * 6, sizey * 4, sizex, sizey));
+		fleeGhost.right.addFrame(image, sf::IntRect(sizex * 7, sizey * 4, sizex, sizey));
+		fleeGhost.right.addFrame(image, sf::IntRect(sizex * 8, sizey * 4, sizex, sizey));
+		fleeGhost.right.addFrame(image, sf::IntRect(sizex * 9, sizey * 4, sizex, sizey));
+		fleeGhost.left.addFrame(image, sf::IntRect(sizex * 6, sizey * 4, sizex, sizey));
+		fleeGhost.left.addFrame(image, sf::IntRect(sizex * 7, sizey * 4, sizex, sizey));
+		fleeGhost.left.addFrame(image, sf::IntRect(sizex * 8, sizey * 4, sizex, sizey));
+		fleeGhost.left.addFrame(image, sf::IntRect(sizex * 9, sizey * 4, sizex, sizey));
+		fleeGhost.up.addFrame(image, sf::IntRect(sizex * 6, sizey * 4, sizex, sizey));
+		fleeGhost.up.addFrame(image, sf::IntRect(sizex * 7, sizey * 4, sizex, sizey));
+		fleeGhost.up.addFrame(image, sf::IntRect(sizex * 8, sizey * 4, sizex, sizey));
+		fleeGhost.up.addFrame(image, sf::IntRect(sizex * 9, sizey * 4, sizex, sizey));
+		fleeGhost.down.addFrame(image, sf::IntRect(sizex * 6, sizey * 4, sizex, sizey));
+		fleeGhost.down.addFrame(image, sf::IntRect(sizex * 7, sizey * 4, sizex, sizey));
+		fleeGhost.down.addFrame(image, sf::IntRect(sizex * 8, sizey * 4, sizex, sizey));
+		fleeGhost.down.addFrame(image, sf::IntRect(sizex * 9, sizey * 4, sizex, sizey));
 		
 		pacman.left.addFrame(image, sf::IntRect(sizex * 0, sizey * 3, sizex, sizey));
 		pacman.left.addFrame(image, sf::IntRect(sizex * 2, sizey * 3, sizex, sizey));
@@ -206,6 +207,19 @@ void AssetManager::load(){
 		pacman.death.addFrame(image, sf::IntRect(sizex * 13, sizey * 7, sizex, sizey));
 		pacman.death.addFrame(image, sf::IntRect(sizex * 14, sizey * 7, sizex, sizey));
 		pacman.death.addFrame(image, sf::IntRect(sizex * 15, sizey * 7, sizex, sizey));
+	}
+	
+	// points
+	
+	{
+		p200.setTexture(texture);
+		p400.setTexture(texture);
+		p800.setTexture(texture);
+		p1600.setTexture(texture);
+		p200.setTextureRect(sf::IntRect(sizex * 8, sizey * 6, sizex, sizey));
+		p400.setTextureRect(sf::IntRect(sizex * 9, sizey * 6, sizex, sizey));
+		p800.setTextureRect(sf::IntRect(sizex * 10, sizey * 6, sizex, sizey));
+		p1600.setTextureRect(sf::IntRect(sizex * 11, sizey * 6, sizex, sizey));
 	}
 	
 	// fonts

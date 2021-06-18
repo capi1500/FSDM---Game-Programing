@@ -17,7 +17,7 @@ void FleeGhostState::calculateMove(){
 		moves.push(v);
 }
 
-FleeGhostState::FleeGhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack) : GhostState(fsm, ghost, assetPack){
+FleeGhostState::FleeGhostState(FiniteStateMachine& fsm, Ghost& ghost, AssetManager::EntityAssetPack& assetPack) : GhostState(fsm, ghost, AssetManager::get().fleeGhost, assetPack){
 	 velocity = sf::milliseconds(200);
 }
 
@@ -38,7 +38,7 @@ void FleeGhostState::update(const sf::Time& time){
 				
 				gameEventSignal.notify(event);
 				message.notify(Message("change ghost to deafult", Message::Debug));
-				fsm.replace(new DefaultGhostState(fsm, ghost, assetPack));
+				fsm.replace(new DefaultGhostState(fsm, ghost, defaultAssetPack));
 			}
 		}
 	}
@@ -52,7 +52,7 @@ void FleeGhostState::onNotify(const GameEvent& event){
 			
 			gameEventSignal.notify(event);
 			message.notify(Message("change ghost to dead", Message::Debug));
-			fsm.replace(new DeadGhostState(fsm, ghost, assetPack));
+			fsm.replace(new DeadGhostState(fsm, ghost, defaultAssetPack));
 		}
 	}
 }
