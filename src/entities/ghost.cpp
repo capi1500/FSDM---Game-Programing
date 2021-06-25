@@ -81,7 +81,7 @@ Ghost::Ghost(Map& map, sf::Vector2u position, AIType type) : map(map), aiType(ty
 	else if(aiType == Mixed){
 		fsm.add(new DefaultGhostState(fsm, *this, AssetManager::get().orangeGhost));
 		secondaryAIType = static_cast<AIType>(rand() % 3);
-		corner = rand() % 4;
+		corner = 0/*rand() % 4*/;
 	}
 }
 
@@ -136,4 +136,12 @@ unsigned int Ghost::getCorner() const{
 
 void Ghost::setCorner(unsigned int corner){
 	Ghost::corner = corner;
+}
+
+const sf::Vector2u &Ghost::getDestinationPoint() const {
+    return destinationPoint;
+}
+
+void Ghost::setDestinationPoint(const sf::Vector2u &destinationPoint) {
+    Ghost::destinationPoint = destinationPoint;
 }

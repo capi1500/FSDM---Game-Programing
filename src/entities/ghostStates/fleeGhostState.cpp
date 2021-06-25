@@ -37,6 +37,7 @@ void FleeGhostState::update(const sf::Time& time){
 				event.type = GameEvent::GhostsRegenerated;
 				
 				gameEventSignal.notify(event);
+				ghost.setCorner(rand() % 4);
 				message.notify(Message("change ghost to deafult", Message::Debug));
 				fsm.replace(new DefaultGhostState(fsm, ghost, defaultAssetPack));
 			}

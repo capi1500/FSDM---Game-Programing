@@ -35,8 +35,15 @@ class Ghost : public Entity, public Listener<GameEvent>{
 		unsigned corner;
 		sf::Time aiTime;
 		AIType secondaryAIType;
-		
-		FiniteStateMachine fsm;
+		sf::Vector2u destinationPoint;
+public:
+    const sf::Vector2u &getDestinationPoint() const;
+
+    void setDestinationPoint(const sf::Vector2u &lastPoint);
+
+private:
+
+    FiniteStateMachine fsm;
 		GhostState* state;
 		
 		GhostState* getState();
