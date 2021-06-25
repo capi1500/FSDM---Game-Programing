@@ -41,6 +41,9 @@ Scene::Scene(FiniteStateMachine& fsm) : FiniteState(fsm){
 
 Scene::~Scene(){
 	InputHandler::get().removeListener(this);
+	for(auto& e : entities){
+		delete e;
+	}
 }
 
 void Scene::onNotify(const sf::Event& event){

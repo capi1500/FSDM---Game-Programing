@@ -29,15 +29,19 @@ GhostState* Ghost::getState(){
 }
 
 void Ghost::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-	states.transform.combine(getTransform());
-	states.transform.translate(-GraphicSettings::fieldSize * 2, -GraphicSettings::fieldSize * 2);
-	target.draw(state->getSprite(), states);
+	if(isVisible()){
+		states.transform.combine(getTransform());
+		states.transform.translate(-GraphicSettings::fieldSize * 2, -GraphicSettings::fieldSize * 2);
+		target.draw(state->getSprite(), states);
+	}
 }
 
 void Ghost::update(const sf::Time& time){
-	state = getState();
-	state->update(time);
-	aiTime += time;
+	if(active){
+		state = getState();
+		state->update(time);
+		aiTime += time;
+	}
 }
 
 void Ghost::onNotify(const GameEvent& event){
@@ -49,6 +53,12 @@ void Ghost::onNotify(const GameEvent& event){
 	else if(event.type == GameEvent::PacmanEaten){
 		pos = startingPos;
 		getState()->forceRecalculate();
+		visible = false;
+		active = false;
+	}
+	else if(event.type == GameEvent::PacmanStarted){
+		visible = true;
+		active = true;
 	}
 }
 
@@ -69,6 +79,7 @@ Ghost::Ghost(Map& map, sf::Vector2u position, AIType type) : map(map), aiType(ty
 	pacmanPos.x = 33;
 	pacmanPos.y = 47;
 	deltaTime = sf::Time::Zero;
+	corner = 0;
 	gameEventSignal.addListener(this);
 	if(aiType == Follow)
 		fsm.add(new DefaultGhostState(fsm, *this, AssetManager::get().redGhost));
@@ -81,7 +92,7 @@ Ghost::Ghost(Map& map, sf::Vector2u position, AIType type) : map(map), aiType(ty
 	else if(aiType == Mixed){
 		fsm.add(new DefaultGhostState(fsm, *this, AssetManager::get().orangeGhost));
 		secondaryAIType = static_cast<AIType>(rand() % 3);
-		corner = 0/*rand() % 4*/;
+		corner = rand() % 4;
 	}
 }
 

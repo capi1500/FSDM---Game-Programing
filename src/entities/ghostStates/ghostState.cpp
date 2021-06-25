@@ -60,42 +60,7 @@ sf::Vector2u GhostState::nextMove(){
 void GhostState::update(const sf::Time& time){
 	ghost.setDeltaTime(ghost.getDeltaTime() + time);
 	
-	//Entity::Direction lastDir = ghost.getDir();
-	//sf::Vector2u lastPos = ghost.getPos();
-	//sf::Vector2u lastPos2(lastPos.x + dx[lastDir], lastPos.y + dy[lastDir]);
-	
 	pos2 = nextMove();
-	
-	// bug jest gdy np:
-	//
-	// duszek szedł w prawo, przed dotarciem zmienił się kierunek podróży na lewo
-	
-	/*if(ghost.getMap().getField(lastPos2).isCanPass() || (ghost.isPassDoor() && ghost.getMap().getField(lastPos2).getType() == Field::Door)){
-		if(lastDir == Entity::Left && ghost.getDir() == Entity::Right){
-			pos2 = ghost.getPos();
-			moves.push(pos2);
-			ghost.setPos(lastPos2);
-			ghost.setDeltaTime(velocity - ghost.getDeltaTime());
-		}
-		else if(lastDir == Entity::Right && ghost.getDir() == Entity::Left){
-			pos2 = ghost.getPos();
-			moves.push(pos2);
-			ghost.setPos(lastPos2);
-			ghost.setDeltaTime(velocity - ghost.getDeltaTime());
-		}
-		else if(lastDir == Entity::Up && ghost.getDir() == Entity::Down){
-			pos2 = ghost.getPos();
-			moves.push(pos2);
-			ghost.setPos(lastPos2);
-			ghost.setDeltaTime(velocity - ghost.getDeltaTime());
-		}
-		else if(lastDir == Entity::Down && ghost.getDir() == Entity::Up){
-			pos2 = ghost.getPos();
-			moves.push(pos2);
-			ghost.setPos(lastPos2);
-			ghost.setDeltaTime(velocity - ghost.getDeltaTime());
-		}
-	}*/
 	
 	while(ghost.getDeltaTime() >= velocity){
 		ghost.setPos(pos2);
@@ -123,9 +88,6 @@ void GhostState::update(const sf::Time& time){
 			}
 		}
 		
-		//if(pos2 != ghost.getPos())
-		//	sprite.update(velocity);
-			
 		ghost.setDeltaTime(ghost.getDeltaTime() - velocity);
 	}
 	

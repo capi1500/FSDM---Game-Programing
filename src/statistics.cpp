@@ -21,6 +21,11 @@ void Statistics::onNotify(const GameEvent& event){
 	else if(event.type == GameEvent::SmallPointEaten){
 		setPoints(getPoints() + 10);
 		pointsEaten++;
+		if(pointsEaten == pointsTotal){
+			GameEvent gameEvent;
+			gameEvent.type = GameEvent::NextLevel;
+			gameEventSignal.notify(gameEvent);
+		}
 	}
 	else if(event.type == GameEvent::FruitEaten){
 		setPoints(getPoints() + event.fruitEaten.fruit->getPoints());

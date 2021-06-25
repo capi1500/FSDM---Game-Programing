@@ -26,13 +26,7 @@ Game::Game(){
 	gameEventSignal.addListener(this);
 	InputHandler::get().addListener(this);
 	
-	Scene* scene = new Scene(scenes);
-	scene->addEntity(new Pacman(map));
-	scene->addEntity(new Ghost(map, {34, 28}, Ghost::Follow));
-	scene->addEntity(new Ghost(map, {30, 30}, Ghost::Ambush));
-	scene->addEntity(new Ghost(map, {38, 30}, Ghost::Corner));
-	scene->addEntity(new Ghost(map, {34, 30}, Ghost::Mixed));
-	scenes.add(scene);
+	scenes.add(newScene());
 	
 	statistics = new Statistics();
 	
@@ -51,7 +45,7 @@ Game::~Game(){
 
 void Game::run(){
 	Console console;
-	console.listenType(Message::Debug);
+	//console.listenType(Message::Debug);
 	
 	gameEventSignal.addListener(statistics);
 	
@@ -83,13 +77,16 @@ void Game::run(){
 
 void Game::onNotify(const GameEvent& event){
 	if(statistics->getPointsEaten() * 2 == statistics->getPointsTotal() + 1){
-	//if(statistics->getPointsEaten() == 10){
 		Fruit* fruit = new Fruit(static_cast<Fruit::Type>((statistics->getLevel() - 1) % Fruit::Count), sf::Vector2u(34, 47));
 		gameEventSignal.addListener(fruit);
 		getScene()->addEntity(fruit);
 	}
 	if(event.type == GameEvent::Closed)
 		active = false;
+	if(event.type == GameEvent::NextLevel){
+		Scene* scene = newScene();
+		scenes.replace(scene);
+	}
 }
 
 void Game::onNotify(const sf::Event& event){
@@ -98,4 +95,14 @@ void Game::onNotify(const sf::Event& event){
 		view.setViewport(sf::FloatRect((1 - width) / 2, 0, width, 1));
 		window.setView(view);
 	}
+}
+
+Scene* Game::newScene(){
+	Scene* scene = new Scene(scenes);
+	scene->addEntity(new Pacman(map));
+	scene->addEntity(new Ghost(map, {34, 28}, Ghost::Follow));
+	scene->addEntity(new Ghost(map, {30, 30}, Ghost::Ambush));
+	scene->addEntity(new Ghost(map, {38, 30}, Ghost::Corner));
+	scene->addEntity(new Ghost(map, {34, 30}, Ghost::Mixed));
+	return scene;
 }

@@ -43,13 +43,11 @@ void DefaultGhostState::calculateMove(){
 		unsigned distanceToPacman = path.size();
 		if(distanceToPacman < 20){
 			possible = path;
-            ghost.setDestinationPoint(points[ghost.getCorner()][rand() % 4]);
 		}
 		else{
 		    if(ghost.getPos() == ghost.getDestinationPoint())
-		        ghost.setDestinationPoint(points[ghost.getCorner()][rand() % 4]);
-            std::vector<sf::Vector2u> path = ghost.getMap().findShortestPath(ghost.getPos(), ghost.getDestinationPoint(), ghost.isPassDoor());
-            possible = path;
+		        ghost.setDestinationPoint(points[ghost.getCorner()][rand() % points[ghost.getCorner()].size()]);
+            possible = ghost.getMap().findShortestPath(ghost.getPos(), ghost.getDestinationPoint(), ghost.isPassDoor());
 		}
 	}
 	
@@ -68,7 +66,7 @@ void DefaultGhostState::onNotify(const GameEvent& event){
 		if(event.pacmanMove.position == ghost.getPos()){
 			GameEvent event1;
 			event1.type = GameEvent::PacmanEaten;
-			//gameEventSignal.notify(event1);
+			gameEventSignal.notify(event1);
 		}
 	}
 }
@@ -78,10 +76,14 @@ void DefaultGhostState::update(const sf::Time& time){
 	if(ghost.getPacmanPos() == ghost.getPos()){
 		GameEvent event;
 		event.type = GameEvent::PacmanEaten;
-		//gameEventSignal.notify(event);
+		gameEventSignal.notify(event);
 	}
 	if(ghost.getAiType() == Ghost::Mixed && ghost.getAiTime() >= sf::seconds(10)){
 		ghost.setSecondaryAiType(static_cast<Ghost::AIType>(rand() % 3));
+		ghost.setAiTime(sf::Time::Zero);
+		ghost.setCorner(rand() % 4);
+	}
+	if(ghost.getAiType() == Ghost::Corner && ghost.getAiTime() >= sf::seconds(1)){
 		ghost.setAiTime(sf::Time::Zero);
 		ghost.setCorner(rand() % 4);
 	}

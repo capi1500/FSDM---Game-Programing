@@ -59,7 +59,7 @@ void FiniteStateMachine::onNotify(const FiniteStateEvent& event){
 		}
 		delete states.top();
 		states.pop();
-		states.push(event.add.state);
+		states.push(event.replace.state);
 		states.top()->setActive(true);
 	}
 	else if(event.type == FiniteStateEvent::Clear){

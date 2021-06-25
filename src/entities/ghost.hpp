@@ -36,20 +36,17 @@ class Ghost : public Entity, public Listener<GameEvent>{
 		sf::Time aiTime;
 		AIType secondaryAIType;
 		sf::Vector2u destinationPoint;
-public:
-    const sf::Vector2u &getDestinationPoint() const;
-
-    void setDestinationPoint(const sf::Vector2u &lastPoint);
-
-private:
-
-    FiniteStateMachine fsm;
+		
+		FiniteStateMachine fsm;
 		GhostState* state;
 		
 		GhostState* getState();
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:
+		const sf::Vector2u& getDestinationPoint() const;
+		
+		void setDestinationPoint(const sf::Vector2u& lastPoint);
 		const sf::Time& getAiTime() const;
 		void setAiTime(const sf::Time& aiTime);
 		AIType getSecondaryAiType() const;

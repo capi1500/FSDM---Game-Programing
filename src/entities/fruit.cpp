@@ -51,10 +51,14 @@ Fruit::Fruit(Fruit::Type type, const sf::Vector2u& position){
 	}
 	sprite->setPosition(position.x * GraphicSettings::fieldSize, position.y * GraphicSettings::fieldSize);
 	this->position = position;
+	time = sf::Time::Zero;
 }
 
 void Fruit::update(const sf::Time& time){
-
+	this->time += time;
+	if(this->time >= sf::seconds(10)){
+		exists = false;
+	}
 }
 
 void Fruit::draw(sf::RenderTarget& target, sf::RenderStates states) const{
@@ -72,7 +76,10 @@ void Fruit::onNotify(const GameEvent& event){
 			gameEventSignal.notify(event1);
 			
 			exists = false;
-			gameEventSignal.removeListener(this);
 		}
 	}
+}
+
+Fruit::~Fruit(){
+	gameEventSignal.removeListener(this);
 }

@@ -28,6 +28,7 @@ class Fruit : public Entity, public Listener<GameEvent>{
 		Type type;
 		unsigned points;
 		sf::Sprite* sprite;
+		sf::Time time;
 	protected:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	public:
@@ -37,6 +38,7 @@ class Fruit : public Entity, public Listener<GameEvent>{
 		void update(const sf::Time& time) override;
 		
 		Fruit(Type type, const sf::Vector2u& position);
+		~Fruit();
 };
 
 #endif //PROGRAMOWANIEGIER_FRUIT_HPP

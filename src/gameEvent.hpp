@@ -18,6 +18,7 @@ struct GameEvent{
 		Closed,
 		PacmanMove,
 		PacmanEaten,
+		PacmanStarted,
 		GhostEaten,
 		GhostsRegenerated,
 		BigPointEaten,

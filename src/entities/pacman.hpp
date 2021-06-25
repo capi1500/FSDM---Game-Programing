@@ -16,6 +16,7 @@ class Pacman : public Entity, public Listener<GameEvent>{
 		
 		Map& map;
 		
+		bool dying;
 		sf::Vector2u pos;
 		AnimatedSprite sprite;
 		

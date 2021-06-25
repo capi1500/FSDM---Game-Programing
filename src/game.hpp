@@ -27,8 +27,9 @@ class Game : public Listener<GameEvent>, public Listener<sf::Event>{
 	public:
 		void run();
 		
-		void onNotify(const GameEvent& event) override;
+		Scene* newScene();
 		
+		void onNotify(const GameEvent& event) override;
 		void onNotify(const sf::Event& event) override;
 		
 		Game();
