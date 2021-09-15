@@ -1,2 +1,2 @@
-# ProgramowanieGier - Pong
-W tej gałęzi projektu znajduje się implementacja jednej z pierwszych gier w histori gier komputerowych, ponga.
+# Pong
+In this branch there is reimplemented one of the first video games, pong.
